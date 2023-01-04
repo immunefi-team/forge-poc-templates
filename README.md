@@ -10,7 +10,7 @@ A Foundry installation is required to use this repository. See https://book.getf
 
 ### Getting Started 📖
 
-Pick a PoC [template](#template-categories) and open the corresponding source contract. Within the source contract, there will be comments describing how you can modify the PoC to fit your vulnerability.
+Pick a PoC [template](#template-categories-) and open the corresponding source contract. Within the source contract, there will be comments describing how you can modify the PoC to fit your vulnerability.
 
 Once you have completed your attack contract, navigate to the corresponding [test](./test) file and modify the setup to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more setup that is done, the harder it is for projects to verify your claims.
 
@@ -60,7 +60,7 @@ We would like to keep our templates as modular as possible and provide generic t
 
 To create a PoC template, be sure to follow the same pattern as existing templates. Create an attack contract which exists in ./src and a corresponding test in ./test. The name of both files should match, and be a short one or two word description of the vulnerability type used in the attack.
 
-In addition to the attack contract and test file, the [Template Categories](#template-categories) needs to be updated with the corresponding template.
+In addition to the attack contract and test file, the [Template Categories](#template-categories-) needs to be updated with the corresponding template.
 
 In order to be consistent with all the other Solidity projects, we follow the
 [official recommendations documented in the Solidity style guide](http://solidity.readthedocs.io/en/latest/style-guide.html).
