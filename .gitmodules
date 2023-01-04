@@ -7,3 +7,6 @@
 [submodule "lib/v2-periphery"]
 	path = lib/v2-periphery
 	url = https://github.com/uniswap/v2-periphery
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
