@@ -1,0 +1,156 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.13;
+
+import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
+import "forge-std/console.sol";
+
+abstract contract Reentrancy {
+    enum State {
+        PRE_ATTACK,
+        ATTACK,
+        POST_ATTACK
+    }
+
+    State reentrancyStage;
+
+    /**
+     * @dev Main body of the attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
+     * TODO: Implement the attack here to initiate reentrancy in your victim
+     */
+    function initiateAttack() external virtual;
+
+    /**
+     * @dev Function run the first time the callback is entered
+     * TODO: Implement the attack here
+     */
+    function _executeAttack() internal virtual;
+
+
+    /**    
+     * @dev Function run after the attack is executed
+     * TODO: Implement the attack cleanup here by performing an exchange, paying back flashloan, etc.
+     */
+    function _completeAttack() internal virtual;
+
+    /**
+     * @dev Function run when target contract makes external call back to attack contract
+     */
+    function _reentrancyCallback() incrementState internal virtual {
+        console.log("Begin reentrancy stage %s", uint(reentrancyStage));
+        if(reentrancyStage == State.ATTACK) {
+            // Execute attack
+            console.log("Execute attack");
+            _executeAttack();
+        } else if(reentrancyStage == State.POST_ATTACK) {
+            // Already ran the attack once
+            console.log("Attack completed successfully");
+            _completeAttack();
+        } else {
+            // No state defined
+        }
+    }
+
+    modifier incrementState() {
+        reentrancyStage = State(uint(reentrancyStage) + 1);
+        _;
+    }
+
+    /**
+     * @dev The callback function for uniswap exchange
+     */
+    function uniswapV2Call(address,  uint amount0, uint amount1, bytes calldata) external {
+        _reentrancyCallback();
+    }
+    
+    /**
+     * @dev Handles the receipt of ERC677 token type.
+     */
+    function onTokenTransfer(address from, uint256, bytes memory) external {
+        _reentrancyCallback();
+    }
+    
+    /**
+     * @dev Handles the receipt of ERC1363 token type.
+     */
+    function onTransferReceived(address, address, uint256, bytes memory) external returns (bytes4) {
+        _reentrancyCallback();
+        return this.onTransferReceived.selector;
+    }
+
+    /**
+     * @dev Handles the receipt of ERC777 token type.
+     */
+    function tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external {
+        _reentrancyCallback();
+    }
+    
+    /**
+     * @dev Handles the receipt of a single ERC1155 token type. This function is
+     * called at the end of a `safeTransferFrom` after the balance has been updated.
+     */
+    function onERC1155Received(
+        address operator,
+        address from,
+        uint256 id,
+        uint256 value,
+        bytes calldata data
+    ) external returns (bytes4) {
+        _reentrancyCallback();
+        return this.onERC1155Received.selector;
+    }
+
+    /**
+     * @dev Handles the receipt of a multiple ERC1155 token types. This function
+     * is called at the end of a `safeBatchTransferFrom` after the balances have
+     * been updated.
+     */
+    function onERC1155BatchReceived(
+        address operator,
+        address from,
+        uint256[] calldata ids,
+        uint256[] calldata values,
+        bytes calldata data
+    ) external returns (bytes4) {
+        _reentrancyCallback();
+        return this.onERC1155BatchReceived.selector;
+    }
+
+    /**
+     * @dev Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom}
+     * by `operator` from `from`, this function is called.
+     */
+    function onERC721Received(
+        address operator,
+        address from,
+        uint256 tokenId,
+        bytes calldata data
+    ) external returns (bytes4) {
+        _reentrancyCallback();
+        return this.onERC721Received.selector;
+    }
+
+    /**
+     * @dev Fallback function called when no other functions match the function signature
+     */
+    fallback() external payable {
+        _reentrancyCallback();
+    }
+
+    /**
+     * @dev Function called when native asset is sent with no calldata
+     */
+    receive() external payable {
+        _reentrancyCallback();
+    }
+    
+    /**
+     * @dev We need to implement this function to tell contracts we support their callback interface
+     * @return true Always returns true
+     */
+    function supportsInterface(bytes4 interfaceId) public view returns (bool) {
+        return true;
+    }
+}
