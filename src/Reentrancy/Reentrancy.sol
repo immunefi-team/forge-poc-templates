@@ -18,20 +18,17 @@ abstract contract Reentrancy {
 
     /**
      * @dev Main body of the attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
-     * TODO: Implement the attack here to initiate reentrancy in your victim
      */
     function initiateAttack() external virtual;
 
     /**
      * @dev Function run the first time the callback is entered
-     * TODO: Implement the attack here
      */
     function _executeAttack() internal virtual;
 
 
     /**    
      * @dev Function run after the attack is executed
-     * TODO: Implement the attack cleanup here by performing an exchange, paying back flashloan, etc.
      */
     function _completeAttack() internal virtual;
 
