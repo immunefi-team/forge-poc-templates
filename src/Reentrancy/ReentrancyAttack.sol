@@ -26,13 +26,14 @@ contract ReentrancyAttack is Reentrancy {
         console.log("Attacker balance before %s", address(this).balance);
 
         // TODO: Modify the attack here to initiate reentrancy in your victim
-        uint256 amount = 1 ether;
-        target.call{value: amount}(abi.encodeWithSelector(bytes4(keccak256("deposit()"))));
+        target.call{value: 1 ether}(abi.encodeWithSelector(bytes4(keccak256("deposit()"))));
         target.call(abi.encodeWithSelector(bytes4(keccak256("withdraw()"))));
     }
 
     /**
      * @dev Function run the first time the callback is entered
+     * @dev msg.sender will be the victim contract
+     * @dev msg.sig can be used to identify which callback triggered the reentrancy eg. msg.sig == this.onTokenTransfer.selector
      */
     function _executeAttack() internal override {
         // TODO: Modify the attack here

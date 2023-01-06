@@ -53,7 +53,7 @@ abstract contract Reentrancy {
         }
     }
 
-    modifier incrementState() {
+    modifier incrementState() virtual {
         reentrancyStage = State(uint(reentrancyStage) + 1);
         _;
     }
