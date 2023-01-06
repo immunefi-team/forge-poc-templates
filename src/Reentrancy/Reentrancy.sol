@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-
 import "forge-std/console.sol";
 
 abstract contract Reentrancy {
@@ -17,7 +13,7 @@ abstract contract Reentrancy {
     State reentrancyStage;
 
     /**
-     * @dev Main body of the attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
+     * @dev Initiates the reentrancy attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
      */
     function initiateAttack() external virtual;
 
@@ -25,7 +21,6 @@ abstract contract Reentrancy {
      * @dev Function run the first time the callback is entered
      */
     function _executeAttack() internal virtual;
-
 
     /**    
      * @dev Function run after the attack is executed

@@ -1,6 +1,6 @@
 pragma solidity ^0.8.13;
 
-contract ReentrancyVictim {
+contract ReentrancyExampleVictim {
     mapping(address => uint256) balance;
 
     function deposit() external payable {

