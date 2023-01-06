@@ -18,6 +18,7 @@ Fixes #???? <!-- Fill in with issue number -->
 <!-- Feel free to submit a PR or Draft PR even if some items are pending. -->
 <!-- Some of the items may not apply. -->
 
-- [ ] Attack Contract
+- [ ] Attack Template
+- [ ] Attack Example
 - [ ] Test
 - [ ] Readme Updated
