@@ -53,14 +53,14 @@ abstract contract Reentrancy {
     /**
      * @dev The callback function for uniswap exchange
      */
-    function uniswapV2Call(address,  uint amount0, uint amount1, bytes calldata) external {
+    function uniswapV2Call(address, uint, uint, bytes calldata) external {
         _reentrancyCallback();
     }
     
     /**
      * @dev Handles the receipt of ERC677 token type.
      */
-    function onTokenTransfer(address from, uint256, bytes memory) external returns (bool) {
+    function onTokenTransfer(address, uint256, bytes memory) external returns (bool) {
         _reentrancyCallback();
         return true;
     }
@@ -84,13 +84,7 @@ abstract contract Reentrancy {
      * @dev Handles the receipt of a single ERC1155 token type. This function is
      * called at the end of a `safeTransferFrom` after the balance has been updated.
      */
-    function onERC1155Received(
-        address operator,
-        address from,
-        uint256 id,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bytes4) {
+    function onERC1155Received(address, address, uint256, uint256, bytes calldata) external returns (bytes4) {
         _reentrancyCallback();
         return this.onERC1155Received.selector;
     }
@@ -100,13 +94,7 @@ abstract contract Reentrancy {
      * is called at the end of a `safeBatchTransferFrom` after the balances have
      * been updated.
      */
-    function onERC1155BatchReceived(
-        address operator,
-        address from,
-        uint256[] calldata ids,
-        uint256[] calldata values,
-        bytes calldata data
-    ) external returns (bytes4) {
+    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata) external returns (bytes4) {
         _reentrancyCallback();
         return this.onERC1155BatchReceived.selector;
     }
@@ -115,12 +103,7 @@ abstract contract Reentrancy {
      * @dev Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom}
      * by `operator` from `from`, this function is called.
      */
-    function onERC721Received(
-        address operator,
-        address from,
-        uint256 tokenId,
-        bytes calldata data
-    ) external returns (bytes4) {
+    function onERC721Received(address, address, uint256, bytes calldata) external returns (bytes4) {
         _reentrancyCallback();
         return this.onERC721Received.selector;
     }
@@ -143,7 +126,7 @@ abstract contract Reentrancy {
      * @dev We need to implement this function to tell contracts we support their callback interface
      * @return true Always returns true
      */
-    function supportsInterface(bytes4 interfaceId) public view returns (bool) {
+    function supportsInterface(bytes4) public pure returns (bool) {
         return true;
     }
 }

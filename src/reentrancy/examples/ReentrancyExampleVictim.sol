@@ -8,7 +8,8 @@ contract ReentrancyExampleVictim {
     }
 
     function withdraw() external {
-        msg.sender.call{value: balance[msg.sender]}("");
+        (bool success, ) = msg.sender.call{value: balance[msg.sender]}("");
+        require(success, "ETH transfer failed");
         balance[msg.sender] = 0;
     }
 }
