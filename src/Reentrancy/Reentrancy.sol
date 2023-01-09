@@ -60,8 +60,9 @@ abstract contract Reentrancy {
     /**
      * @dev Handles the receipt of ERC677 token type.
      */
-    function onTokenTransfer(address from, uint256, bytes memory) external {
+    function onTokenTransfer(address from, uint256, bytes memory) external returns (bool) {
         _reentrancyCallback();
+        return true;
     }
     
     /**

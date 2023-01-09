@@ -31,14 +31,14 @@ forge test -vv --match-path test/[test_name]
 ## Template Categories 🪲
 
 |       Categorisation       | Source | Test |
-| -------------------------- | --------------------------------------- | --------------------------------------- |
-| Forking                    | [Source](./src/Forking.sol)            | [Test](./test/Forking.t.sol)            |
-| Reentrancy                 | [Source](./src/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
-| Token Balance Manipulation | [Source](./src/TokenBalance.sol)       | [Test](./test/TokenBalance.t.sol)       |
-| Flashloan                  | [Source](./src/Flashloan.sol)          | [Test](./test/Flashloan.t.sol)          |
-| Price Manipulation         | [Source](./src/PriceManipulation.sol)  | [Test](./test/PriceManipulation.t.sol)  |
-| NFTX Loan                  | [Source](./src/NFTXLoan.sol)           | [Test](./test/NFTXLoan.t.sol)           |
-| Uninitialized Proxy        | [Source](./src/UninitializedProxy.sol) | [Test](./test/UninitializedProxy.t.sol) |
+| -------------------------- | ------------------------------------------------- | --------------------------------------- |
+| Reentrancy                 | [Source](./src/Reentrancy/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
+<!-- | Forking                    | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
+| Token Balance Manipulation | [Source](./src/TokenBalance.sol)                  | [Test](./test/TokenBalance.t.sol)       |
+| Flashloan                  | [Source](./src/Flashloan.sol)                     | [Test](./test/Flashloan.t.sol)          |
+| Price Manipulation         | [Source](./src/PriceManipulation.sol)             | [Test](./test/PriceManipulation.t.sol)  |
+| NFTX Loan                  | [Source](./src/NFTXLoan.sol)                      | [Test](./test/NFTXLoan.t.sol)           |
+| Uninitialized Proxy        | [Source](./src/UninitializedProxy.sol)            | [Test](./test/UninitializedProxy.t.sol) | -->
 
 ## Foundry Concepts
 
