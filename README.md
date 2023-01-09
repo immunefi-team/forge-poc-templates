@@ -32,7 +32,7 @@ forge test -vv --match-path test/[test_name]
 
 |       Categorisation       | Source | Test |
 | -------------------------- | ------------------------------------------------- | --------------------------------------- |
-| Reentrancy                 | [Source](./src/Reentrancy/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
+| Reentrancy                 | [Source](./src/reentrancy/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
 <!-- | Forking                    | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
 | Token Balance Manipulation | [Source](./src/TokenBalance.sol)                  | [Test](./test/TokenBalance.t.sol)       |
 | Flashloan                  | [Source](./src/Flashloan.sol)                     | [Test](./test/Flashloan.t.sol)          |

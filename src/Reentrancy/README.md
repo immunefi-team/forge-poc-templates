@@ -11,7 +11,7 @@ This template is for getting started with reentrancy attack PoCs. The reentrancy
 
 ## Usage
 The following attack contract demonstrate a simple reentrancy attack on a improper implementation of a deposit and withdraw contract.
-* [ReentrancyExampleAttack](./ReentrancyExampleAttack.sol)
+* [ReentrancyExampleAttack](./examples/ReentrancyExampleAttack.sol)
 
 
 Extend the Reentrancy contract and implement the following functions:
