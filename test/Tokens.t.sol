@@ -7,12 +7,12 @@ import "../src/tokens/Tokens.sol";
 
 contract TokensTest is Test {
     uint256 mainnetFork;
-    string MAINNET_RPC_URL = vm.envString("ALCHEMY_API");
+    string RPC_URL = vm.envString("RPC_URL");
 
     TokenExampleManipulation public tokenExample;
 
     function setUp() public {
-        mainnetFork = vm.createFork(MAINNET_RPC_URL);
+        mainnetFork = vm.createFork(RPC_URL);
         vm.selectFork(mainnetFork);
 
         tokenExample = new TokenExampleManipulation();
