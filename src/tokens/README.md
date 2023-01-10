@@ -341,7 +341,7 @@ The following attack contract demonstrate a simple token balance manipulation of
 
 * [TokenExampleManipulation](./examples/TokenExampleManipulation.sol)
 
-Extend the Tokens contract and call `deal(address token, address to, uint256 amount)` to set an accounts balance for the specified token:
+Extend the Tokens contract and call `deal(IERC20 token, address to, uint256 amount)` to set an accounts balance for the specified token:
 ```
 deal(EthereumTokens.USDC, address(this), 1 ether);
 ```
