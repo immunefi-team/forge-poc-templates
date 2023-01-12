@@ -10,9 +10,18 @@ A Foundry installation is required to use this repository. See https://book.getf
 
 ### Getting Started 📖
 
-Pick a PoC [template](#template-categories-) and open the corresponding source contract. Within the source contract, there will be comments describing how you can modify the PoC to fit your vulnerability.
+1️⃣ First set up the interfaces for the protocol you will be creating a PoC for. You can create your own interface contracts, or download the contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. Define the `ETHERSCAN_API_KEY` environment variable, then call
+```
+cast etherscan-source [address] -d src/external
+```
+Optionally, append `--chain [chain_name]` to specify a chain other than Ethereum mainnet to download contracts from. This will download the contracts source code to `src/external` where you can simply import any contract interfaces by adding the following to the top of your PoC.
+```
+import "./external/ExampleProtocol/ExampleEtherscanContract.sol"
+```
 
-Once you have completed your attack contract, navigate to the corresponding [test](./test) file and modify the setup to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more setup that is done, the harder it is for projects to verify your claims.
+2️⃣ Pick a PoC [template](#template-categories-) and open the corresponding source contract. Within the source contract, there will be comments describing how you can modify the PoC to fit your vulnerability.
+
+3️⃣ Once you have completed your attack contract, navigate to the corresponding [test](./test) file and modify the setup to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more setup that is done, the harder it is for projects to verify your claims.
 
 ### Running a PoC 🚀
 
