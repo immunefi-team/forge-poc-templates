@@ -88,7 +88,7 @@ As a contributor, you are expected to fork this repository, work on your own for
 cd forge-poc-templates
 git remote add upstream https://github.com/immunefi-team/forge-poc-templates.git
 git fetch upstream
-git pull --rebase upstream master
+git pull --rebase upstream main
 ```
 NOTE: The directory `forge-poc-templates` represents your fork's local copy.
 
