@@ -48,9 +48,9 @@ forge test -vv --match-path test/[test_name]
 |       Categorisation       | Template | Source | Test |
 | -------------------------- | -------- |  ------------------------------------------------- | --------------------------------------- |
 | Reentrancy                 | [Template](./src/ReentrancyTemplate.sol) | [Source](./src/reentrancy/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
-| Token Balance Manipulation | [Template](./src/TokenTemplate.sol) | [Source](./src/tokens/Tokens.sol)                 | [Test](./test/Tokens.t.sol)             |
+| Token Balance Manipulation | [Template](./src/TokenTemplate.sol) | [Source](./src/tokens/Tokens.sol)                 | [Test](./test/Tokens.t.sol)             |          |
+| Flash Loan                 | [Template](./src/FlashloanTemplate.sol)  | [Source](./src/flashloan/Flashloan.sol)                     | [Test](./test/Flashloan.t.sol)          |
 <!-- | Forking                    | [Template](./src/ForkingTemplate.sol) | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
-| Flashloan                  | [Template](./src/FlashloanTemplate.sol) | [Source](./src/Flashloan.sol)                     | [Test](./test/Flashloan.t.sol)          |
 | Price Manipulation         | [Template](./src/PriceManipulationTemplate.sol) | [Source](./src/PriceManipulation.sol)             | [Test](./test/PriceManipulation.t.sol)  |
 | NFTX Loan                  | [Template](./src/NFTXLoanTemplate.sol) | [Source](./src/NFTXLoan.sol)                      | [Test](./test/NFTXLoan.t.sol)           |
 | Uninitialized Proxy        | [Template](./src/UninitializedProxyTemplate.sol) | [Source](./src/UninitializedProxy.sol)            | [Test](./test/UninitializedProxy.t.sol) | -->

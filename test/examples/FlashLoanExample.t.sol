@@ -2,22 +2,22 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/FlashLoanTemplate.sol";
+import "../../src/flashloan/examples/FlashLoanExample.sol";
 
-contract FlashLoanTest is Test {
+contract FlashLoanExampleTest is Test {
     uint256 mainnetFork;
     string RPC_URL = vm.envString("RPC_URL");
 
-    FlashLoanTemplate public flashLoanTemplate;
+    FlashLoanExample public flashLoanExample;
 
     function setUp() public {
         mainnetFork = vm.createFork(RPC_URL);
         vm.selectFork(mainnetFork);
 
-        flashLoanTemplate = new FlashLoanTemplate();
+        flashLoanExample = new FlashLoanExample();
     }
 
     function testFlashLoan() public {
-        flashLoanTemplate.initiateAttack();
+        flashLoanExample.initiateAttack();
     }
 }
