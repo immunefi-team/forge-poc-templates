@@ -31,7 +31,10 @@ library AAVEFlashLoan {
         Context memory context = context();
         (address asset, uint256 amount, uint256 fee, bytes memory params) = unpackData(data);
 
-        require(msg.sender == address(context.AAVElendingPool), "AAVEFlashloan: Callback msg.sender was not the lending pool");
+        require(
+            msg.sender == address(context.AAVElendingPool),
+            "AAVEFlashloan: Callback msg.sender was not the lending pool"
+        );
 
         IERC20(asset).approve(address(context.core), amount + fee);
         IERC20(asset).transfer(context.core, amount + fee);
@@ -67,7 +70,7 @@ library AAVEFlashLoan {
     /**
      * @dev Helper function which decodes the flash loan callback data
      * @param data The data of the flash loan
-     * @return asset The address of the asset borrowed 
+     * @return asset The address of the asset borrowed
      * @return amount The amount of the asset borrowed
      * @return fee The fee associated with the flash loan
      * @return params Additional params associated with the flash loan

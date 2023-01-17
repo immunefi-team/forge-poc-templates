@@ -12,6 +12,7 @@ abstract contract Flashloan {
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
+
     function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) public virtual {
         console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amount, token, uint256(flp));
         _flp = flp;

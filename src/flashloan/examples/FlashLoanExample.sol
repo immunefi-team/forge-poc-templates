@@ -4,6 +4,7 @@ import "../Flashloan.sol";
 import "../../tokens/Tokens.sol";
 
 import "forge-std/console.sol";
+
 contract FlashLoanExample is Flashloan, Tokens {
     function initiateAttack() external {
         deal(EthereumTokens.DAI, address(this), 1 ether);
