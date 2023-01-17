@@ -1,4 +1,3 @@
-
 ### Contribution Guidelines
 
 We would like to keep our templates as modular as possible and provide generic tooling which will get our whitehats up and running with PoCs for vulnerabilities as quickly as possible. This means templates must be neat and concise. The following guidelines were adapted from OpenZeppelin's contribution guidelines.

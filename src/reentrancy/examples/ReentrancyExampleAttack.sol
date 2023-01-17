@@ -37,7 +37,7 @@ contract ReentrancyExampleAttack is Reentrancy {
      */
     function _executeAttack() internal override {
         // TODO: Modify the attack here
-        if(target.balance >= 1 ether) {
+        if (target.balance >= 1 ether) {
             target.call(abi.encodeWithSelector(bytes4(keccak256("withdraw()"))));
         }
     }

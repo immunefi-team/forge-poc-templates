@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "../reentrancy/Reentrancy.sol";
+import "./reentrancy/Reentrancy.sol";
 
 import "forge-std/console.sol";
 

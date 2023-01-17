@@ -2,8 +2,8 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/tokens/examples/TokenExampleManipulation.sol";
-import "../src/tokens/Tokens.sol";
+import "../../src/tokens/examples/TokenExampleManipulation.sol";
+import "../../src/tokens/Tokens.sol";
 
 contract TokensExampleTest is Test {
     uint256 mainnetFork;

@@ -15,14 +15,17 @@ A Foundry installation is required to use this repository. See https://book.getf
 cast etherscan-source [address] -d src/external
 ```
 This will download the contracts source code to `src/external` where you can simply import any contract interfaces by adding the following to the top of your PoC.
+> ##### *🚨 When downloading source code from deployed contracts, there may be remappings that need to be modified for the source files to compile. Add any necessary remappings to [`remappings.txt`](./remappings.txt).
 ```
 import "./external/ExampleProtocol/ExampleEtherscanContract.sol"
 ```
 Optionally, append `--chain [chain_name]` to specify a chain other than Ethereum mainnet to download contracts from. **Note:** You will have to update your Etherscan API key when switching between different chains.
+<br>
 
 2️⃣ Pick a PoC [template](#template-categories-) and modify the template file which extends* from the corresponding source contract. Within the source contract, there will be comments describing how you can modify the PoC to fit your vulnerability. 
 
 > #####  *🚨 When extending from an abstract contract, there will be functions which must be defined. Implement any undefined functions with your attack.
+<br>
 
 3️⃣ Once you have completed your attack contract, navigate to the corresponding [test](./test) file, import your attack contract, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more setup that is done, the harder it is for projects to verify your claims.
 
