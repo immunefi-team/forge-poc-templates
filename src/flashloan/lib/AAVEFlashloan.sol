@@ -2,8 +2,6 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "forge-std/console.sol";
-
 library AAVEFlashLoan {
     /**
      * @dev struct that hold the reference of IAAVELendingPool and address core
