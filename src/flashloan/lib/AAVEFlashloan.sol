@@ -5,12 +5,19 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "forge-std/console.sol";
 
 library AAVEFlashloan {
-
+    /**
+     * @dev struct that hold the reference of IAAVELendingPool and address core
+     */
     struct Context {
         IAAVELendingPool AAVElendingPool;
         address core;
     }
 
+    /**
+     * @dev Allows a user to take a flash loan from AAVE Lending Pool for a given token and amount
+     * @param token The address of the token to borrow
+     * @param amount The amount of the token to borrow
+     */
     function takeFlashLoan(address token, uint256 amount) internal {
         Context memory context = context();
         require(address(context.AAVElendingPool) != address(0), "AAVEFlashloan: Query to AAVElendingPool failed.");
@@ -18,7 +25,11 @@ library AAVEFlashloan {
         context.AAVElendingPool.flashLoan(address(this), token, amount, "");
     }
 
-    function payFlashLoan(bytes calldata data) internal returns (bool) {
+    /**
+     * @dev Pay back the flash loan to AAVE Lending Pool
+     * @param data The data of the flash loan
+     */
+    function payFlashLoan(bytes calldata data) internal {
         Context memory context = context();
         (address asset, uint256 amount, uint256 fee, bytes memory params) = unpackData(data);
 
@@ -26,11 +37,11 @@ library AAVEFlashloan {
 
         IERC20(asset).approve(address(context.core), amount + fee);
         IERC20(asset).transfer(context.core, amount + fee);
-        return true;
     }
 
     /**
      * @dev Helper function which returns the on chain context needed to execute a flashloan
+     * @return The context of the flashloan
      */
     function context() internal returns (Context memory) {
         ILendingPoolAddressesProvider AAVELendingPoolProvider;
@@ -55,6 +66,14 @@ library AAVEFlashloan {
         return Context(AAVElendingPool, core);
     }
 
+    /**
+     * @dev Helper function which decodes the flash loan callback data
+     * @param data The data of the flash loan
+     * @return asset The address of the asset borrowed 
+     * @return amount The amount of the asset borrowed
+     * @return fee The fee associated with the flash loan
+     * @return params Additional params associated with the flash loan
+     */
     function unpackData(bytes calldata data)
         internal
         returns (address asset, uint256 amount, uint256 fee, bytes memory params)
