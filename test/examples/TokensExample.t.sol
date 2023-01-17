@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import "../src/tokens/examples/TokenExampleManipulation.sol";
 import "../src/tokens/Tokens.sol";
 
-contract TokensTest is Test {
+contract TokensExampleTest is Test {
     uint256 mainnetFork;
     string RPC_URL = vm.envString("RPC_URL");
 
