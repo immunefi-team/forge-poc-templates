@@ -22,7 +22,7 @@ abstract contract Reentrancy {
      */
     function _executeAttack() internal virtual;
 
-    /**    
+    /**
      * @dev Function run after the attack is executed
      */
     function _completeAttack() internal virtual;
@@ -30,13 +30,13 @@ abstract contract Reentrancy {
     /**
      * @dev Function run when target contract makes external call back to attack contract
      */
-    function _reentrancyCallback() incrementState internal virtual {
-        console.log("Begin reentrancy stage %s", uint(reentrancyStage));
-        if(reentrancyStage == State.ATTACK) {
+    function _reentrancyCallback() internal virtual incrementState {
+        console.log("Begin reentrancy stage %s", uint256(reentrancyStage));
+        if (reentrancyStage == State.ATTACK) {
             // Execute attack
             console.log("Execute attack");
             _executeAttack();
-        } else if(reentrancyStage == State.POST_ATTACK) {
+        } else if (reentrancyStage == State.POST_ATTACK) {
             // Already ran the attack once
             console.log("Attack completed successfully");
             _completeAttack();
@@ -46,17 +46,17 @@ abstract contract Reentrancy {
     }
 
     modifier incrementState() virtual {
-        reentrancyStage = State(uint(reentrancyStage) + 1);
+        reentrancyStage = State(uint256(reentrancyStage) + 1);
         _;
     }
 
     /**
      * @dev The callback function for uniswap exchange
      */
-    function uniswapV2Call(address, uint, uint, bytes calldata) external {
+    function uniswapV2Call(address, uint256, uint256, bytes calldata) external {
         _reentrancyCallback();
     }
-    
+
     /**
      * @dev Handles the receipt of ERC677 token type.
      */
@@ -64,7 +64,7 @@ abstract contract Reentrancy {
         _reentrancyCallback();
         return true;
     }
-    
+
     /**
      * @dev Handles the receipt of ERC1363 token type.
      */
@@ -79,7 +79,7 @@ abstract contract Reentrancy {
     function tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external {
         _reentrancyCallback();
     }
-    
+
     /**
      * @dev Handles the receipt of a single ERC1155 token type. This function is
      * called at the end of a `safeTransferFrom` after the balance has been updated.
@@ -94,7 +94,10 @@ abstract contract Reentrancy {
      * is called at the end of a `safeBatchTransferFrom` after the balances have
      * been updated.
      */
-    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata) external returns (bytes4) {
+    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata)
+        external
+        returns (bytes4)
+    {
         _reentrancyCallback();
         return this.onERC1155BatchReceived.selector;
     }
@@ -121,7 +124,7 @@ abstract contract Reentrancy {
     receive() external payable {
         _reentrancyCallback();
     }
-    
+
     /**
      * @dev We need to implement this function to tell contracts we support their callback interface
      * @return true Always returns true

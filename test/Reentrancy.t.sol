@@ -2,18 +2,14 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/reentrancy/examples/ReentrancyExampleAttack.sol";
-import "../src/reentrancy/examples/ReentrancyExampleVictim.sol";
+import "../src/ReentrancyTemplate.sol";
 
 contract ReentrancyTest is Test {
-    ReentrancyExampleAttack public attackContract;
-    ReentrancyExampleVictim public victimContract;
+    ReentrancyTemplate public attackContract;
+    address victimContract = address(0x0); // Modify this to be your victim contract
 
     function setUp() public {
-        victimContract = new ReentrancyExampleVictim();
-        attackContract = new ReentrancyExampleAttack(address(victimContract));
-        deal(address(attackContract), 1 ether);
-        deal(address(victimContract), 2 ether);
+        attackContract = new ReentrancyTemplate(address(victimContract));
     }
 
     function testReentrancyAttack() public {
