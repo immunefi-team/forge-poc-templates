@@ -9,7 +9,7 @@ contract FlashLoanTemplate is Flashloan, Tokens {
     function initiateAttack() external {
         // Take flash loan on some token
         deal(EthereumTokens.DAI, address(this), 900000000000000);
-        takeFlashLoan(FlashLoanProviders.AAVE, address(EthereumTokens.DAI), 1 ether);
+        takeFlashLoan(FlashLoanProviders.AAVEV1, address(EthereumTokens.DAI), 1 ether);
     }
 
     function _executeAttack() internal override {
