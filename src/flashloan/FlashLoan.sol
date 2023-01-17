@@ -35,7 +35,7 @@ abstract contract Flashloan {
     fallback() external payable virtual {
         console.log("Execute attack");
         _executeAttack();
-        console.log("Pay back flashloan");
+        console.log("Pay back flash loan");
         FlashLoanProvider.payFlashLoan(_flp);
         console.log("Attack completed successfully");
         _completeAttack();
