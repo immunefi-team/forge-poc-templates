@@ -1,18 +1,18 @@
 pragma solidity ^0.8.0;
 
-import "./FlashloanProvider.sol";
+import "./FlashLoanProvider.sol";
 
 abstract contract Flashloan {
-    FlashloanProviders internal _flp;
+    FlashLoanProviders internal _flp;
     /**
      * @dev Allows a user to take a flash loan from a specified FlashloanProvider and token
      * @param flp The address of the flash loan provider to take the loan from
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
-    function takeFlashLoan(FlashloanProviders flp, address token, uint256 amount) public virtual {
+    function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) public virtual {
         _flp = flp;
-        FlashloanProvider.takeFlashLoan(flp, token, amount);
+        FlashLoanProvider.takeFlashLoan(flp, token, amount);
     }
 
     /**
@@ -30,7 +30,7 @@ abstract contract Flashloan {
      */
     fallback() external payable virtual {
         _executeAttack();
-        FlashloanProvider.payFlashLoan(_flp);
+        FlashLoanProvider.payFlashLoan(_flp);
         _completeAttack();
     }
 }
