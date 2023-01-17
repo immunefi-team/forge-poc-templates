@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import "forge-std/console.sol";
 
-library AAVEFlashloan {
+library AAVEFlashLoan {
     /**
      * @dev struct that hold the reference of IAAVELendingPool and address core
      */
