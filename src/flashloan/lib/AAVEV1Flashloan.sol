@@ -49,18 +49,6 @@ library AAVEV1FlashLoan {
         if (block.chainid == 1) {
             // Ethereum mainnet
             lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0x24a42fD28C976A61Df5D00D0599C34c4f90748c8);
-        } else if (block.chainid == 42161) {
-            // Arbitrum mainnet
-            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
-        } else if (block.chainid == 137) {
-            // Polygon mainnet
-            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
-        } else if (block.chainid == 43114) {
-            // Avalanche C-Chain
-            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
-        } else if (block.chainid == 10) {
-            // Optimism
-            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
         } else {
             revert("AAVEV1FlashLoan: Chain not supported");
         }
