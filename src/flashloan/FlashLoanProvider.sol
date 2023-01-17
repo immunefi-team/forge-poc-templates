@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import {AAVEFlashLoan} from "./lib/AAVEFlashLoan.sol";
+import {AAVEV1FlashLoan} from "./lib/AAVEV1FlashLoan.sol";
 
 enum FlashLoanProviders {
     AAVE,
@@ -17,7 +17,7 @@ library FlashLoanProvider {
      */
     function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) internal {
         if (flp == FlashLoanProviders.AAVE) {
-            AAVEFlashLoan.takeFlashLoan(token, amount);
+            AAVEV1FlashLoan.takeFlashLoan(token, amount);
         } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {}
     }
 
@@ -27,7 +27,7 @@ library FlashLoanProvider {
      */
     function payFlashLoan(FlashLoanProviders flp) internal {
         if (flp == FlashLoanProviders.AAVE) {
-            AAVEFlashLoan.payFlashLoan(msg.data);
+            AAVEV1FlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {}
     }
 }

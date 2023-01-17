@@ -2,12 +2,12 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-library AAVEFlashLoan {
+library AAVEV1FlashLoan {
     /**
-     * @dev struct that hold the reference of IAAVELendingPool and address core
+     * @dev struct that hold the reference of IAAVEV1LendingPool and address core
      */
     struct Context {
-        IAAVELendingPool AAVElendingPool;
+        IAAVEV1LendingPool AAVElendingPool;
         address core;
     }
 
@@ -33,10 +33,9 @@ library AAVEFlashLoan {
 
         require(
             msg.sender == address(context.AAVElendingPool),
-            "AAVEFlashloan: Callback msg.sender was not the lending pool"
+            "AAVEV1FlashLoan: Callback msg.sender was not the lending pool"
         );
 
-        IERC20(asset).approve(address(context.core), amount + fee);
         IERC20(asset).transfer(context.core, amount + fee);
     }
 
@@ -45,26 +44,30 @@ library AAVEFlashLoan {
      * @return The context of the flashloan
      */
     function context() internal returns (Context memory) {
-        ILendingPoolAddressesProvider AAVELendingPoolProvider;
+        IAAVEV1LendingPoolAddressesProvider lendingPoolProvider;
 
         if (block.chainid == 1) {
             // Ethereum mainnet
-            AAVELendingPoolProvider = ILendingPoolAddressesProvider(0x24a42fD28C976A61Df5D00D0599C34c4f90748c8);
-        } else if (block.chainid == 56) {
-            // Binance Smart Chain mainnet
+            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0x24a42fD28C976A61Df5D00D0599C34c4f90748c8);
+        } else if (block.chainid == 42161) {
+            // Arbitrum mainnet
+            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
         } else if (block.chainid == 137) {
             // Polygon mainnet
+            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
         } else if (block.chainid == 43114) {
             // Avalanche C-Chain
+            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
         } else if (block.chainid == 10) {
             // Optimism
+            lendingPoolProvider = IAAVEV1LendingPoolAddressesProvider(0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb);
         } else {
-            revert("AAVEFlashloan: Chain not supported");
+            revert("AAVEV1FlashLoan: Chain not supported");
         }
 
-        IAAVELendingPool AAVElendingPool = IAAVELendingPool(AAVELendingPoolProvider.getLendingPool());
-        address core = AAVElendingPool.core();
-        return Context(AAVElendingPool, core);
+        IAAVEV1LendingPool lendingPool = IAAVEV1LendingPool(lendingPoolProvider.getLendingPool());
+        address core = lendingPool.core();
+        return Context(lendingPool, core);
     }
 
     /**
@@ -84,7 +87,7 @@ library AAVEFlashLoan {
     }
 }
 
-interface IAAVELendingPool {
+interface IAAVEV1LendingPool {
     function flashLoan(address _receiver, address _reserve, uint256 _amount, bytes memory _params) external;
     function flashLoan(
         address receiver,
@@ -98,7 +101,7 @@ interface IAAVELendingPool {
     function core() external view returns (address);
 }
 
-interface ILendingPoolAddressesProvider {
+interface IAAVEV1LendingPoolAddressesProvider {
     function getLendingPool() external view returns (address);
     function setLendingPoolImpl(address _pool) external;
     function getLendingPoolCore() external view returns (address payable);
