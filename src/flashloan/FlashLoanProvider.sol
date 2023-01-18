@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import {AAVEV1FlashLoan} from "./lib/AAVEV1FlashLoan.sol";
+import {EulerFlashLoan} from "./lib/EulerFlashLoan.sol";
 
 enum FlashLoanProviders {
     AAVEV1,
@@ -18,7 +19,9 @@ library FlashLoanProvider {
     function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) internal {
         if (flp == FlashLoanProviders.AAVEV1) {
             AAVEV1FlashLoan.takeFlashLoan(token, amount);
-        } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {}
+        } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {
+            EulerFlashLoan.takeFlashLoan(token, amount);
+        }
     }
 
     /**
@@ -28,7 +31,9 @@ library FlashLoanProvider {
     function payFlashLoan(FlashLoanProviders flp) internal {
         if (flp == FlashLoanProviders.AAVEV1) {
             AAVEV1FlashLoan.payFlashLoan(msg.data);
-        } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {}
+        } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {
+            EulerFlashLoan.payFlashLoan(msg.data);
+        }
     }
 
     /**
@@ -36,8 +41,10 @@ library FlashLoanProvider {
      * @param flp The flashloan provider to get the callback selector of
      */
     function callbackFunctionSelector(FlashLoanProviders flp) internal returns (bytes4) {
-        if(flp == FlashLoanProviders.AAVEV1) {
+        if (flp == FlashLoanProviders.AAVEV1) {
             return AAVEV1FlashLoan.CALLBACK_SELECTOR;
+        } else if (flp == FlashLoanProviders.EULER) {
+            return EulerFlashLoan.CALLBACK_SELECTOR;
         }
     }
 }
