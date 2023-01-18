@@ -5,6 +5,9 @@ import "./FlashLoanProvider.sol";
 import "forge-std/console.sol";
 
 abstract contract Flashloan {
+    /**
+     * @dev Flash loan provider call stack
+     */
     FlashLoanProviders[] internal _flps;
 
     /**
