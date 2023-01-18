@@ -11,6 +11,8 @@ library AAVEV1FlashLoan {
         address core;
     }
 
+    bytes4 constant CALLBACK_SELECTOR = 0xee872558;
+
     /**
      * @dev Allows a user to take a flash loan from AAVE Lending Pool for a given token and amount
      * @param token The address of the token to borrow
