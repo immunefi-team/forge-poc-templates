@@ -30,4 +30,14 @@ library FlashLoanProvider {
             AAVEV1FlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.BALANCER) {} else if (flp == FlashLoanProviders.EULER) {}
     }
+
+    /**
+     * @dev Gets the bytes4 function selector for the intended flash loan callback
+     * @param flp The flashloan provider to get the callback selector of
+     */
+    function callbackFunctionSelector(FlashLoanProviders flp) internal returns (bytes4) {
+        if(flp == FlashLoanProviders.AAVEV1) {
+            return AAVEV1FlashLoan.CALLBACK_SELECTOR;
+        }
+    }
 }
