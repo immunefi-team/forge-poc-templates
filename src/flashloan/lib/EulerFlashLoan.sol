@@ -11,6 +11,8 @@ library EulerFlashLoan {
         IEulerDToken dToken;
     }
 
+    bytes4 constant CALLBACK_SELECTOR = 0xc4850ea8; // keccak256(onFlashLoan(bytes memory data))
+
     /**
      * @dev Allows a user to take a flash loan from Euler for a given token and amount
      * @param token The address of the token to borrow
@@ -63,18 +65,15 @@ library EulerFlashLoan {
      * @return token The address of the token of the flash loan
      * @return amount The amount of the token borrowed
      */
-    function unpackData(bytes calldata data)
-        internal
-        returns (address token, uint256 amount)
-    {
+    function unpackData(bytes calldata data) internal returns (address token, uint256 amount) {
         (bytes memory params) = abi.decode(data[4:], (bytes));
-        (address token, uint amount) = abi.decode(params, (address, uint256));
+        (address token, uint256 amount) = abi.decode(params, (address, uint256));
         return (token, amount);
     }
 }
 
 interface IEulerDToken {
-    function flashLoan(uint amount, bytes calldata data) external; 
+    function flashLoan(uint256 amount, bytes calldata data) external;
 }
 
 interface IEulerMarkets {

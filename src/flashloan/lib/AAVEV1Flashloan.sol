@@ -11,7 +11,7 @@ library AAVEV1FlashLoan {
         address core;
     }
 
-    bytes4 constant CALLBACK_SELECTOR = 0xee872558;
+    bytes4 constant CALLBACK_SELECTOR = 0xee872558; // keccak256(executeOperation(address _reserve, uint256 _amount, uint256 _fee, bytes calldata _params))
 
     /**
      * @dev Allows a user to take a flash loan from AAVE Lending Pool for a given token and amount
