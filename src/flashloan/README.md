@@ -9,7 +9,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEFlashLoan.sol) |
+| Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEV1FlashLoan.sol) |
 | Ethereum | Euler      | [EulerFlashLoan](./lib/EulerFlashLoan.sol) |
 
 </details>
@@ -21,7 +21,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEFlashLoan.sol) |
+<!-- | Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEFlashLoan.sol) | -->
 
 </details>
 
@@ -39,3 +39,8 @@ contract Attack is FlashLoan {
 }
 ```
 Call `takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount)` in `initiateAttack()` to trigger your attack.
+
+The following attack contract demonstrate multi provider flash loan usage.
+* [MultiProviderFlashLoanExample](./examples/MultiProviderFlashLoanExample.sol)
+
+Each time a flash loan is taken, the `_executeAttack()` function is called when the provider calls the flash loan callback. The context of the current execution call can be determined by calling `currentProvider()`, which returns the Flash Loan Provider which initiated the callback. This can be used as a state machine to execute stages of an attack. See the example for more.
