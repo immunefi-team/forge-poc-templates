@@ -1,11 +1,11 @@
 pragma solidity ^0.8.0;
 
-import "../Flashloan.sol";
+import "../FlashLoan.sol";
 import "../../tokens/Tokens.sol";
 
 import "forge-std/console.sol";
 
-contract MultiProviderFlashLoanExample is Flashloan, Tokens {
+contract MultiProviderFlashLoanExample is FlashLoan, Tokens {
     function initiateAttack() external {
         deal(EthereumTokens.DAI, address(this), 1 ether);
         console.log("DAI BALANCE BEFORE:", EthereumTokens.DAI.balanceOf(address(this)));
