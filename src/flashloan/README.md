@@ -13,6 +13,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 | Ethereum | Euler      | [EulerFlashLoan](./lib/EulerFlashLoan.sol) |
 
 </details>
+<!---
 <details>
   <summary>
 
@@ -21,9 +22,10 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-<!-- | Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEFlashLoan.sol) | -->
+| Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEFlashLoan.sol) |
 
 </details>
+--->
 
 ## Usage
 The following attack contract demonstrate simple flash loan usage.
@@ -46,4 +48,4 @@ The following attack contract demonstrate multi provider flash loan usage.
 Each time a flash loan is taken, the `_executeAttack()` function is called when the provider calls the flash loan callback. The context of the current execution call can be determined by calling `currentProvider()`, which returns the Flash Loan Provider which initiated the callback. This can be used as a state machine to execute stages of an attack. See the example for more.
 
 
-Note: Flash loans cannot be taken from the same provider due to reentrancy protections. If you need to flash loan multiple tokens, you will have to use multiple providers unless the provider specifically supports multi-token flash loans.
+> 🚨 Multiple flash loans cannot be taken from the same provider due to reentrancy protections. If you need to flash loan multiple tokens, you will have to use multiple providers unless the provider specifically supports multi-token flash loans.
