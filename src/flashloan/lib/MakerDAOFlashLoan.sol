@@ -64,7 +64,10 @@ library MakerDAOFlashLoan {
      * @return fee The amount of the token to be paid as a fee
      * @return data Encoded action from MakerDAO
      */
-    function unpackData(bytes calldata _data) internal returns (address initiator, address token, uint256 amount, uint256 fee, bytes memory data) {
+    function unpackData(bytes calldata _data)
+        internal
+        returns (address initiator, address token, uint256 amount, uint256 fee, bytes memory data)
+    {
         (initiator, token, amount, fee, data) = abi.decode(_data[4:], (address, address, uint256, uint256, bytes));
         return (initiator, token, amount, fee, data);
     }
