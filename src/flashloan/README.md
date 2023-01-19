@@ -9,7 +9,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEV1FlashLoan.sol) |
+| Ethereum | AAVE     | [AAVEV1FlashLoan](./lib/AAVEV1FlashLoan.sol) |
 | Ethereum | Euler      | [EulerFlashLoan](./lib/EulerFlashLoan.sol) |
 
 </details>
