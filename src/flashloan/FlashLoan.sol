@@ -5,6 +5,8 @@ import "./FlashLoanProvider.sol";
 import "forge-std/console.sol";
 
 abstract contract Flashloan {
+    using FlashLoanProvider for FlashLoanProviders;
+
     /**
      * @dev Flash loan provider call stack
      */
@@ -19,7 +21,7 @@ abstract contract Flashloan {
     function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) public virtual {
         console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amount, token, uint256(flp));
         _flps.push(flp);
-        FlashLoanProvider.takeFlashLoan(flp, token, amount);
+        flp.takeFlashLoan(token, amount);
     }
 
     /**
@@ -49,11 +51,11 @@ abstract contract Flashloan {
     fallback() external payable virtual {
         if (_flps.length > 0) {
             FlashLoanProviders flp = currentProvider();
-            if (FlashLoanProvider.callbackFunctionSelector(flp) == bytes4(msg.data[:4])) {
+            if (flp.callbackFunctionSelector() == bytes4(msg.data[:4])) {
                 console.log("Execute attack");
                 _executeAttack();
                 console.log("Pay back flash loan");
-                FlashLoanProvider.payFlashLoan(flp);
+                flp.payFlashLoan();
                 console.log("Attack completed successfully");
                 _completeAttack();
                 _flps.pop();
