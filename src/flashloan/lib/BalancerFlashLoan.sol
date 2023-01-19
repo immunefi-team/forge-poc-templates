@@ -33,12 +33,15 @@ library BalancerFlashLoan {
         require(
             msg.sender == address(context.balancerVault), "BalancerFlashLoan: Callback msg.sender was not the Balancer"
         );
-        for(uint256 i = 0; i < tokens.length; i++) {
+        for (uint256 i = 0; i < tokens.length; i++) {
             IERC20(tokens[i]).transfer(msg.sender, amounts[i] + feeAmounts[i]);
         }
     }
 
-    function unpackData(bytes calldata data) internal returns (address[] memory token, uint256[] memory amount, uint256[] memory feeAmount) {
+    function unpackData(bytes calldata data)
+        internal
+        returns (address[] memory token, uint256[] memory amount, uint256[] memory feeAmount)
+    {
         bytes memory params = data[4:]; // skipping the function selector
         (address[] memory tokens, uint256[] memory amounts, uint256[] memory feeAmounts, bytes memory userData) =
             abi.decode(params, (address[], uint256[], uint256[], bytes));
