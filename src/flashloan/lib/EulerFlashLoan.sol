@@ -31,7 +31,7 @@ library EulerFlashLoan {
         (address token, uint256 amount) = unpackData(data);
         Context memory context = context(token);
 
-        require(msg.sender == context.euler, "EulerFlashLoan: Callback msg.sender was not the Euler");
+        require(msg.sender == context.euler, "EulerFlashLoan: Callback msg.sender was not Euler");
 
         IERC20(token).transfer(msg.sender, amount);
     }
@@ -67,7 +67,7 @@ library EulerFlashLoan {
      */
     function unpackData(bytes calldata data) internal returns (address token, uint256 amount) {
         (bytes memory params) = abi.decode(data[4:], (bytes));
-        (address token, uint256 amount) = abi.decode(params, (address, uint256));
+        (token, amount) = abi.decode(params, (address, uint256));
         return (token, amount);
     }
 }

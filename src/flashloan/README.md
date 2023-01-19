@@ -9,9 +9,10 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVE     | [AAVEV1FlashLoan](./lib/AAVEV1FlashLoan.sol) |
+| Ethereum | AAVEV1     | [AAVEV1FlashLoan](./lib/AAVEV1FlashLoan.sol) |
 | Ethereum | Euler      | [EulerFlashLoan](./lib/EulerFlashLoan.sol) |
-| Ethereum | Balancer      | [BalancerFlashLoan](./lib/BalancerFlashLoan.sol) |
+| Ethereum | Balancer   | [BalancerFlashLoan](./lib/BalancerFlashLoan.sol) |
+| Ethereum | MakerDAO   | [MakerDAOFlashLoan](./lib/MakerDAOFlashLoan.sol) |
 
 </details>
 <!---

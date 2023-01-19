@@ -3,11 +3,13 @@ pragma solidity ^0.8.0;
 import {AAVEV1FlashLoan} from "./lib/AAVEV1FlashLoan.sol";
 import {EulerFlashLoan} from "./lib/EulerFlashLoan.sol";
 import {BalancerFlashLoan} from "./lib/BalancerFlashLoan.sol";
+import {MakerDAOFlashLoan} from "./lib/MakerDAOFlashLoan.sol";
 
 enum FlashLoanProviders {
     AAVEV1,
     BALANCER,
-    EULER
+    EULER,
+    MAKERDAO
 }
 
 library FlashLoanProvider {
@@ -38,6 +40,8 @@ library FlashLoanProvider {
             BalancerFlashLoan.takeFlashLoan(token, amount);
         } else if (flp == FlashLoanProviders.EULER) {
             EulerFlashLoan.takeFlashLoan(token, amount);
+        } else if (flp == FlashLoanProviders.MAKERDAO) {
+            MakerDAOFlashLoan.takeFlashLoan(token, amount);
         } else {
             revert("FlashLoanProvider: Provider doesn't support single token flash loans");
         }
@@ -54,6 +58,8 @@ library FlashLoanProvider {
             BalancerFlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.EULER) {
             EulerFlashLoan.payFlashLoan(msg.data);
+        } else if (flp == FlashLoanProviders.MAKERDAO) {
+            MakerDAOFlashLoan.payFlashLoan(msg.data);
         } else {
             revert("FlashLoanProvider: Flash loan provider not supported");
         }
@@ -70,6 +76,18 @@ library FlashLoanProvider {
             return BalancerFlashLoan.CALLBACK_SELECTOR;
         } else if (flp == FlashLoanProviders.EULER) {
             return EulerFlashLoan.CALLBACK_SELECTOR;
+        } else if (flp == FlashLoanProviders.MAKERDAO) {
+            return MakerDAOFlashLoan.CALLBACK_SELECTOR;
+        }
+    }
+
+    /**
+     * @dev Gets the bytes32 return data for the intended flash loan callback
+     * @param flp The flashloan provider to get the return data of
+     */
+    function returnData(FlashLoanProviders flp) internal returns (bytes32) {
+        if (flp == FlashLoanProviders.MAKERDAO) {
+            return MakerDAOFlashLoan.RETURN_DATA;
         }
     }
 }
