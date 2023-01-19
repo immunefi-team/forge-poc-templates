@@ -44,3 +44,6 @@ The following attack contract demonstrate multi provider flash loan usage.
 * [MultiProviderFlashLoanExample](./examples/MultiProviderFlashLoanExample.sol)
 
 Each time a flash loan is taken, the `_executeAttack()` function is called when the provider calls the flash loan callback. The context of the current execution call can be determined by calling `currentProvider()`, which returns the Flash Loan Provider which initiated the callback. This can be used as a state machine to execute stages of an attack. See the example for more.
+
+
+Note: Flash loans cannot be taken from the same provider due to reentrancy protections. If you need to flash loan multiple tokens, you will have to use multiple providers unless the provider specifically supports multi-token flash loans.
