@@ -1,11 +1,11 @@
 pragma solidity ^0.8.0;
 
-import "./flashloan/Flashloan.sol";
+import "./flashloan/FlashLoan.sol";
 import "./tokens/Tokens.sol";
 
 import "forge-std/console.sol";
 
-contract FlashLoanTemplate is Flashloan, Tokens {
+contract FlashLoanTemplate is FlashLoan, Tokens {
     function initiateAttack() external {
         // Take flash loan on some token
         deal(EthereumTokens.DAI, address(this), 900000000000000);

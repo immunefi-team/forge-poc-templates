@@ -4,7 +4,7 @@ import "./FlashLoanProvider.sol";
 
 import "forge-std/console.sol";
 
-abstract contract Flashloan {
+abstract contract FlashLoan {
     using FlashLoanProvider for FlashLoanProviders;
 
     /**
