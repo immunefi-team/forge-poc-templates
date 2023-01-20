@@ -15,34 +15,25 @@ library UniswapV2Flashloan{
 
     /**
      * @dev Allows a user to take a flash loan from UniswapV2Pair for a given Pair and amount
+     * @param pair The address of the pair contract, use address(0) if pair is unkown
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
-    function takeFlashLoanFromPair(address pair, address token, uint256 amount) internal {
+    function takeFlashLoan(address pair, address token, uint256 amount) internal {
 
         Context memory context = context(pair, token);
 
-        address token0 = IUniswapV2Pair(context.pair).token0();
-        address token1 = IUniswapV2Pair(context.pair).token1();
+        require(address(context.UniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
+
+        address token0 = IUniswapV2Pair(context.UniswapV2Pair).token0();
+        address token1 = IUniswapV2Pair(context.UniswapV2Pair).token1();
 
         uint256 amount0;
         uint256 amount1;
 
-        (amount0, amount1) = token0 == token? (amount,) : (,amount);
+        (amount0, amount1) = token0 == context.asset? (amount,) : (,amount);
 
-        IUniswapV2Pair(context.pair).swap(amount0, amount1, address(this), "");
-    }
-
-    /**
-     * @dev Allows a user to take a flash loan from UniswapV2Pair for a given token and amount
-     * @param token The address of the token to borrow
-     * @param amount The amount of the token to borrow
-     */
-    function takeFlashLoan(address token, uint256 amount) internal {
-        Context memory context = context();
-        require(address(context.UniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
-
-        context.AAVElendingPool.flashLoan(address(this), token, amount, "");
+        IUniswapV2Pair(context.UniswapV2Pair).swap(amount0, amount1, address(this), "");
     }
 
     /**
@@ -68,6 +59,8 @@ library UniswapV2Flashloan{
 
     /**
      * @dev Helper function which returns the on chain context needed to execute a flashloan
+     * @param pair The address of pair contract, use address(0) if pair is unkown
+     * @param token The address of the token to borrow
      * @return The context of the flashloan
      */
     function context(address pair, address token) internal returns (Context memory) {
@@ -99,9 +92,9 @@ library UniswapV2Flashloan{
     /**
      * @dev Helper function which decodes the flash loan callback data
      * @param data The data of the flash loan
-     * @return asset The address of the asset borrowed
-     * @return amount The amount of the asset borrowed
-     * @return fee The fee associated with the flash loan
+     * @return sender The address of this contract
+     * @return amount0 The amount of the asset borrowed
+     * @return amount1 The amount of the asset borrowed
      * @return params Additional params associated with the flash loan
      */
     function unpackData(bytes calldata data)
