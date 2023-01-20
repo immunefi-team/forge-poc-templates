@@ -10,6 +10,8 @@ contract FlashLoanExample is FlashLoan, Tokens {
         deal(EthereumTokens.DAI, address(this), 900000000000000);
         console.log("DAI BALANCE BEFORE:", EthereumTokens.DAI.balanceOf(address(this)));
         takeFlashLoan(FlashLoanProviders.AAVEV1, address(EthereumTokens.DAI), 1 ether);
+        takeFlashLoan(FlashLoanProviders.BALANCER,address(EthereumTokens.DAI),1 ether);
+        takeFlashLoan(FlashLoanProviders.EULER,address(EthereumTokens.DAI),1 ether);
     }
 
     function _executeAttack() internal override {
