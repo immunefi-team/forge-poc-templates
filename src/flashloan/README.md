@@ -11,6 +11,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 | ---------- | -------- | ------------------------------------------------------- |
 | Ethereum | AAVE     | [AAVEV1FlashLoan](./lib/AAVEV1FlashLoan.sol) |
 | Ethereum | Euler      | [EulerFlashLoan](./lib/EulerFlashLoan.sol) |
+| Ethereum | Balancer      | [BalancerFlashLoan](./lib/BalancerFlashLoan.sol) |
 
 </details>
 <!---
