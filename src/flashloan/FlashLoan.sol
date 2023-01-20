@@ -19,7 +19,7 @@ abstract contract FlashLoan {
      * @param amounts The amounts of the tokens to borrow
      */
     function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts) public virtual {
-        for(uint256 i = 0; i < tokens.length; i++) {
+        for (uint256 i = 0; i < tokens.length; i++) {
             console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], tokens[i], uint256(flp));
         }
         _flps.push(flp);
@@ -73,6 +73,11 @@ abstract contract FlashLoan {
                 console.log("Attack completed successfully");
                 _completeAttack();
                 _flps.pop();
+                bytes32 returnData = flp.returnData();
+                assembly {
+                    mstore(0x0, returnData)
+                    return(0x0, 0x80)
+                }
             }
         }
     }
