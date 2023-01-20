@@ -10,6 +10,7 @@ enum FlashLoanProviders {
     BALANCER,
     EULER,
     MAKERDAO
+    UNISWAPV2
 }
 
 library FlashLoanProvider {
