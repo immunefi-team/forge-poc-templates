@@ -12,7 +12,21 @@ enum FlashLoanProviders {
 
 library FlashLoanProvider {
     /**
-     * @dev Allows a user to take a flash loan from a specified FlashloanProvider and token
+     * @dev Allows a user to take a flash loan from a specified FlashloanProvider
+     * @param flp The flash loan provider to take the loan from
+     * @param tokens The addresses of the tokens to borrow
+     * @param amounts The amounts of the tokens to borrow
+     */
+    function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts) internal {
+        if (flp == FlashLoanProviders.BALANCER) {
+            BalancerFlashLoan.takeFlashLoan(tokens, amounts);
+        } else {
+            revert("FlashLoanProvider: Provider doesn't support multiple token flash loans");
+        }
+    }
+
+    /**
+     * @dev Allows a user to take a flash loan from a specified FlashloanProvider
      * @param flp The flashloan provider to take the loan from
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
@@ -21,9 +35,11 @@ library FlashLoanProvider {
         if (flp == FlashLoanProviders.AAVEV1) {
             AAVEV1FlashLoan.takeFlashLoan(token, amount);
         } else if (flp == FlashLoanProviders.BALANCER) {
-            BalancerFlashLoan.takeFlashLoan(token,amount);
+            BalancerFlashLoan.takeFlashLoan(token, amount);
         } else if (flp == FlashLoanProviders.EULER) {
             EulerFlashLoan.takeFlashLoan(token, amount);
+        } else {
+            revert("FlashLoanProvider: Provider doesn't support single token flash loans");
         }
     }
 
@@ -38,6 +54,8 @@ library FlashLoanProvider {
             BalancerFlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.EULER) {
             EulerFlashLoan.payFlashLoan(msg.data);
+        } else {
+            revert("FlashLoanProvider: Flash loan provider not supported");
         }
     }
 

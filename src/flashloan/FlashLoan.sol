@@ -13,7 +13,21 @@ abstract contract FlashLoan {
     FlashLoanProviders[] internal _flps;
 
     /**
-     * @dev Allows a user to take a flash loan from a specified FlashloanProvider and token
+     * @dev Allows a user to take a flash loan from a specified FlashloanProvider
+     * @param flp The flash loan provider to take the loan from
+     * @param tokens The addresses of the tokens to borrow
+     * @param amounts The amounts of the tokens to borrow
+     */
+    function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts) public virtual {
+        for(uint256 i = 0; i < tokens.length; i++) {
+            console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], tokens[i], uint256(flp));
+        }
+        _flps.push(flp);
+        flp.takeFlashLoan(tokens, amounts);
+    }
+
+    /**
+     * @dev Allows a user to take a flash loan from a specified FlashloanProvider
      * @param flp The address of the flash loan provider to take the loan from
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
