@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-library UniswapV2Flashloan{
+library UniswapV2FlashLoan{
     /**
      * @dev struct that hold the reference of IAAVEV1LendingPool and address core
      */
