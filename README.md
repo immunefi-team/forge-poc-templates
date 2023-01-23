@@ -22,12 +22,12 @@ import "./external/ExampleProtocol/ExampleEtherscanContract.sol"
 Optionally, append `--chain [chain_name]` to specify a chain other than Ethereum mainnet to download contracts from. **Note:** You will have to update your Etherscan API key when switching between different chains.
 <br>
 
-2️⃣ Pick a PoC [template](#template-categories-) and modify the template file which extends* from the corresponding source contract. Within the source contract, there will be comments describing how you can modify the PoC to fit your vulnerability. 
+2️⃣ Pick a PoC [template](#template-categories-) and modify the template file which extends* from the corresponding source contract. Within the template contract, there will be comments describing how you can modify the PoC to fit your vulnerability. 
 
 > #####  *🚨 When extending from an abstract contract, there will be functions which must be defined. Implement any undefined functions with your attack.
 <br>
 
-3️⃣ Once you have completed your attack contract, navigate to the corresponding [test](./test) file, import your attack contract, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more setup that is done, the harder it is for projects to verify your claims.
+3️⃣ Once you have completed your attack contract, navigate to the corresponding [test](./test) file, import your attack contract, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more setup that is done, the harder it is for projects to verify your claims. Now you're ready to run your PoC!
 
 ### Running a PoC 🚀
 
@@ -48,7 +48,7 @@ forge test -vv --match-path test/[test_name]
 |       Categorisation       | Template | Source | Test |
 | -------------------------- | -------- |  ------------------------------------------------- | --------------------------------------- |
 | Reentrancy                 | [Template](./src/ReentrancyTemplate.sol) | [Source](./src/reentrancy/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
-| Token Balance Manipulation | [Template](./src/ReentrancyTemplate.sol) | [Source](./src/tokens/Tokens.sol)                 | [Test](./test/Tokens.t.sol)             |
+| Token Balance Manipulation | [Template](./src/TokenTemplate.sol) | [Source](./src/tokens/Tokens.sol)                 | [Test](./test/Tokens.t.sol)             |
 <!-- | Forking                    | [Template](./src/ForkingTemplate.sol) | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
 | Flashloan                  | [Template](./src/FlashloanTemplate.sol) | [Source](./src/Flashloan.sol)                     | [Test](./test/Flashloan.t.sol)          |
 | Price Manipulation         | [Template](./src/PriceManipulationTemplate.sol) | [Source](./src/PriceManipulation.sol)             | [Test](./test/PriceManipulation.t.sol)  |

@@ -6,7 +6,7 @@ We would like to keep our templates as modular as possible and provide generic t
 
 To create a PoC template, be sure to follow the same pattern as existing templates. Create an abstract attack contract which exists in ./src and a corresponding test in ./test. The name of both files should match, and be a short one or two word description of the vulnerability type used in the attack.
 
-In addition to the abstract attack contract which can be extended and test file, the [Template Categories](#template-categories-) needs to be updated with the corresponding template which whitehats can modify to implement their own attack.
+In addition to the abstract attack contract which can be extended and test file, the [Template Categories](#template-categories-) needs to be updated with the corresponding template whitehats can modify to implement their own attack.
 
 In order to be consistent with all the other Solidity projects, we follow the
 [official recommendations documented in the Solidity style guide](http://solidity.readthedocs.io/en/latest/style-guide.html).
@@ -52,7 +52,7 @@ forge test -vv
 5) Go to [github.com/immunefi-team/forge-poc-templates](https://github.com/immunefi-team/forge-poc-templates) in your web browser and issue a new pull request.
 
 *IMPORTANT* Read the PR template very carefully and make sure to follow all the instructions. These instructions
-refer to some very important conditions that your PR must meet in order to be accepted, such as making sure that all tests pass, JS linting tests pass, Solidity linting tests pass, etc.
+refer to some very important conditions that your PR must meet in order to be accepted, such as making sure that all tests pass, Solidity linting tests pass, etc.
 
 6) Maintainers will review your code and possibly ask for changes before your code is pulled in to the main repository. We'll check that all tests pass, review the coding style, and check for general code correctness. If everything is OK, we'll merge your pull request and your code will be part of Immunefi's templates.
 
