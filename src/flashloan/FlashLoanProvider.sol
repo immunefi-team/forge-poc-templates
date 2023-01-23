@@ -9,7 +9,7 @@ enum FlashLoanProviders {
     AAVEV1,
     BALANCER,
     EULER,
-    MAKERDAO
+    MAKERDAO,
     UNISWAPV2
 }
 
