@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 library UniswapV2FlashLoan{
     /**
-     * @dev struct that hold the reference of IAAVEV1LendingPool and address core
+     * @dev struct that hold the reference of IUnisawpV2Pair and asset address
      */
     struct Context {
         IUniswapV2Pair UniswapV2Pair;
@@ -15,7 +15,6 @@ library UniswapV2FlashLoan{
 
     /**
      * @dev Allows a user to take a flash loan from UniswapV2Pair for a given Pair and amount
-     * @param pair The address of the pair contract, use address(0) if pair is unknown
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
@@ -107,7 +106,7 @@ library UniswapV2FlashLoan{
             defaultToken = token == WETH? USDC : WETH; 
             UniswapV2Factory = IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
         } else {
-            revert("AAVEV1FlashLoan: Chain not supported");
+            revert("UniswapV2Flashloan: Chain not supported");
         }
 
         if (pair == address(0)) {
