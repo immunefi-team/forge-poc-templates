@@ -31,7 +31,10 @@ library UniswapV2FlashLoan {
 
         (amount0, amount1) = token0 == context.asset ? (amount, amount1) : (amount0, amount);
 
-        IUniswapV2Pair(context.uniswapV2Pair).swap(amount0, amount1, address(this), "");
+        IUniswapV2Pair(context.uniswapV2Pair).swap(
+            // Uniswap V2 requires data be non empty for the flash loan callback to be called
+            amount0, amount1, address(this), keccak256("immunefi.flashloan.UniswapV2FlashLoan")
+        );
     }
 
     /**
@@ -66,11 +69,12 @@ library UniswapV2FlashLoan {
         uint256 fee;
         address asset;
 
-        if (amount0 == 0) {
+        if (amount1 > 0) {
             asset = IUniswapV2Pair(msg.sender).token1();
             fee = calcFlashloanFee(amount1);
             IERC20(asset).transfer(msg.sender, amount1 + fee);
-        } else {
+        }
+        if (amount0 > 0) {
             asset = IUniswapV2Pair(msg.sender).token0();
             fee = calcFlashloanFee(amount0);
             IERC20(asset).transfer(msg.sender, amount0 + fee);
@@ -139,7 +143,7 @@ library UniswapV2FlashLoan {
      * @return fee The fee associated with the flash loan
      */
     function calcFlashloanFee(uint256 amount) internal returns (uint256 fee) {
-        fee = ((amount * 1000) / 997) + 1;
+        fee = ((amount * 3) / 997) + 1;
     }
 }
 
