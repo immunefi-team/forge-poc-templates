@@ -15,7 +15,30 @@ library UniswapV2Flashloan{
 
     /**
      * @dev Allows a user to take a flash loan from UniswapV2Pair for a given Pair and amount
-     * @param pair The address of the pair contract, use address(0) if pair is unkown
+     * @param pair The address of the pair contract, use address(0) if pair is unknown
+     * @param token The address of the token to borrow
+     * @param amount The amount of the token to borrow
+     */
+    function takeFlashLoan(address token, uint256 amount) internal {
+
+        Context memory context = context(address(0), token);
+
+        require(address(context.UniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
+
+        address token0 = IUniswapV2Pair(context.UniswapV2Pair).token0();
+        address token1 = IUniswapV2Pair(context.UniswapV2Pair).token1();
+
+        uint256 amount0;
+        uint256 amount1;
+
+        (amount0, amount1) = token0 == context.asset? (amount, amount1) : (amount0, amount);
+
+        IUniswapV2Pair(context.UniswapV2Pair).swap(amount0, amount1, address(this), "");
+    }
+
+    /**
+     * @dev Allows a user to take a flash loan from UniswapV2Pair for a given Pair and amount
+     * @param pair The address of the pair contract, use address(0) if pair is unknown
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
@@ -31,7 +54,7 @@ library UniswapV2Flashloan{
         uint256 amount0;
         uint256 amount1;
 
-        (amount0, amount1) = token0 == context.asset? (amount,) : (,amount);
+        (amount0, amount1) = token0 == context.asset? (amount, amount1) : (amount0, amount);
 
         IUniswapV2Pair(context.UniswapV2Pair).swap(amount0, amount1, address(this), "");
     }
@@ -125,10 +148,10 @@ library UniswapV2Flashloan{
 
 interface IUniswapV2Pair {
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
+    function token0()external view returns(address);
+    function token1()external view returns(address);
 }
 
 interface IUniswapV2Factory {
     function getPair(address token0, address token1) external returns(address);
-    function token0()external view returns(address);
-    function token1()external view returns(address);
 }
