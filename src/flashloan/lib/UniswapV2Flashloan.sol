@@ -2,12 +2,12 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-library UniswapV2FlashLoan{
+library UniswapV2FlashLoan {
     /**
      * @dev struct that hold the reference of IUnisawpV2Pair and asset address
      */
     struct Context {
-        IUniswapV2Pair UniswapV2Pair;
+        IUniswapV2Pair uniswapV2Pair;
         address asset;
     }
 
@@ -19,20 +19,19 @@ library UniswapV2FlashLoan{
      * @param amount The amount of the token to borrow
      */
     function takeFlashLoan(address token, uint256 amount) internal {
-
         Context memory context = context(address(0), token);
 
-        require(address(context.UniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
+        require(address(context.uniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
 
-        address token0 = IUniswapV2Pair(context.UniswapV2Pair).token0();
-        address token1 = IUniswapV2Pair(context.UniswapV2Pair).token1();
+        address token0 = IUniswapV2Pair(context.uniswapV2Pair).token0();
+        address token1 = IUniswapV2Pair(context.uniswapV2Pair).token1();
 
         uint256 amount0;
         uint256 amount1;
 
-        (amount0, amount1) = token0 == context.asset? (amount, amount1) : (amount0, amount);
+        (amount0, amount1) = token0 == context.asset ? (amount, amount1) : (amount0, amount);
 
-        IUniswapV2Pair(context.UniswapV2Pair).swap(amount0, amount1, address(this), "");
+        IUniswapV2Pair(context.uniswapV2Pair).swap(amount0, amount1, address(this), "");
     }
 
     /**
@@ -42,20 +41,19 @@ library UniswapV2FlashLoan{
      * @param amount The amount of the token to borrow
      */
     function takeFlashLoan(address pair, address token, uint256 amount) internal {
-
         Context memory context = context(pair, token);
 
-        require(address(context.UniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
+        require(address(context.uniswapV2Pair) != address(0), "UniswapV2Flashloan: Pair contract not found");
 
-        address token0 = IUniswapV2Pair(context.UniswapV2Pair).token0();
-        address token1 = IUniswapV2Pair(context.UniswapV2Pair).token1();
+        address token0 = IUniswapV2Pair(context.uniswapV2Pair).token0();
+        address token1 = IUniswapV2Pair(context.uniswapV2Pair).token1();
 
         uint256 amount0;
         uint256 amount1;
 
-        (amount0, amount1) = token0 == context.asset? (amount, amount1) : (amount0, amount);
+        (amount0, amount1) = token0 == context.asset ? (amount, amount1) : (amount0, amount);
 
-        IUniswapV2Pair(context.UniswapV2Pair).swap(amount0, amount1, address(this), "");
+        IUniswapV2Pair(context.uniswapV2Pair).swap(amount0, amount1, address(this), "");
     }
 
     /**
@@ -72,7 +70,7 @@ library UniswapV2FlashLoan{
             asset = IUniswapV2Pair(msg.sender).token1();
             fee = calcFlashloanFee(amount1);
             IERC20(asset).transfer(msg.sender, amount1 + fee);
-        }else {
+        } else {
             asset = IUniswapV2Pair(msg.sender).token0();
             fee = calcFlashloanFee(amount0);
             IERC20(asset).transfer(msg.sender, amount0 + fee);
@@ -86,7 +84,8 @@ library UniswapV2FlashLoan{
      * @return The context of the flashloan
      */
     function context(address pair, address token) internal returns (Context memory) {
-        IUniswapV2Factory UniswapV2Factory;
+        IUniswapV2Factory uniswapV2Factory;
+        IUniswapV2Pair uniswapV2Pair;
 
         address token0;
         address token1;
@@ -103,20 +102,19 @@ library UniswapV2FlashLoan{
 
             // By default will search for WETH <-> token pair
             // If Flashloan WETH, automatically use WETH <-> USDC pair
-            defaultToken = token == WETH? USDC : WETH; 
-            UniswapV2Factory = IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
+            defaultToken = token == WETH ? USDC : WETH;
+            uniswapV2Factory = IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
         } else {
             revert("UniswapV2Flashloan: Chain not supported");
         }
-
         if (pair == address(0)) {
-            (token0, token1) = defaultToken < token? (defaultToken, token) : (token, defaultToken);
-            IUniswapV2Pair pair = IUniswapV2Pair(UniswapV2Factory.getPair(token0, token1));
-        }else {
-            pair = IUniswapV2Pair(pair);
+            (token0, token1) = defaultToken < token ? (defaultToken, token) : (token, defaultToken);
+            uniswapV2Pair = IUniswapV2Pair(uniswapV2Factory.getPair(token0, token1));
+        } else {
+            uniswapV2Pair = IUniswapV2Pair(pair);
         }
 
-        return Context(pair, token);
+        return Context(uniswapV2Pair, token);
     }
 
     /**
@@ -140,17 +138,17 @@ library UniswapV2FlashLoan{
      * @param amount The amount of the asset borrowed
      * @return fee The fee associated with the flash loan
      */
-    function calcFlashloanFee(uint256 amount)internal returns(uint256 fee) {
+    function calcFlashloanFee(uint256 amount) internal returns (uint256 fee) {
         fee = ((amount * 1000) / 997) + 1;
     }
 }
 
 interface IUniswapV2Pair {
-    function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
-    function token0()external view returns(address);
-    function token1()external view returns(address);
+    function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes calldata data) external;
+    function token0() external view returns (address);
+    function token1() external view returns (address);
 }
 
 interface IUniswapV2Factory {
-    function getPair(address token0, address token1) external returns(address);
+    function getPair(address token0, address token1) external returns (address);
 }

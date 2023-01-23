@@ -11,20 +11,20 @@ library BalancerFlashLoan {
     bytes4 constant CALLBACK_SELECTOR = 0xf04f2707; // keccak256(receiveFlashLoan(address[], uint256[], uint256[], bytes))
 
     /**
-    * @dev Takes a flash loan from the Balancer Vault.
-    * @param tokens The addresses of the tokens to borrow.
-    * @param amounts The amount of each token to borrow.
-    */
+     * @dev Takes a flash loan from the Balancer Vault.
+     * @param tokens The addresses of the tokens to borrow.
+     * @param amounts The amount of each token to borrow.
+     */
     function takeFlashLoan(address[] memory tokens, uint256[] memory amounts) internal {
         Context memory context = context();
         context.balancerVault.flashLoan(address(this), tokens, amounts, "");
     }
 
     /**
-    * @dev Takes a flash loan from the Balancer Vault.
-    * @param token The address of the token to borrow.
-    * @param amount The amount of the token to borrow.
-    */
+     * @dev Takes a flash loan from the Balancer Vault.
+     * @param token The address of the token to borrow.
+     * @param amount The amount of the token to borrow.
+     */
     function takeFlashLoan(address token, uint256 amount) internal {
         Context memory context = context();
 
@@ -38,9 +38,9 @@ library BalancerFlashLoan {
     }
 
     /**
-    * @dev Pays back a flash loan to the Balancer Vault.
-    * @param data The calldata received from the callback function of the Balancer Vault.
-    */
+     * @dev Pays back a flash loan to the Balancer Vault.
+     * @param data The calldata received from the callback function of the Balancer Vault.
+     */
     function payFlashLoan(bytes calldata data) internal {
         (address[] memory tokens, uint256[] memory amounts, uint256[] memory feeAmounts) = unpackData(data);
         Context memory context = context();
@@ -53,13 +53,13 @@ library BalancerFlashLoan {
     }
 
     /**
-    * @dev Unpacks the data received from the Balancer Vault callback function.
-    * @param data The calldata received from the callback function.
-    * returns A tuple of the borrowed tokens, amounts, and fee amounts.
-    * @return token The addresses of the borrowed tokens
-    * @return amount The amounts of the borrowed tokens
-    * @return feeAmount The fee amounts of the borrowed tokens
-    */
+     * @dev Unpacks the data received from the Balancer Vault callback function.
+     * @param data The calldata received from the callback function.
+     * returns A tuple of the borrowed tokens, amounts, and fee amounts.
+     * @return token The addresses of the borrowed tokens
+     * @return amount The amounts of the borrowed tokens
+     * @return feeAmount The fee amounts of the borrowed tokens
+     */
     function unpackData(bytes calldata data)
         internal
         returns (address[] memory token, uint256[] memory amount, uint256[] memory feeAmount)
@@ -72,9 +72,9 @@ library BalancerFlashLoan {
     }
 
     /**
-    * @dev Returns the context for the library, including the address of the Balancer Vault.
-    * @return The context for the library.
-    */
+     * @dev Returns the context for the library, including the address of the Balancer Vault.
+     * @return The context for the library.
+     */
     function context() internal returns (Context memory) {
         IBalancer balancerVault;
 
@@ -87,17 +87,16 @@ library BalancerFlashLoan {
 
         return Context(balancerVault);
     }
-
 }
 
 interface IBalancer {
     /**
-    * @dev Takes a flash loan from the Balancer Vault.
-    * @param recipient The address of the recipient of the flash loan.
-    * @param tokens The addresses of the tokens to borrow.
-    * @param amounts The amount of each token to borrow.
-    * @param userData Additional data to pass to the Balancer Vault.
-    */
+     * @dev Takes a flash loan from the Balancer Vault.
+     * @param recipient The address of the recipient of the flash loan.
+     * @param tokens The addresses of the tokens to borrow.
+     * @param amounts The amount of each token to borrow.
+     * @param userData Additional data to pass to the Balancer Vault.
+     */
     function flashLoan(address recipient, address[] memory tokens, uint256[] memory amounts, bytes memory userData)
-    external;
+        external;
 }
