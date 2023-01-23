@@ -49,11 +49,11 @@ library UniswapV2Flashloan{
         if (amount0 == 0) {
             asset = IUniswapV2Pair(msg.sender).token1();
             fee = calcFlashloanFee(amount1);
-            IERC20(asset).transfer(msg.sender, amount1 + fee); // ganti context.core sama asset
+            IERC20(asset).transfer(msg.sender, amount1 + fee);
         }else {
             asset = IUniswapV2Pair(msg.sender).token0();
             fee = calcFlashloanFee(amount0);
-            IERC20(asset).transfer(msg.sender, amount0 + fee); // ganti context.core sama asset
+            IERC20(asset).transfer(msg.sender, amount0 + fee);
         }
     }
 
@@ -70,17 +70,25 @@ library UniswapV2Flashloan{
         address token1;
 
         address WETH;
+        address USDC;
+
+        address defaultToken;
 
         if (block.chainid == 1) {
             // Ethereum mainnet
             WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+            USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+
+            // By default will search for WETH <-> token pair
+            // If Flashloan WETH, automatically use WETH <-> USDC pair
+            defaultToken = token == WETH? USDC : WETH; 
             UniswapV2Factory = IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
         } else {
             revert("AAVEV1FlashLoan: Chain not supported");
         }
 
         if (pair == address(0)) {
-            (token0, token1) = WETH < token? (WETH, token) : (token, WETH);
+            (token0, token1) = defaultToken < token? (defaultToken, token) : (token, defaultToken);
             IUniswapV2Pair pair = IUniswapV2Pair(UniswapV2Factory.getPair(token0, token1));
         }else {
             pair = IUniswapV2Pair(pair);
