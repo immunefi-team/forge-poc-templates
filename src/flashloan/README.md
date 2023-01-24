@@ -14,6 +14,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 | Ethereum | Balancer   | [BalancerFlashLoan](./lib/BalancerFlashLoan.sol) |
 | Ethereum | MakerDAO   | [MakerDAOFlashLoan](./lib/MakerDAOFlashLoan.sol) |
 | Ethereum | UniswapV2  | [UniswapV2FlashLoan](./lib/UniswapV2FlashLoan.sol) |
+| Ethereum | UniswapV3  | [UniswapV3FlashLoan](./lib/UniswapV3FlashLoan.sol) |
 
 </details>
 <details>
