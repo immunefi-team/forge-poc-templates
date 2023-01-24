@@ -11,17 +11,13 @@ library UniswapV3FlashLoan {
         address asset;
     }
 
+    /**
+     * @dev struct that hold the reference of fee and tickspacing in the factory contract
+     */
     struct FeesTickSpacing {
         uint24 fee;
         int24 tickSpacing;
     }
-
-    /**
-    feeAmountTickSpacing[100] = 1
-    feeAmountTickSpacing[500] = 10;
-    feeAmountTickSpacing[3000] = 60;
-    feeAmountTickSpacing[10000] = 200;
-     */
 
     bytes4 constant CALLBACK_SELECTOR = 0xe9cbafb0; // keccak256(uniswapV3FlashCallback(uint256,uint256,bytes))
 
@@ -149,13 +145,24 @@ library UniswapV3FlashLoan {
         return (fee0, fee1, params);
     }
 
-    function calcAmount(uint256 fees)internal view returns(uint256){
+    /**
+     * @dev Helper function which calculates the amount based on the fees from the callback
+     * @param fees The fees from the flashloan
+     * @return amount The flashloan amount
+     */
+    function calcAmount(uint256 fees)internal returns(uint256 amount){
         uint256 basisPoints = 1e6;
+
         uint256 fee = uint256(IUniswapV3Pool(msg.sender).fee());
-        return (fees * basisPoints) / fee + 1;
+
+        amount = (fees * basisPoints) / fee + 1;
+        return amount;
     }
 
-
+    /**
+     * @dev Helper function which saved the current fees that was available in the factory
+     * @return fees a struct of fees that was available in the factory
+     */
     function getFees()internal returns(FeesTickSpacing[] memory) {
         FeesTickSpacing[] memory fees = new FeesTickSpacing[](4);
         fees[0] = FeesTickSpacing(100, 1);
@@ -165,7 +172,14 @@ library UniswapV3FlashLoan {
         return fees;
     }
 
-    function getPair(IUniswapV3Factory factory, address token0, address token1)internal view returns(address pair) {
+    /**
+     * @dev Helper function to search the pair address that was available in the factory contract
+     * @param factory The address of the factory contract
+     * @param token0 The address of token0
+     * @param token1 The address of token1
+     * @return pair The address of the pair contract
+     */
+    function getPair(IUniswapV3Factory factory, address token0, address token1)internal returns(address pair) {
         FeesTickSpacing[] memory _fees = getFees();
 
         for (uint256 i; i < _fees.length; i++){
