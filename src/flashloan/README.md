@@ -16,19 +16,61 @@ This template is for getting started with attack PoCs which use flash loans. The
 | Ethereum | UniswapV2  | [UniswapV2FlashLoan](./lib/UniswapV2FlashLoan.sol) |
 
 </details>
-<!---
 <details>
   <summary>
 
-### Binance
+### Optimism
   </summary>
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVE     | [AAVEFlashLoan](./lib/AAVEFlashLoan.sol) |
+| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
---->
+<details>
+  <summary>
+
+### Arbitrum
+  </summary>
+
+| Network | Protocol | Library |
+| ---------- | -------- | ------------------------------------------------------- |
+| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+
+</details>
+<details>
+  <summary>
+
+### Polygon
+  </summary>
+
+| Network | Protocol | Library |
+| ---------- | -------- | ------------------------------------------------------- |
+| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+
+</details>
+<details>
+  <summary>
+
+### Fantom
+  </summary>
+
+| Network | Protocol | Library |
+| ---------- | -------- | ------------------------------------------------------- |
+| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+
+</details>
+<details>
+  <summary>
+
+### Avalanche
+  </summary>
+
+| Network | Protocol | Library |
+| ---------- | -------- | ------------------------------------------------------- |
+| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+
+</details>
 
 ## Usage
 The following attack contract demonstrate simple flash loan usage.
