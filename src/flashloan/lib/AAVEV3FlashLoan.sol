@@ -70,7 +70,7 @@ library AAVEV3FlashLoan {
      * @dev Helper function which returns the on chain context needed to execute a flashloan
      * @return The context of the flashloan
      */
-    function context() internal returns (Context memory) {
+    function context() internal view returns (Context memory) {
         IAAVEV3PoolAddressesProvider poolAddressesProvider;
 
         if (block.chainid == 1) {
@@ -110,6 +110,7 @@ library AAVEV3FlashLoan {
      */
     function unpackData(bytes calldata data)
         internal
+        pure
         returns (
             address[] memory assets,
             uint256[] memory amounts,

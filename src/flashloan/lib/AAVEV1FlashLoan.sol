@@ -45,7 +45,7 @@ library AAVEV1FlashLoan {
      * @dev Helper function which returns the on chain context needed to execute a flashloan
      * @return The context of the flashloan
      */
-    function context() internal returns (Context memory) {
+    function context() internal view returns (Context memory) {
         IAAVEV1LendingPoolAddressesProvider lendingPoolProvider;
 
         if (block.chainid == 1) {
@@ -70,6 +70,7 @@ library AAVEV1FlashLoan {
      */
     function unpackData(bytes calldata data)
         internal
+        pure
         returns (address asset, uint256 amount, uint256 fee, bytes memory params)
     {
         (asset, amount, fee, params) = abi.decode(data[4:], (address, uint256, uint256, bytes));

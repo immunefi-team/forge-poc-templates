@@ -90,7 +90,7 @@ library UniswapV2FlashLoan {
      * @param token The address of the token to borrow
      * @return The context of the flashloan
      */
-    function context(address pair, address token) internal returns (Context memory) {
+    function context(address pair, address token) internal view returns (Context memory) {
         IUniswapV2Factory uniswapV2Factory;
         IUniswapV2Pair uniswapV2Pair;
 
@@ -134,6 +134,7 @@ library UniswapV2FlashLoan {
      */
     function unpackData(bytes calldata data)
         internal
+        pure
         returns (address sender, uint256 amount0, uint256 amount1, bytes memory params)
     {
         (sender, amount0, amount1, params) = abi.decode(data[4:], (address, uint256, uint256, bytes));
@@ -157,5 +158,5 @@ interface IUniswapV2Pair {
 }
 
 interface IUniswapV2Factory {
-    function getPair(address token0, address token1) external returns (address);
+    function getPair(address token0, address token1) external view returns (address);
 }

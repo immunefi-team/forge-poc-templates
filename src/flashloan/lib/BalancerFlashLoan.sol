@@ -62,6 +62,7 @@ library BalancerFlashLoan {
      */
     function unpackData(bytes calldata data)
         internal
+        pure
         returns (address[] memory token, uint256[] memory amount, uint256[] memory feeAmount)
     {
         bytes memory params = data[4:]; // skipping the function selector
@@ -75,7 +76,7 @@ library BalancerFlashLoan {
      * @dev Returns the context for the library, including the address of the Balancer Vault.
      * @return The context for the library.
      */
-    function context() internal returns (Context memory) {
+    function context() internal view returns (Context memory) {
         IBalancer balancerVault;
 
         if (block.chainid == 1) {

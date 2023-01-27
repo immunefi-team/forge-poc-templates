@@ -41,7 +41,7 @@ library EulerFlashLoan {
      * @param token The address of the token of the flash loan
      * @return A struct containing the address of Euler and the dToken
      */
-    function context(address token) internal returns (Context memory) {
+    function context(address token) internal view returns (Context memory) {
         IEulerMarkets markets;
         address euler;
         IEulerDToken dToken;
@@ -65,7 +65,7 @@ library EulerFlashLoan {
      * @return token The address of the token of the flash loan
      * @return amount The amount of the token borrowed
      */
-    function unpackData(bytes calldata data) internal returns (address token, uint256 amount) {
+    function unpackData(bytes calldata data) internal pure returns (address token, uint256 amount) {
         (bytes memory params) = abi.decode(data[4:], (bytes));
         (token, amount) = abi.decode(params, (address, uint256));
         return (token, amount);
@@ -77,5 +77,5 @@ interface IEulerDToken {
 }
 
 interface IEulerMarkets {
-    function underlyingToDToken(address token) external returns (address);
+    function underlyingToDToken(address token) external view returns (address);
 }

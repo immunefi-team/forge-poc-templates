@@ -42,7 +42,7 @@ library MakerDAOFlashLoan {
      * @dev Helper function that returns the context of the flash loan for a given token
      * @return A struct containing the address of the dssFlash contract
      */
-    function context() internal returns (Context memory) {
+    function context() internal view returns (Context memory) {
         IDssFlash dssFlash;
 
         if (block.chainid == 1) {
@@ -66,6 +66,7 @@ library MakerDAOFlashLoan {
      */
     function unpackData(bytes calldata _data)
         internal
+        pure
         returns (address initiator, address token, uint256 amount, uint256 fee, bytes memory data)
     {
         (initiator, token, amount, fee, data) = abi.decode(_data[4:], (address, address, uint256, uint256, bytes));
