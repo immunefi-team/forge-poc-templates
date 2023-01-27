@@ -33,7 +33,10 @@ library UniswapV2FlashLoan {
 
         IUniswapV2Pair(context.uniswapV2Pair).swap(
             // Uniswap V2 requires data be non empty for the flash loan callback to be called
-            amount0, amount1, address(this), "immunefi.flashloan.UniswapV2FlashLoan"
+            amount0,
+            amount1,
+            address(this),
+            "immunefi.flashloan.UniswapV2FlashLoan"
         );
     }
 

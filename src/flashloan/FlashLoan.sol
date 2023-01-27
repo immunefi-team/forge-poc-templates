@@ -73,10 +73,10 @@ abstract contract FlashLoan {
                 console.log("Attack completed successfully");
                 _completeAttack();
                 _flps.pop();
-                bytes32 returnData = flp.returnData();
+                bytes memory returnData = flp.returnData();
                 assembly {
-                    mstore(0x0, returnData)
-                    return(0x0, 0x80)
+                    let len := mload(returnData)
+                    return(add(returnData, 0x20), len)
                 }
             }
         }

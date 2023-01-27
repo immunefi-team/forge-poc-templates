@@ -11,7 +11,7 @@ library AAVEV1FlashLoan {
         address core;
     }
 
-    bytes4 constant CALLBACK_SELECTOR = 0xee872558; // keccak256(executeOperation(address _reserve, uint256 _amount, uint256 _fee, bytes calldata _params))
+    bytes4 constant CALLBACK_SELECTOR = 0xee872558; // keccak256(executeOperation(address reserve, uint256 amount, uint256 fee, bytes calldata params))
 
     /**
      * @dev Allows a user to take a flash loan from AAVE Lending Pool for a given token and amount
@@ -20,7 +20,7 @@ library AAVEV1FlashLoan {
      */
     function takeFlashLoan(address token, uint256 amount) internal {
         Context memory context = context();
-        require(address(context.AAVElendingPool) != address(0), "AAVEFlashloan: Query to AAVElendingPool failed.");
+        require(address(context.AAVElendingPool) != address(0), "AAVEV1Flashloan: Query to AAVElendingPool failed.");
 
         context.AAVElendingPool.flashLoan(address(this), token, amount, "");
     }
@@ -78,7 +78,7 @@ library AAVEV1FlashLoan {
 }
 
 interface IAAVEV1LendingPool {
-    function flashLoan(address _receiver, address _reserve, uint256 _amount, bytes memory _params) external;
+    function flashLoan(address receiver, address reserve, uint256 amount, bytes memory params) external;
     function flashLoan(
         address receiver,
         address[] calldata assets,

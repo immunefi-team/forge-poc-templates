@@ -11,7 +11,7 @@ library MakerDAOFlashLoan {
     }
 
     bytes4 constant CALLBACK_SELECTOR = 0x23e30c8b; // keccak256(flashLoan(address initiator, address token, uint256 amount, uint256 fee, bytes memory data))
-    bytes32 constant RETURN_DATA = 0x439148f0bbc682ca079e46d6e2c2f0c1e3b820f1a291b069d8882abf8cf18dd9; // keccak256(ERC3156FlashBorrower.onFlashLoan)
+    bytes constant RETURN_DATA = abi.encode(bytes32(0x439148f0bbc682ca079e46d6e2c2f0c1e3b820f1a291b069d8882abf8cf18dd9)); // keccak256(ERC3156FlashBorrower.onFlashLoan)
 
     /**
      * @dev Allows a user to take a flash loan from MakerDAO for a given token and amount
