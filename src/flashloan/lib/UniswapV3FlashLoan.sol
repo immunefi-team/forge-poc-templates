@@ -41,7 +41,11 @@ library UniswapV3FlashLoan {
 
         IUniswapV3Pool(context.uniswapV3Pool).flash(
             // Uniswap V3 requires data be non empty for the flash loan callback to be called
-            address(this), amount0, amount1, "immunefi.flashloan.UniswapV2FlashLoan");
+            address(this),
+            amount0,
+            amount1,
+            "immunefi.flashloan.UniswapV2FlashLoan"
+        );
     }
 
     /**
@@ -63,7 +67,9 @@ library UniswapV3FlashLoan {
 
         (amount0, amount1) = token0 == context.asset ? (amount, amount1) : (amount0, amount);
 
-        IUniswapV3Pool(context.uniswapV3Pool).flash(address(this), amount0, amount1, "immunefi.flashloan.UniswapV2FlashLoan");
+        IUniswapV3Pool(context.uniswapV3Pool).flash(
+            address(this), amount0, amount1, "immunefi.flashloan.UniswapV2FlashLoan"
+        );
     }
 
     /**
@@ -94,7 +100,7 @@ library UniswapV3FlashLoan {
      * @param token The address of the token to borrow
      * @return The context of the flashloan
      */
-    function context(address pair, address token) internal returns (Context memory) {
+    function context(address pair, address token) internal view returns (Context memory) {
         IUniswapV3Factory uniswapV3Factory;
         IUniswapV3Pool uniswapV3Pool;
 
@@ -121,7 +127,7 @@ library UniswapV3FlashLoan {
         if (pair == address(0)) {
             (token0, token1) = defaultToken < token ? (defaultToken, token) : (token, defaultToken);
 
-            uniswapV3Pool = IUniswapV3Pool( getPair(uniswapV3Factory, token0, token1) );
+            uniswapV3Pool = IUniswapV3Pool(getPair(uniswapV3Factory, token0, token1));
         } else {
             uniswapV3Pool = IUniswapV3Pool(pair);
         }
@@ -132,15 +138,11 @@ library UniswapV3FlashLoan {
     /**
      * @dev Helper function which decodes the flash loan callback data
      * @param data The data of the flash loan
-     * @return sender The address of this contract
-     * @return amount0 The amount of the asset borrowed
-     * @return amount1 The amount of the asset borrowed
+     * @return fee0 The fee of the asset 0
+     * @return fee1 The fee of the asset 1
      * @return params Additional params associated with the flash loan
      */
-    function unpackData(bytes calldata data)
-        internal
-        returns (uint256 fee0, uint256 fee1, bytes memory params)
-    {
+    function unpackData(bytes calldata data) internal pure returns (uint256 fee0, uint256 fee1, bytes memory params) {
         (fee0, fee1, params) = abi.decode(data[4:], (uint256, uint256, bytes));
         return (fee0, fee1, params);
     }
@@ -150,7 +152,7 @@ library UniswapV3FlashLoan {
      * @param fees The fees from the flashloan
      * @return amount The flashloan amount
      */
-    function calcAmount(uint256 fees)internal returns(uint256 amount){
+    function calcAmount(uint256 fees) internal view returns (uint256 amount) {
         uint256 basisPoints = 1e6;
 
         uint256 fee = uint256(IUniswapV3Pool(msg.sender).fee());
@@ -163,7 +165,7 @@ library UniswapV3FlashLoan {
      * @dev Helper function which saved the current fees that was available in the factory
      * @return fees a struct of fees that was available in the factory
      */
-    function getFees()internal returns(FeesTickSpacing[] memory) {
+    function getFees() internal pure returns (FeesTickSpacing[] memory) {
         FeesTickSpacing[] memory fees = new FeesTickSpacing[](4);
         fees[0] = FeesTickSpacing(100, 1);
         fees[1] = FeesTickSpacing(500, 10);
@@ -179,10 +181,10 @@ library UniswapV3FlashLoan {
      * @param token1 The address of token1
      * @return pair The address of the pair contract
      */
-    function getPair(IUniswapV3Factory factory, address token0, address token1)internal returns(address pair) {
+    function getPair(IUniswapV3Factory factory, address token0, address token1) internal view returns (address pair) {
         FeesTickSpacing[] memory _fees = getFees();
 
-        for (uint256 i; i < _fees.length; i++){
+        for (uint256 i; i < _fees.length; i++) {
             pair = factory.getPair(token0, token1, _fees[i].fee);
             if (pair != address(0)) break;
         }
@@ -193,7 +195,7 @@ interface IUniswapV3Pool {
     function flash(address recipient, uint256 amount0Out, uint256 amount1Out, bytes calldata data) external;
     function token0() external view returns (address);
     function token1() external view returns (address);
-    function fee()external view returns(uint24);
+    function fee() external view returns (uint24);
 }
 
 interface IUniswapV3Factory {
