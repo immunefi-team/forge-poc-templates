@@ -55,6 +55,7 @@ interface ICurvePoolRegistry {
 
 interface ICurvePool {
     function add_liquidity(uint256[2] calldata amounts, uint256 minMintAmount) external payable returns (uint256);
+    function remove_liquidity(uint256 amount, uint256[2] memory minAmounts) external returns (uint256);
     function remove_liquidity_imbalance(uint256[2] memory amounts, uint256 maxBurnAmount) external returns (uint256);
     function balances(uint256 i) external view returns (uint256);
     function lp_token() external view returns (address);
