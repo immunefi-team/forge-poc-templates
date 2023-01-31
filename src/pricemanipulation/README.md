@@ -21,7 +21,7 @@ The following attack contract demonstrate simple flash loan usage.
 Extend the PriceManipulation contract and implement the following functions:
 ```Solidity
 contract Attack is PriceManipulation {
-    function initiateAttack() external override { }
+    function initiateAttack() external { }
     function _executeAttack() internal override { }
     function _completeAttack() internal override { }
 }
