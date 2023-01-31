@@ -17,7 +17,7 @@ contract PriceManipulationExampleTest is Test {
         attackContract = new PriceManipulationExample();
     }
 
-    function testReentrancyAttack() public {
+    function testPriceManipulationAttack() public {
         attackContract.initiateAttack();
     }
 }

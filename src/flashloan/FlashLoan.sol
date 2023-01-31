@@ -71,7 +71,7 @@ abstract contract FlashLoan {
      * @dev Returns the top most provider from the call stack
      * @return flp The current flash loan provider context
      */
-    function currentProvider() internal returns (FlashLoanProviders flp) {
+    function currentFlashLoanProvider() internal view returns (FlashLoanProviders flp) {
         require(_flps.length > 0, "FlashLoan: No current flash loan provider");
         return _flps[_flps.length - 1];
     }
@@ -88,7 +88,7 @@ abstract contract FlashLoan {
 
     function _fallback() internal virtual {
         if (_flps.length > 0) {
-            FlashLoanProviders flp = currentProvider();
+            FlashLoanProviders flp = currentFlashLoanProvider();
             if (flp.callbackFunctionSelector() == bytes4(msg.data[:4])) {
                 console.log("Execute attack");
                 _executeAttack();
