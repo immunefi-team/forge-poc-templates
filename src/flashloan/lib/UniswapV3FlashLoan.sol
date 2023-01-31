@@ -185,7 +185,7 @@ library UniswapV3FlashLoan {
         FeesTickSpacing[] memory _fees = getFees();
 
         for (uint256 i; i < _fees.length; i++) {
-            pair = factory.getPair(token0, token1, _fees[i].fee);
+            pair = factory.getPool(token0, token1, _fees[i].fee);
             if (pair != address(0)) break;
         }
     }
@@ -199,5 +199,5 @@ interface IUniswapV3Pool {
 }
 
 interface IUniswapV3Factory {
-    function getPair(address token0, address token1, uint24 fee) external view returns (address);
+    function getPool(address token0, address token1, uint24 fee) external view returns (address);
 }
