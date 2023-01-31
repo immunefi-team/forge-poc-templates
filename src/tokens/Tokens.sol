@@ -12,12 +12,17 @@ abstract contract Tokens is Test {
      * @param amount Amount to set balance to
      */
     function deal(IERC20 token, address to, uint256 amount) internal {
-        deal(address(token), to, amount);
+        if (address(token) == address(0x0)) {
+            deal(to, amount);
+        } else {
+            deal(address(token), to, amount);
+        }
     }
 }
 
 library EthereumTokens {
     IERC20 public constant NATIVE_ASSET = IERC20(address(0x0));
+    IERC20 public constant ETH        =  IERC20(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);
     // Top 50 tokens by market cap on etherscan
     IERC20 public constant USDT       =  IERC20(0xdAC17F958D2ee523a2206206994597C13D831ec7);
     IERC20 public constant BNB        =  IERC20(0xB8c77482e45F1F44dE1745F52C74426C631bDD52);
@@ -69,6 +74,8 @@ library EthereumTokens {
     IERC20 public constant ZIL        =  IERC20(0x05f4a42e251f2d52b8ed15E9FEdAacFcEF1FAD27);
     IERC20 public constant XDCE       =  IERC20(0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2);
     IERC20 public constant ONEINCH    =  IERC20(0x111111111117dC0aa78b770fA6A738034120C302);
+    IERC20 public constant steCRV     =  IERC20(0x06325440D014e39736583c165C2963BA99fAf14E);
+    IERC20 public constant wstETH     =  IERC20(0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0);
 }
 
 library BinanceTokens {
