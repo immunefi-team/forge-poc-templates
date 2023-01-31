@@ -78,6 +78,11 @@ abstract contract FlashLoan {
     }
 
     /**
+     * @dev Initiates the flash loan
+     */
+    function initiateAttack() external virtual;
+
+    /**
      * @dev Executes the attack logic for the flash loan
      */
     function _executeAttack() internal virtual;

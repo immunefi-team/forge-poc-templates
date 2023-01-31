@@ -6,7 +6,7 @@ import "../../tokens/Tokens.sol";
 import "forge-std/console.sol";
 
 contract MultiProviderFlashLoanExample is FlashLoan, Tokens {
-    function initiateAttack() external {
+    function initiateAttack() external override {
         deal(EthereumTokens.DAI, address(this), 1 ether);
         console.log("DAI BALANCE BEFORE:", EthereumTokens.DAI.balanceOf(address(this)));
         takeFlashLoan(FlashLoanProviders.EULER, address(EthereumTokens.DAI), 1 ether);

@@ -51,6 +51,11 @@ abstract contract PriceManipulation is Reentrancy {
     }
 
     /**
+     * @dev Initiates the flash loan
+     */
+    function initiateAttack() external virtual override;
+
+    /**
      * @dev Executes the attack logic for the price manipulation
      */
     function _executeAttack() internal virtual override;
@@ -68,7 +73,6 @@ abstract contract PriceManipulation is Reentrancy {
             PriceManipulationProviders pmp = currentPriceOracleProvider();
             if (pmp.callbackFunctionSelector() == "" || pmp.callbackFunctionSelector() == bytes4(msg.data[:4])) {
                 _executeAttack();
-                _completeAttack();
                 bytes memory returnData = pmp.returnData();
                 assembly {
                     let len := mload(returnData)

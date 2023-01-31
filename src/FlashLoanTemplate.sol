@@ -6,7 +6,7 @@ import "./tokens/Tokens.sol";
 import "forge-std/console.sol";
 
 contract FlashLoanTemplate is FlashLoan, Tokens {
-    function initiateAttack() external {
+    function initiateAttack() external override {
         // Take flash loan on some token
         deal(EthereumTokens.DAI, address(this), 900000000000000);
         takeFlashLoan(FlashLoanProviders.AAVEV1, address(EthereumTokens.DAI), 1 ether);
