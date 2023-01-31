@@ -12,11 +12,6 @@ abstract contract Reentrancy {
     State reentrancyStage;
 
     /**
-     * @dev Initiates the reentrancy attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
-     */
-    function initiateAttack() external virtual;
-
-    /**
      * @dev Function run the first time the callback is entered
      */
     function _executeAttack() internal virtual;

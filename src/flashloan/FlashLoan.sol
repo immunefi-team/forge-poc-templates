@@ -36,6 +36,7 @@ abstract contract FlashLoan {
         console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amount, token, uint256(flp));
         _flps.push(flp);
         flp.takeFlashLoan(token, amount);
+        _flps.pop();
     }
 
     /**
@@ -72,7 +73,6 @@ abstract contract FlashLoan {
                 flp.payFlashLoan();
                 console.log("Attack completed successfully");
                 _completeAttack();
-                _flps.pop();
                 bytes memory returnData = flp.returnData();
                 assembly {
                     let len := mload(returnData)

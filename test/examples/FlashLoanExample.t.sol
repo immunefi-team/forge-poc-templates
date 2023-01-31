@@ -19,8 +19,28 @@ contract FlashLoanExampleTest is Test {
         multiProviderFlashLoanExample = new MultiProviderFlashLoanExample();
     }
 
-    function testFlashLoan() public {
-        flashLoanExample.initiateAttack();
+    function testAAVEV1FlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV1);
+    }
+
+    function testAAVEV3FlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV3);
+    }
+
+    function testBalancerFlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.BALANCER);
+    }
+    
+    function testEulerFlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.EULER);
+    }
+    
+    function testMakerDAOFlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.MAKERDAO);
+    }
+    
+    function testUniswapV2FlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.UNISWAPV2);
     }
 
     function testMultiProviderFlashLoan() public {

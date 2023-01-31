@@ -18,7 +18,7 @@ contract ReentrancyExampleAttack is Reentrancy {
     /**
      * @dev Initiates the reentrancy attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
      */
-    function initiateAttack() external override {
+    function initiateAttack() external {
         // Initiate call to the target contract
         // Interface(target).someFunction();
         console.log("Initiating attack on %s", target);

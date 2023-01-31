@@ -11,8 +11,10 @@ contract ReentrancyTemplate is Reentrancy {
     constructor(address victim) {
         target = victim;
     }
-
-    function initiateAttack() external override {
+    /**
+     * @dev Initiates the reentrancy attack. Make any calls to the target contract, and continue reentrancy attack in the below callback function
+     */
+    function initiateAttack() external {
         // Initiate call to the target contract
         console.log("Initiating attack on %s", target);
 
