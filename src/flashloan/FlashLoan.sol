@@ -72,8 +72,9 @@ abstract contract FlashLoan {
      * @return flp The current flash loan provider context
      */
     function currentFlashLoanProvider() internal view returns (FlashLoanProviders flp) {
-        require(_flps.length > 0, "FlashLoan: No current flash loan provider");
-        return _flps[_flps.length - 1];
+        if(_flps.length > 0) {
+            return _flps[_flps.length - 1];
+        } return FlashLoanProviders.NONE;
     }
 
     /**

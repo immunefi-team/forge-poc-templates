@@ -9,6 +9,7 @@ import {UniswapV2FlashLoan} from "./lib/UniswapV2FlashLoan.sol";
 import {UniswapV3FlashLoan} from "./lib/UniswapV3FlashLoan.sol";
 
 enum FlashLoanProviders {
+    NONE,
     AAVEV1,
     AAVEV3,
     BALANCER,

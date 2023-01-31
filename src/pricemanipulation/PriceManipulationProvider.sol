@@ -13,7 +13,7 @@ library PriceManipulationProvider {
         if (pmp == PriceManipulationProviders.CURVE) {
             CurvePriceManipulation.manipulatePoolPrice(token0, token1, amount0, amount1);
         } else {
-            revert("FlashLoanProvider: Provider doesn't support single token flash loans");
+            revert("PriceManipulationProvider: Provider doesn't support single token flash loans");
         }
     }
 

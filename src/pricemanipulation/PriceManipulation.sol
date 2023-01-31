@@ -13,10 +13,26 @@ abstract contract PriceManipulation is Reentrancy {
      */
     PriceManipulationProviders[] internal _pmps;
 
+    /**
+     * @dev Manipulates the price of a given token pair by calling the manipulatePrice function on a PriceManipulationProviders contract.
+     * @param pmp The PriceManipulationProviders contract instance.
+     * @param token0 The address of the first token to manipulate.
+     * @param token1 The address of the second token to manipulate.
+     * @param amount0 The amount of the first token.
+     * @param amount1 The amount of the second token.
+     */
     function manipulatePrice(PriceManipulationProviders pmp, address token0, address token1, uint256 amount0, uint256 amount1) internal virtual {
         manipulatePrice(pmp, IERC20(token0), IERC20(token1), amount0, amount1);
     }
-
+    
+    /**
+     * @dev Manipulates the price of a given token pair by calling the manipulatePrice function on a PriceManipulationProviders contract.
+     * @param pmp The PriceManipulationProviders contract instance.
+     * @param token0 The IERC20 contract instance of the first token to manipulate.
+     * @param token1 The IERC20 contract instance of the second token to manipulate.
+     * @param amount0 The amount of the first token.
+     * @param amount1 The amount of the second token.
+     */
     function manipulatePrice(PriceManipulationProviders pmp, IERC20 token0, IERC20 token1, uint256 amount0, uint256 amount1) internal virtual {
         _pmps.push(pmp);
         pmp.manipulatePrice(token0, token1, amount0, amount1);
@@ -28,8 +44,6 @@ abstract contract PriceManipulation is Reentrancy {
      * @return pmp The current flash loan provider context
      */
     function currentPriceOracleProvider() internal view returns (PriceManipulationProviders pmp) {
-        // console.log("PMP");
-        // require(_pmps.length > 0, "FlashLoan: No current flash loan provider");
         if (_pmps.length > 0) {
             return _pmps[_pmps.length - 1];
         }
@@ -55,6 +69,11 @@ abstract contract PriceManipulation is Reentrancy {
             if (pmp.callbackFunctionSelector() == "" || pmp.callbackFunctionSelector() == bytes4(msg.data[:4])) {
                 _executeAttack();
                 _completeAttack();
+                bytes memory returnData = pmp.returnData();
+                assembly {
+                    let len := mload(returnData)
+                    return(add(returnData, 0x20), len)
+                }
             }
         }
     }
