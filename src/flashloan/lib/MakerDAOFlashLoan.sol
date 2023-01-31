@@ -47,9 +47,9 @@ library MakerDAOFlashLoan {
 
         if (block.chainid == 1) {
             // Ethereum mainnet
-            dssFlash = IDssFlash(0x1EB4CF3A948E7D72A198fe073cCb8C7a948cD853);
+            dssFlash = IDssFlash(0x60744434d6339a6B27d73d9Eda62b6F66a0a04FA);
         } else {
-            revert("EulerFlashLoan: Chain not supported");
+            revert("MakerDAOFlashLoan: Chain not supported");
         }
 
         return Context(dssFlash);
