@@ -43,6 +43,10 @@ contract FlashLoanExampleTest is Test {
         flashLoanExample.initiateAttack(FlashLoanProviders.UNISWAPV2);
     }
 
+    function testUniswapV3FlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.UNISWAPV3);
+    }
+
     function testMultiProviderFlashLoan() public {
         multiProviderFlashLoanExample.initiateAttack();
     }
