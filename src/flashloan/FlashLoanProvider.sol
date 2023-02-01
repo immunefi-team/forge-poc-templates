@@ -102,7 +102,7 @@ library FlashLoanProvider {
             return MakerDAOFlashLoan.CALLBACK_SELECTOR;
         } else if (flp == FlashLoanProviders.UNISWAPV2) {
             return UniswapV2FlashLoan.CALLBACK_SELECTOR;
-        } else if (flp == FlashLoanProviders.UNISWAPV2) {
+        } else if (flp == FlashLoanProviders.UNISWAPV3) {
             return UniswapV3FlashLoan.CALLBACK_SELECTOR;
         }
     }
