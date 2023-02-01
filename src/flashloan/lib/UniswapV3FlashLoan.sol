@@ -22,14 +22,14 @@ library UniswapV3FlashLoan {
     bytes4 constant CALLBACK_SELECTOR = 0xe9cbafb0; // keccak256(uniswapV3FlashCallback(uint256,uint256,bytes))
 
     /**
-     * @dev Allows a user to take a flash loan from UniswapV2Pair for a given Pair and amount
+     * @dev Allows a user to take a flash loan from UniswapV3Pair for a given Pair and amount
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
     function takeFlashLoan(address token, uint256 amount) internal {
         Context memory context = context(address(0), token, amount);
 
-        require(address(context.uniswapV3Pool) != address(0), "UniswapV2Flashloan: Pair contract not found");
+        require(address(context.uniswapV3Pool) != address(0), "UniswapV3Flashloan: Pair contract not found");
 
         address token0 = IUniswapV3Pool(context.uniswapV3Pool).token0();
         address token1 = IUniswapV3Pool(context.uniswapV3Pool).token1();
@@ -44,12 +44,12 @@ library UniswapV3FlashLoan {
             address(this),
             amount0,
             amount1,
-            "immunefi.flashloan.UniswapV2FlashLoan"
+            "immunefi.flashloan.UniswapV3FlashLoan"
         );
     }
 
     /**
-     * @dev Allows a user to take a flash loan from UniswapV2Pair for a given Pair and amount
+     * @dev Allows a user to take a flash loan from UniswapV3Pair for a given Pair and amount
      * @param pair The address of the pair contract, use address(0) if pair is unknown
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
@@ -57,7 +57,7 @@ library UniswapV3FlashLoan {
     function takeFlashLoan(address pair, address token, uint256 amount) internal {
         Context memory context = context(pair, token, amount);
 
-        require(address(context.uniswapV3Pool) != address(0), "UniswapV2Flashloan: Pair contract not found");
+        require(address(context.uniswapV3Pool) != address(0), "UniswapV3Flashloan: Pair contract not found");
 
         address token0 = IUniswapV3Pool(context.uniswapV3Pool).token0();
         address token1 = IUniswapV3Pool(context.uniswapV3Pool).token1();
@@ -68,12 +68,12 @@ library UniswapV3FlashLoan {
         (amount0, amount1) = token0 == context.asset ? (amount, amount1) : (amount0, amount);
 
         IUniswapV3Pool(context.uniswapV3Pool).flash(
-            address(this), amount0, amount1, "immunefi.flashloan.UniswapV2FlashLoan"
+            address(this), amount0, amount1, "immunefi.flashloan.UniswapV3FlashLoan"
         );
     }
 
     /**
-     * @dev Pay back the flash loan to UniswapV2Pair contract
+     * @dev Pay back the flash loan to UniswapV3Pair contract
      * @param data The data of the flash loan
      */
     function payFlashLoan(bytes calldata data) internal {
@@ -122,7 +122,7 @@ library UniswapV3FlashLoan {
             defaultToken = token == WETH ? USDC : WETH;
             uniswapV3Factory = IUniswapV3Factory(0x1F98431c8aD98523631AE4a59f267346ea31F984);
         } else {
-            revert("UniswapV2Flashloan: Chain not supported");
+            revert("UniswapV3Flashloan: Chain not supported");
         }
         if (pair == address(0)) {
             (token0, token1) = defaultToken < token ? (defaultToken, token) : (token, defaultToken);
@@ -194,9 +194,10 @@ library UniswapV3FlashLoan {
         for (uint256 i; i < _fees.length; i++) {
             pair = factory.getPool(token0, token1, _fees[i].fee);
             if (pair != address(0) && IERC20(token).balanceOf(pair) >= amount) {
-                break;
+                return pair;
             }
         }
+        revert("UniswapV3Flashloan: Pair not found/amount to big");
     }
 }
 
