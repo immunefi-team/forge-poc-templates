@@ -180,6 +180,7 @@ library UniswapV3FlashLoan {
      * @param token0 The address of token0
      * @param token1 The address of token1
      * @param amount The amount of token
+     * @param token The address of the flashloaned token
      * @return pair The address of the pair contract
      */
     function getPair(
