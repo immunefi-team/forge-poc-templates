@@ -13,6 +13,13 @@ library CurvePriceManipulation {
         ICurvePoolRegistry poolRegistry;
     }
 
+  /**
+   * @dev Manipulates the price in a Curve pool by adding and removing liquidity.
+   * @param token0 Address of the first token in the pool.
+   * @param token1 Address of the second token in the pool.
+   * @param amount0 The amount of token0 to add to the pool.
+   * @param amount1 The amount of token1 to add to the pool.
+   */
     function manipulatePoolPrice(IERC20 token0, IERC20 token1, uint256 amount0, uint256 amount1) internal {
         Context memory context = context();
 
@@ -38,6 +45,10 @@ library CurvePriceManipulation {
         curvePool.remove_liquidity_imbalance(amounts, type(uint256).max);
     }
 
+  /**
+   * @dev Returns the context information for the curve pool registry.
+   * @return Context The context information.
+   */
     function context() internal view returns (Context memory) {
         ICurvePoolRegistry poolRegistry;
         if (block.chainid == 1) {
