@@ -78,7 +78,7 @@ library FlashLoanProvider {
             MakerDAOFlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.UNISWAPV2) {
             UniswapV2FlashLoan.payFlashLoan(msg.data);
-        } else if (flp == FlashLoanProviders.UNISWAPV2) {
+        } else if (flp == FlashLoanProviders.UNISWAPV3) {
             UniswapV3FlashLoan.payFlashLoan(msg.data);
         } else {
             revert("FlashLoanProvider: Flash loan provider not supported");
