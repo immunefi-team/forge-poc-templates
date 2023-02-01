@@ -1,6 +1,6 @@
 # Immunefi PoC Templates
 
-This is a collaborative repository that aims to provide reusable and easily modifiable PoC examples for a variety of EVM based vulnerabilities. This will increase the quality of bug reports and allow whitehats an easier, faster way to create PoCs and verify their claims. These templates are intended for testing proof of concepts in local forks for research purposes only. Any other use is explicitly prohibited and discouraged.
+This is a collaborative repository that aims to provide reusable and easily modifiable PoC examples for a variety of EVM based vulnerabilities. This will increase the quality of bug reports and allow whitehats an easier, faster way to create PoCs and verify their claims. These templates are intended for testing proof of concepts in local forks for submission to bug bounty programs. Any other use is explicitly prohibited.
 
 ## Overview
 
