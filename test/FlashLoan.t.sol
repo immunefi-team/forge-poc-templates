@@ -1,22 +1,22 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/TokenTemplate.sol";
+import "../src/FlashLoanTemplate.sol";
 
-contract TokensTemplateTest is Test {
+contract FlashLoanTest is Test {
     uint256 mainnetFork;
     string RPC_URL = vm.envString("RPC_URL");
 
-    TokenTemplate public tokenTemplate;
+    FlashLoanTemplate public flashLoanTemplate;
 
     function setUp() public {
         mainnetFork = vm.createFork(RPC_URL);
         vm.selectFork(mainnetFork);
 
-        tokenTemplate = new TokenTemplate();
+        flashLoanTemplate = new FlashLoanTemplate();
     }
 
-    function testAttack() public {
-        tokenTemplate.initiateAttack();
+    function testFlashLoan() public {
+        flashLoanTemplate.initiateAttack();
     }
 }

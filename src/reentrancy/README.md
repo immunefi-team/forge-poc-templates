@@ -17,7 +17,7 @@ The following attack contract demonstrate a simple reentrancy attack on a improp
 Extend the Reentrancy contract and implement the following functions:
 ```Solidity
 contract Attack is Reentrancy {
-    function initiateAttack() external override { }
+    function initiateAttack() external { }
     function _executeAttack() internal override { }
     function _completeAttack() internal override { }
 }
