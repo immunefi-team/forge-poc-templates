@@ -9,7 +9,6 @@ enum PriceManipulationProviders {
 }
 
 library PriceManipulationProvider {
-
     /**
      * @dev Function to manipulate price using different price manipulation providers.
      * @param pmp The price manipulation provider to use. ex: CURVE.
@@ -18,7 +17,13 @@ library PriceManipulationProvider {
      * @param amount0 Amount of token0 involved in the price manipulation.
      * @param amount1 Amount of token1 involved in the price manipulation.
      */
-    function manipulatePrice(PriceManipulationProviders pmp, IERC20 token0, IERC20 token1, uint256 amount0, uint256 amount1) internal {
+    function manipulatePrice(
+        PriceManipulationProviders pmp,
+        IERC20 token0,
+        IERC20 token1,
+        uint256 amount0,
+        uint256 amount1
+    ) internal {
         if (pmp == PriceManipulationProviders.CURVE) {
             CurvePriceManipulation.manipulatePoolPrice(token0, token1, amount0, amount1);
         } else {

@@ -23,7 +23,9 @@ abstract contract FlashLoan {
     function takeFlashLoan(FlashLoanProviders flp, IERC20[] memory tokens, uint256[] memory amounts) internal virtual {
         address[] memory tkns = new address[](tokens.length);
         for (uint256 i = 0; i < tokens.length; i++) {
-            console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], address(tokens[i]), uint256(flp));
+            console.log(
+                "Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], address(tokens[i]), uint256(flp)
+            );
             tkns[i] = address(tokens[i]);
         }
         _flps.push(flp);
@@ -36,7 +38,10 @@ abstract contract FlashLoan {
      * @param tokens The addresses of the tokens to borrow
      * @param amounts The amounts of the tokens to borrow
      */
-    function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts) internal virtual {
+    function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts)
+        internal
+        virtual
+    {
         for (uint256 i = 0; i < tokens.length; i++) {
             console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], tokens[i], uint256(flp));
         }
@@ -72,9 +77,10 @@ abstract contract FlashLoan {
      * @return flp The current flash loan provider context
      */
     function currentFlashLoanProvider() internal view returns (FlashLoanProviders flp) {
-        if(_flps.length > 0) {
+        if (_flps.length > 0) {
             return _flps[_flps.length - 1];
-        } return FlashLoanProviders.NONE;
+        }
+        return FlashLoanProviders.NONE;
     }
 
     /**

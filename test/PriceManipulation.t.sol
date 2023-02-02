@@ -13,7 +13,7 @@ contract PriceManipulationTest is Test {
     function setUp() public {
         mainnetFork = vm.createFork(RPC_URL);
         vm.selectFork(mainnetFork);
-        
+
         attackContract = new PriceManipulationTemplate();
     }
 

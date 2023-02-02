@@ -31,6 +31,7 @@ contract PriceManipulationTemplate is PriceManipulation, Tokens {
 interface IPool {
     function get_virtual_price() external view returns (uint256);
 }
+
 interface IWrapped {
     function wrap(uint256) external;
     function unwrap(uint256) external;

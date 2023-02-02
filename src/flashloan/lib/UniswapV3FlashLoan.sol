@@ -183,13 +183,11 @@ library UniswapV3FlashLoan {
      * @param token The address of the flashloaned token
      * @return pair The address of the pair contract
      */
-    function getPair(
-        IUniswapV3Factory factory, 
-        address token0, 
-        address token1, 
-        uint256 amount,
-        address token
-        ) internal view returns (address pair) {
+    function getPair(IUniswapV3Factory factory, address token0, address token1, uint256 amount, address token)
+        internal
+        view
+        returns (address pair)
+    {
         FeesTickSpacing[] memory _fees = getFees();
 
         for (uint256 i; i < _fees.length; i++) {

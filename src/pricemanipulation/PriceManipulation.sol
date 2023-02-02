@@ -21,10 +21,16 @@ abstract contract PriceManipulation is Reentrancy {
      * @param amount0 The amount of the first token.
      * @param amount1 The amount of the second token.
      */
-    function manipulatePrice(PriceManipulationProviders pmp, address token0, address token1, uint256 amount0, uint256 amount1) internal virtual {
+    function manipulatePrice(
+        PriceManipulationProviders pmp,
+        address token0,
+        address token1,
+        uint256 amount0,
+        uint256 amount1
+    ) internal virtual {
         manipulatePrice(pmp, IERC20(token0), IERC20(token1), amount0, amount1);
     }
-    
+
     /**
      * @dev Manipulates the price of a given token pair by calling the manipulatePrice function on a PriceManipulationProviders contract.
      * @param pmp The PriceManipulationProviders contract instance.
@@ -33,7 +39,13 @@ abstract contract PriceManipulation is Reentrancy {
      * @param amount0 The amount of the first token.
      * @param amount1 The amount of the second token.
      */
-    function manipulatePrice(PriceManipulationProviders pmp, IERC20 token0, IERC20 token1, uint256 amount0, uint256 amount1) internal virtual {
+    function manipulatePrice(
+        PriceManipulationProviders pmp,
+        IERC20 token0,
+        IERC20 token1,
+        uint256 amount0,
+        uint256 amount1
+    ) internal virtual {
         _pmps.push(pmp);
         pmp.manipulatePrice(token0, token1, amount0, amount1);
         _pmps.pop();
