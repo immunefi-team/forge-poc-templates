@@ -46,7 +46,7 @@ forge test -vv --match-path test/[test_name]
 ## Template Categories 🪲
 
 |       Categorisation       | Template | Source | Test | Documentation |
-| -------------------------- | -------- |  ------------------------------------------------- | --------------------------------------- |
+| -------------------------- | -------- | ------ | ---- | ------------- |
 | Reentrancy                 | [Template](./src/ReentrancyTemplate.sol)        | [Source](./src/reentrancy/Reentrancy.sol)                         | [Test](./test/Reentrancy.t.sol)         | [Readme](./src/reentrancy/README.md)              |
 | Token Balance Manipulation | [Template](./src/TokenTemplate.sol)             | [Source](./src/tokens/Tokens.sol)                         | [Test](./test/Tokens.t.sol)             | [Readme](./src/tokens/README.md)                  |
 | Flash Loan                 | [Template](./src/FlashLoanTemplate.sol)         | [Source](./src/flashloan/FlashLoan.sol)                         | [Test](./test/FlashLoan.t.sol)          | [Readme](./src/flashloan/README.md)               |
