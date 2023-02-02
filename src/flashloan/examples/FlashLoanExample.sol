@@ -16,7 +16,7 @@ contract FlashLoanExample is FlashLoan, Tokens {
         } else if (flp == FlashLoanProviders.UNISWAPV2) {
             fee = 3009027081243732;
         } else if (flp == FlashLoanProviders.UNISWAPV3) {
-            fee = 50000000000000 + 1;
+            fee = 500000000000000 + 1;
         }
         deal(EthereumTokens.DAI, address(this), fee);
         console.log("DAI BALANCE BEFORE:", EthereumTokens.DAI.balanceOf(address(this)));
