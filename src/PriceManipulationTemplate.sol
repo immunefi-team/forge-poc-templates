@@ -8,7 +8,7 @@ import "forge-std/console.sol";
 contract PriceManipulationTemplate is PriceManipulation, Tokens {
     // stETH / ETH Curve pool
     ICurvePool pool = ICurvePool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022);
-    
+
     function initiateAttack() external {
         // In this example we are dealing ETH and stETH to an attacker to use for price manipulation
         // of the stETH / ETH Curve pool. This allows us to manipulate the virtual price of the asset
