@@ -26,4 +26,4 @@ contract Attack is PriceManipulation {
     function _completeAttack() internal override { }
 }
 ```
-Call `manipulatePoolPrice(PriceManipulationProviders pmp, IERC20 token0, IERC20 token1, uint256 amount0, uint256 amount1)` in `initiateAttack()` to trigger your attack. The underlying function will call `_executeAttack()` during the manipulated price.
+Call `manipulatePrice(PriceManipulationProviders pmp, IERC20 token0, IERC20 token1, uint256 amount0, uint256 amount1)` in `initiateAttack()` to trigger your attack. The underlying function will call `_executeAttack()` during the manipulated price.
