@@ -29,9 +29,11 @@ library CurvePriceManipulation {
         amounts[1] = amount1;
 
         if (token0 != EthereumTokens.ETH) {
-            try token0.approve(address(curvePool), type(uint256).max) {} catch {}
+            token0.approve(address(curvePool), 0);
+            token0.approve(address(curvePool), type(uint256).max);
         }
-        try token1.approve(address(curvePool), type(uint256).max) {} catch {}
+        token1.approve(address(curvePool), 0);
+        token1.approve(address(curvePool), type(uint256).max);
 
         curvePool.add_liquidity{value: token0 == EthereumTokens.ETH ? amount0 : 0}(amounts, 0);
 
