@@ -45,13 +45,13 @@ forge test -vv --match-path test/[test_name]
 
 ## Template Categories 🪲
 
-|       Categorisation       | Template | Source | Test |
-| -------------------------- | -------- |  ------------------------------------------------- | --------------------------------------- |
-| Reentrancy                 | [Template](./src/ReentrancyTemplate.sol) | [Source](./src/reentrancy/Reentrancy.sol)         | [Test](./test/Reentrancy.t.sol)         |
-| Token Balance Manipulation | [Template](./src/TokenTemplate.sol)      | [Source](./src/tokens/Tokens.sol)                 | [Test](./test/Tokens.t.sol)             |
-| Flash Loan                 | [Template](./src/FlashloanTemplate.sol)  | [Source](./src/flashloan/Flashloan.sol)           | [Test](./test/Flashloan.t.sol)          |
+|       Categorisation       | Template | Source | Test | Documentation |
+| -------------------------- | -------- | ------ | ---- | ------------- |
+| Reentrancy                 | [Template](./src/ReentrancyTemplate.sol)        | [Source](./src/reentrancy/Reentrancy.sol)                         | [Test](./test/Reentrancy.t.sol)         | [Readme](./src/reentrancy/README.md)              |
+| Token Balance Manipulation | [Template](./src/TokenTemplate.sol)             | [Source](./src/tokens/Tokens.sol)                         | [Test](./test/Tokens.t.sol)             | [Readme](./src/tokens/README.md)                  |
+| Flash Loan                 | [Template](./src/FlashLoanTemplate.sol)         | [Source](./src/flashloan/FlashLoan.sol)                         | [Test](./test/FlashLoan.t.sol)          | [Readme](./src/flashloan/README.md)               |
+| Price Manipulation         | [Template](./src/PriceManipulationTemplate.sol) | [Source](./src/pricemanipulation/PriceManipulation.sol)       | [Test](./test/PriceManipulation.t.sol)  | [Readme](./src/pricemanipulation/README.md)       |
 <!-- | Forking                    | [Template](./src/ForkingTemplate.sol) | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
-| Price Manipulation         | [Template](./src/PriceManipulationTemplate.sol) | [Source](./src/PriceManipulation.sol)             | [Test](./test/PriceManipulation.t.sol)  |
 | NFTX Loan                  | [Template](./src/NFTXLoanTemplate.sol) | [Source](./src/NFTXLoan.sol)                      | [Test](./test/NFTXLoan.t.sol)           |
 | Uninitialized Proxy        | [Template](./src/UninitializedProxyTemplate.sol) | [Source](./src/UninitializedProxy.sol)            | [Test](./test/UninitializedProxy.t.sol) | -->
 

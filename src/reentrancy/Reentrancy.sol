@@ -108,14 +108,14 @@ abstract contract Reentrancy {
     /**
      * @dev Fallback function called when no other functions match the function signature
      */
-    fallback() external payable {
+    fallback() external payable virtual {
         _reentrancyCallback();
     }
 
     /**
      * @dev Function called when native asset is sent with no calldata
      */
-    receive() external payable {
+    receive() external payable virtual {
         _reentrancyCallback();
     }
 

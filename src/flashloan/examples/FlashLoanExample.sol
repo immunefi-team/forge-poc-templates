@@ -25,7 +25,7 @@ contract FlashLoanExample is FlashLoan, Tokens {
 
     function _executeAttack() internal override {
         console.log("DAI BALANCE DURING:", EthereumTokens.DAI.balanceOf(address(this)));
-        if (currentProvider() == FlashLoanProviders.AAVEV1) {
+        if (currentFlashLoanProvider() == FlashLoanProviders.AAVEV1) {
             // Execute attack with funds from AAVEV1
         }
     }

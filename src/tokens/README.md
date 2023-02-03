@@ -59,6 +59,8 @@ This template is for getting started with manipulating token balances. The token
 | Ethereum | ZIL      | [0x05f4a42e251f2d52b8ed15E9FEdAacFcEF1FAD27](https://etherscan.io/address/0x05f4a42e251f2d52b8ed15E9FEdAacFcEF1FAD27) |
 | Ethereum | XDCE     | [0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2](https://etherscan.io/address/0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2) |
 | Ethereum | ONEINCH  | [0x111111111117dC0aa78b770fA6A738034120C302](https://etherscan.io/address/0x111111111117dC0aa78b770fA6A738034120C302) |
+| Ethereum | steCRV   | [0x06325440D014e39736583c165C2963BA99fAf14E](https://etherscan.io/address/0x06325440D014e39736583c165C2963BA99fAf14E) |
+| Ethereum | wstETH   | [0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0](https://etherscan.io/address/0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) |
 </details>
 <details>
   <summary>

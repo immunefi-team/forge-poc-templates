@@ -30,15 +30,15 @@ contract FlashLoanExampleTest is Test {
     function testBalancerFlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.BALANCER);
     }
-    
+
     function testEulerFlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.EULER);
     }
-    
+
     function testMakerDAOFlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.MAKERDAO);
     }
-    
+
     function testUniswapV2FlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.UNISWAPV2);
     }

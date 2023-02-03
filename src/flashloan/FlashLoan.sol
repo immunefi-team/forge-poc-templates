@@ -1,5 +1,7 @@
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import "./FlashLoanProvider.sol";
 
 import "forge-std/console.sol";
@@ -18,7 +20,28 @@ abstract contract FlashLoan {
      * @param tokens The addresses of the tokens to borrow
      * @param amounts The amounts of the tokens to borrow
      */
-    function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts) public virtual {
+    function takeFlashLoan(FlashLoanProviders flp, IERC20[] memory tokens, uint256[] memory amounts) internal virtual {
+        address[] memory tkns = new address[](tokens.length);
+        for (uint256 i = 0; i < tokens.length; i++) {
+            console.log(
+                "Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], address(tokens[i]), uint256(flp)
+            );
+            tkns[i] = address(tokens[i]);
+        }
+        _flps.push(flp);
+        flp.takeFlashLoan(tkns, amounts);
+    }
+
+    /**
+     * @dev Allows a user to take a flash loan from a specified FlashloanProvider
+     * @param flp The flash loan provider to take the loan from
+     * @param tokens The addresses of the tokens to borrow
+     * @param amounts The amounts of the tokens to borrow
+     */
+    function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts)
+        internal
+        virtual
+    {
         for (uint256 i = 0; i < tokens.length; i++) {
             console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], tokens[i], uint256(flp));
         }
@@ -32,7 +55,17 @@ abstract contract FlashLoan {
      * @param token The address of the token to borrow
      * @param amount The amount of the token to borrow
      */
-    function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) public virtual {
+    function takeFlashLoan(FlashLoanProviders flp, IERC20 token, uint256 amount) internal virtual {
+        takeFlashLoan(flp, address(token), amount);
+    }
+
+    /**
+     * @dev Allows a user to take a flash loan from a specified FlashloanProvider
+     * @param flp The address of the flash loan provider to take the loan from
+     * @param token The address of the token to borrow
+     * @param amount The amount of the token to borrow
+     */
+    function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) internal virtual {
         console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amount, token, uint256(flp));
         _flps.push(flp);
         flp.takeFlashLoan(token, amount);
@@ -43,9 +76,11 @@ abstract contract FlashLoan {
      * @dev Returns the top most provider from the call stack
      * @return flp The current flash loan provider context
      */
-    function currentProvider() internal returns (FlashLoanProviders flp) {
-        require(_flps.length > 0, "FlashLoan: No current flash loan provider");
-        return _flps[_flps.length - 1];
+    function currentFlashLoanProvider() internal view returns (FlashLoanProviders flp) {
+        if (_flps.length > 0) {
+            return _flps[_flps.length - 1];
+        }
+        return FlashLoanProviders.NONE;
     }
 
     /**
@@ -58,14 +93,9 @@ abstract contract FlashLoan {
      */
     function _completeAttack() internal virtual;
 
-    /**
-     * @dev Fallback function that executes the attack logic, pays back the flash loan, and finalizes the attack
-     * @dev First checks if there are any flash loans on the call stack
-     * @dev Verifies the function selector matches the current providers callback function selector
-     */
-    fallback() external payable virtual {
+    function _fallback() internal virtual {
         if (_flps.length > 0) {
-            FlashLoanProviders flp = currentProvider();
+            FlashLoanProviders flp = currentFlashLoanProvider();
             if (flp.callbackFunctionSelector() == bytes4(msg.data[:4])) {
                 console.log("Execute attack");
                 _executeAttack();
@@ -80,5 +110,14 @@ abstract contract FlashLoan {
                 }
             }
         }
+    }
+
+    /**
+     * @dev Fallback function that executes the attack logic, pays back the flash loan, and finalizes the attack
+     * @dev First checks if there are any flash loans on the call stack
+     * @dev Verifies the function selector matches the current providers callback function selector
+     */
+    fallback() external payable virtual {
+        _fallback();
     }
 }
