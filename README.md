@@ -61,7 +61,8 @@ forge test -vv --match-path test/[test_name]
 
 ## PoCs from our community ✨
 
- - [Hundred Finance Hack](https://www.github.com) by [@example_hacker](https://twitter.com)
+ - [Hundred Finance Hack](https://medium.com/immunefi/a-poc-of-the-hundred-finance-heist-4121f23a098) by [@hephyrius](https://twitter.com/hephyrius)
+ - [Omni Protocol Hack](https://medium.com/immunefi/hack-analysis-omni-protocol-july-2022-2d35091a0109) by [@realgmhacker](https://twitter.com/realgmhacker)
 
 ## Contribute 📝
 
