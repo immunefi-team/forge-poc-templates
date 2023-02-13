@@ -74,4 +74,5 @@ interface ICurvePool {
     function remove_liquidity_imbalance(uint256[2] memory amounts, uint256 maxBurnAmount) external returns (uint256);
     function balances(uint256 i) external view returns (uint256);
     function lp_token() external view returns (address);
+    function get_virtual_price() external view returns (uint256);
 }
