@@ -29,7 +29,6 @@ contract ReentrancyTemplate is Reentrancy {
 
     function _completeAttack() internal override {
         console.log("Attacker balance after %s", address(this).balance);
-
         // TODO: Modify the attack cleanup here
     }
 }
