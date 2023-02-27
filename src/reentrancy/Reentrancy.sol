@@ -24,31 +24,9 @@ abstract contract Reentrancy {
     /**
      * @dev Function run when target contract makes external call back to attack contract
      */
-    function _reentrancyCallback() internal virtual incrementState {
-        console.log("Begin reentrancy stage %s", uint256(reentrancyStage));
-        if (reentrancyStage == State.ATTACK) {
-            // Execute attack
-            console.log("Execute attack");
-            _executeAttack();
-        } else if (reentrancyStage == State.POST_ATTACK) {
-            // Already ran the attack once
-            console.log("Attack completed successfully");
-            _completeAttack();
-        } else {
-            // No state defined
-        }
-    }
-
-    modifier incrementState() virtual {
-        reentrancyStage = State(uint256(reentrancyStage) + 1);
-        _;
-    }
-
-    /**
-     * @dev The callback function for uniswap exchange
-     */
-    function uniswapV2Call(address, uint256, uint256, bytes calldata) external {
-        _reentrancyCallback();
+    function _reentrancyCallback() internal virtual {
+        console.log(">>> Execute attack");
+        _executeAttack();
     }
 
     /**
@@ -65,13 +43,6 @@ abstract contract Reentrancy {
     function onTransferReceived(address, address, uint256, bytes memory) external returns (bytes4) {
         _reentrancyCallback();
         return this.onTransferReceived.selector;
-    }
-
-    /**
-     * @dev Handles the receipt of ERC777 token type.
-     */
-    function tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external {
-        _reentrancyCallback();
     }
 
     /**

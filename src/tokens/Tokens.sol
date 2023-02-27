@@ -11,7 +11,7 @@ abstract contract Tokens is Test {
      * @param to IERC20 to manipulate balance of
      * @param amount Amount to set balance to
      */
-    function deal(IERC20 token, IERC20 to, uint256 amount) internal {
+    function deal(IERC20 token, address to, uint256 amount) internal {
         if (address(token) == address(0x0)) {
             deal(to, amount);
         } else {
