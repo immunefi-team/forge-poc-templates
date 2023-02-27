@@ -20,6 +20,17 @@ This template is for getting started with attack PoCs which use flash loans. The
 <details>
   <summary>
 
+### Gnosis
+  </summary>
+
+| Network | Protocol | Library |
+| ---------- | -------- | ------------------------------------------------------- |
+| Gnosis  | UNISWAPV2   | [UniswapV2FlashLoan](./lib/UniswapV2FlashLoan.sol) |
+
+</details>
+<details>
+  <summary>
+
 ### Optimism
   </summary>
 
@@ -36,7 +47,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+| Arbitrum | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
 <details>
@@ -47,7 +58,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+| Polygon | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
 <details>
@@ -58,7 +69,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+| Fantom | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
 <details>
@@ -69,7 +80,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Optimism | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
+| Avalanche | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
 
@@ -91,7 +102,7 @@ Call `takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount)` in `
 The following attack contract demonstrate multi provider flash loan usage.
 * [MultiProviderFlashLoanExample](./examples/MultiProviderFlashLoanExample.sol)
 
-Each time a flash loan is taken, the `_executeAttack()` function is called when the provider calls the flash loan callback. The context of the current execution call can be determined by calling `currentProvider()`, which returns the Flash Loan Provider which initiated the callback. This can be used as a state machine to execute stages of an attack. See the example for more.
+Each time a flash loan is taken, the `_executeAttack()` function is called when the provider calls the flash loan callback. The context of the current execution call can be determined by calling `currentProvider()`, which returns the Flash Loan Provider which initiated the callback. This can be used as a state machine to execute stages of an attack. See the example for more. Flash loan repayment is handled automatically by the flash loan `_fallback()` handler.
 
 
 > 🚨 Multiple flash loans cannot be taken from the same provider due to reentrancy protections. If you need to flash loan multiple tokens, you will have to use multiple providers unless the provider specifically supports multi-token flash loans.

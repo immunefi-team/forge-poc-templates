@@ -29,6 +29,8 @@ library FlashLoanProvider {
     function takeFlashLoan(FlashLoanProviders flp, address[] memory tokens, uint256[] memory amounts) internal {
         if (flp == FlashLoanProviders.BALANCER) {
             BalancerFlashLoan.takeFlashLoan(tokens, amounts);
+        } else if (flp == FlashLoanProviders.UNISWAPV2) {
+            UniswapV2FlashLoan.takeFlashLoan(tokens, amounts);
         } else if (flp == FlashLoanProviders.AAVEV3) {
             AAVEV3FlashLoan.takeFlashLoan(tokens, amounts);
         } else {
