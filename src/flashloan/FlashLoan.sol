@@ -24,7 +24,10 @@ abstract contract FlashLoan {
         address[] memory tkns = new address[](tokens.length);
         for (uint256 i = 0; i < tokens.length; i++) {
             console.log(
-                "Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], address(tokens[i]), uint256(flp)
+                ">>> Taking flashloan of %s %s from FlashLoanProviders[%s]",
+                amounts[i],
+                address(tokens[i]),
+                uint256(flp)
             );
             tkns[i] = address(tokens[i]);
         }
@@ -43,7 +46,9 @@ abstract contract FlashLoan {
         virtual
     {
         for (uint256 i = 0; i < tokens.length; i++) {
-            console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], tokens[i], uint256(flp));
+            console.log(
+                ">>> Taking flashloan of %s %s from FlashLoanProviders[%s]", amounts[i], tokens[i], uint256(flp)
+            );
         }
         _flps.push(flp);
         flp.takeFlashLoan(tokens, amounts);
@@ -66,7 +71,7 @@ abstract contract FlashLoan {
      * @param amount The amount of the token to borrow
      */
     function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) internal virtual {
-        console.log("Taking flashloan of %s %s from FlashLoanProviders[%s]", amount, token, uint256(flp));
+        console.log(">>> Taking flashloan of %s %s from FlashLoanProviders[%s]", amount, token, uint256(flp));
         _flps.push(flp);
         flp.takeFlashLoan(token, amount);
         _flps.pop();
@@ -94,15 +99,15 @@ abstract contract FlashLoan {
     function _completeAttack() internal virtual;
 
     function _fallback() internal virtual {
+        console.log(">>> Execute attack");
+        _executeAttack();
         if (_flps.length > 0) {
             FlashLoanProviders flp = currentFlashLoanProvider();
             if (flp.callbackFunctionSelector() == bytes4(msg.data[:4])) {
-                console.log("Execute attack");
-                _executeAttack();
-                console.log("Pay back flash loan");
-                flp.payFlashLoan();
-                console.log("Attack completed successfully");
+                console.log(">>> Attack completed successfully");
                 _completeAttack();
+                console.log(">>> Pay back flash loan");
+                flp.payFlashLoan();
                 bytes memory returnData = flp.returnData();
                 assembly {
                     let len := mload(returnData)

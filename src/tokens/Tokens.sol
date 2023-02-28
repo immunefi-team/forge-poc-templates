@@ -8,7 +8,7 @@ abstract contract Tokens is Test {
     /**
      * @dev Wrapper function for vm.deal that takes IERC20 object
      * @param token IERC20 token to manipulate
-     * @param to Address to manipulate balance of
+     * @param to IERC20 to manipulate balance of
      * @param amount Amount to set balance to
      */
     function deal(IERC20 token, address to, uint256 amount) internal {
@@ -331,4 +331,59 @@ library OptimismTokens {
     IERC20 public constant ROOBEE     =  IERC20(0xb12c13e66AdE1F72f71834f2FC5082Db8C091358);
     IERC20 public constant GRG        =  IERC20(0xEcF46257ed31c329F204Eb43E254C609dee143B3);
     IERC20 public constant IB         =  IERC20(0x00a35FD824c717879BF370E70AC6868b95870Dfb);
+}
+
+library GnosisTokens {
+    IERC20 public constant NATIVE_ASSET = IERC20(address(0x0));
+    // Top 50 tokens by market cap on gnosisscan.io
+    IERC20 public constant USDT       =  IERC20(0x4ECaBa5870353805a9F068101A40E0f32ed605C6);
+    IERC20 public constant USDC       =  IERC20(0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83);
+    IERC20 public constant MATIC      =  IERC20(0x7122d7661c4564b7C6Cd4878B06766489a6028A2);
+    IERC20 public constant UNI        =  IERC20(0x4537e328Bf7e4eFA29D05CAeA260D7fE26af9D74);
+    IERC20 public constant LINK       =  IERC20(0xE2e73A1c69ecF83F464EFCE6A5be353a37cA09b2);
+    IERC20 public constant RPL        =  IERC20(0x2F0E755Efe6b58238A67DB420Ff3513Ec1fb31eF);
+    IERC20 public constant YFI        =  IERC20(0xbf65bfcb5da067446CeE6A706ba3Fe2fB1a9fdFd);
+    IERC20 public constant GNO        =  IERC20(0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb);
+    IERC20 public constant EWTB       =  IERC20(0x6A8cb6714B1EE5b471a7D2eC4302cb4f5Ff25eC2);
+    IERC20 public constant BADGER     =  IERC20(0xdfc20AE04ED70bd9c7D720F449eEDAe19F659D65);
+    IERC20 public constant DATA       =  IERC20(0x256eb8a51f382650B2A1e946b8811953640ee47D);
+    IERC20 public constant DPI        =  IERC20(0xD3D47d5578e55C880505dC40648F7F9307C3e7A8);
+    IERC20 public constant HOPR       =  IERC20(0xD057604A14982FE8D88c5fC25Aac3267eA142a08);
+    IERC20 public constant FOX        =  IERC20(0x21a42669643f45Bc0e086b8Fc2ed70c23D67509d);
+    IERC20 public constant xMOON      =  IERC20(0x1e16aa4Df73d29C029d94CeDa3e3114EC191E25A);
+    IERC20 public constant DXD        =  IERC20(0xb90D6bec20993Be5d72A5ab353343f7a0281f158);
+    IERC20 public constant UNCX       =  IERC20(0x0116e28B43A358162B96f70B4De14C98A4465f25);
+    IERC20 public constant SWASH      =  IERC20(0x84E2C67CBEfae6B5148fcA7d02B341B12ff4b5Bb);
+    IERC20 public constant COW        =  IERC20(0x177127622c4A00F3d409B75571e12cB3c8973d3c);
+    IERC20 public constant HOP        =  IERC20(0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC);
+    IERC20 public constant DIP        =  IERC20(0x48b1B0d077b4919b65b4E4114806dD803901E1D9);
+    IERC20 public constant MPS        =  IERC20(0xfa57AA7beED63D03Aaf85fFd1753f5f6242588fb);
+    IERC20 public constant HAUS       =  IERC20(0xb0C5f3100A4d9d9532a4CfD68c55F1AE8da987Eb);
+    IERC20 public constant GIV        =  IERC20(0x4f4F9b8D5B4d0Dc10506e5551B0513B61fD59e75);
+    IERC20 public constant ETHIX      =  IERC20(0xec3f3e6d7907acDa3A7431abD230196CDA3FbB19);
+    IERC20 public constant STAKE      =  IERC20(0xb7D311E2Eb55F2f68a9440da38e7989210b9A05e);
+    IERC20 public constant GTON       =  IERC20(0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8);
+    IERC20 public constant SWPR       =  IERC20(0x532801ED6f82FFfD2DAB70A19fC2d7B2772C4f4b);
+    IERC20 public constant AGVE       =  IERC20(0x3a97704a1b25F08aa230ae53B352e2e72ef52843);
+    IERC20 public constant ETHO       =  IERC20(0xB17d999E840e0c1B157Ca5Ab8039Bd958b5fA317);
+    IERC20 public constant DHV        =  IERC20(0xFbdd194376de19a88118e84E279b977f165d01b8);
+    IERC20 public constant ZeroxMR    =  IERC20(0x8c88eA1fD60462Ef7004B9e288afCB4680a3c50c);
+    IERC20 public constant DONUT      =  IERC20(0x524B969793a64a602342d89BC2789D43a016B13A);
+    IERC20 public constant MIVA       =  IERC20(0x63e62989D9EB2d37dfDB1F93A22f063635b07d51);
+    IERC20 public constant NODE       =  IERC20(0xc60e38C6352875c051B481Cbe79Dd0383AdB7817);
+    IERC20 public constant LEVIN      =  IERC20(0x1698cD22278ef6E7c0DF45a8dEA72EDbeA9E42aa);
+    IERC20 public constant WETH       =  IERC20(0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1);
+    IERC20 public constant HNY        =  IERC20(0x71850b7E9Ee3f13Ab46d67167341E4bDc905Eef9);
+    IERC20 public constant jCHF       =  IERC20(0x2d5563da42b06FbBF9c67b7DC073cF6A7842239e);
+    IERC20 public constant jEUR       =  IERC20(0x9fB1d52596c44603198fB0aee434fac3a679f702);
+    IERC20 public constant WXDAI      =  IERC20(0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d);
+    IERC20 public constant TEC        =  IERC20(0x5dF8339c5E282ee48c0c7cE8A7d01a73D38B3B27);
+    IERC20 public constant RICE       =  IERC20(0x97Edc0e345FbBBd8460847Fcfa3bc2a13bF8641F);
+    IERC20 public constant WATER      =  IERC20(0x4291F029B9e7acb02D49428458cf6fceAC545f81);
+    IERC20 public constant SYMM       =  IERC20(0xC45b3C1c24d5F54E7a2cF288ac668c74Dd507a84);
+    IERC20 public constant BRIGHT     =  IERC20(0x83FF60E2f93F8eDD0637Ef669C69D5Fb4f64cA8E);
+    IERC20 public constant xCOMB      =  IERC20(0x38Fb649Ad3d6BA1113Be5F57B927053E97fC5bF7);
+    IERC20 public constant JPYC       =  IERC20(0x431D5dfF03120AFA4bDf332c61A6e1766eF37BDB);
+    IERC20 public constant ESR        =  IERC20(0xD3226B12e6188133b19Ac0419f34B0ed5B10f069);
+    IERC20 public constant RAID       =  IERC20(0x18E9262e68Cc6c6004dB93105cc7c001BB103e49);
 }
