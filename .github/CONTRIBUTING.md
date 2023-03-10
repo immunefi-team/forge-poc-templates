@@ -15,7 +15,7 @@ Any exception or additions specific to our project are documented below.
 
 ### Creating Pull Requests (PRs)
 
-As a contributor, you are expected to fork this repository, work on your own fork and then submit pull requests. The pull requests will be reviewed and eventually merged into the main repo. See ["Fork-a-Repo"](https://help.github.com/articles/fork-a-repo/) for how this works.
+As a contributor, you are expected to fork this repository, work on your own fork and then submit pull requests. The pull requests will be reviewed and eventually merged into the main repo. See ["Fork-a-Repo"](https://help.github.com/articles/fork-a-repo/) for how this works. Additionally, contributors are required to sign a [CLA](./CLA.md) before their changes can be reviewed and accepted.
 
 ### A typical workflow
 
@@ -54,6 +54,8 @@ forge test -vv
 *IMPORTANT* Read the PR template very carefully and make sure to follow all the instructions. These instructions
 refer to some very important conditions that your PR must meet in order to be accepted, such as making sure that all tests pass, Solidity linting tests pass, etc.
 
-6) Maintainers will review your code and possibly ask for changes before your code is pulled in to the main repository. We'll check that all tests pass, review the coding style, and check for general code correctness. If everything is OK, we'll merge your pull request and your code will be part of Immunefi's templates.
+6) Sign CLA available [here]()
+
+7) Maintainers will review your code and possibly ask for changes before your code is pulled in to the main repository. We'll check that all tests pass, review the coding style, and check for general code correctness. If everything is OK, we'll merge your pull request and your code will be part of Immunefi's templates.
 
 *IMPORTANT* Please pay attention to the maintainer's feedback, since it's a necessary step to keep up with the standards Immunefi attains to.
