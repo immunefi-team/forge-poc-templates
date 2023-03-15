@@ -54,7 +54,7 @@ forge test -vv
 *IMPORTANT* Read the PR template very carefully and make sure to follow all the instructions. These instructions
 refer to some very important conditions that your PR must meet in order to be accepted, such as making sure that all tests pass, Solidity linting tests pass, etc.
 
-6) Sign CLA available [here]()
+6) Sign CLA available [here](https://app.hellosign.com/s/3c0FRG89)
 
 7) Maintainers will review your code and possibly ask for changes before your code is pulled in to the main repository. We'll check that all tests pass, review the coding style, and check for general code correctness. If everything is OK, we'll merge your pull request and your code will be part of Immunefi's templates.
 
