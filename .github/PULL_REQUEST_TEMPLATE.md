@@ -2,6 +2,7 @@
 
 <!-- Consider opening an issue for discussion prior to submitting a PR. -->
 <!-- New features will be merged faster if they were first discussed and designed with the team. -->
+<!-- Please review and sign the Contributor's License Agreement before opening a pull request. -->
 
 Fixes #???? <!-- Fill in with issue number -->
 
