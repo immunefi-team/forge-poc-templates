@@ -5,12 +5,11 @@ import "../src/TokenTemplate.sol";
 
 contract TokensTemplateTest is Test {
     uint256 mainnetFork;
-    string RPC_URL = vm.envString("RPC_URL");
 
     TokenTemplate public tokenTemplate;
 
     function setUp() public {
-        mainnetFork = vm.createFork(RPC_URL);
+        mainnetFork = vm.createFork("eth");
         vm.selectFork(mainnetFork);
 
         tokenTemplate = new TokenTemplate();

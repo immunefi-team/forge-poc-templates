@@ -6,12 +6,11 @@ import "../../src/tokens/Tokens.sol";
 
 contract TokensExampleTest is Test {
     uint256 mainnetFork;
-    string RPC_URL = vm.envString("RPC_URL");
 
     TokenExampleManipulation public tokenExample;
 
     function setUp() public {
-        mainnetFork = vm.createFork(RPC_URL);
+        mainnetFork = vm.createFork("eth");
         vm.selectFork(mainnetFork);
 
         tokenExample = new TokenExampleManipulation();
