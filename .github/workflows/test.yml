@@ -1,11 +1,29 @@
 name: test
 
-on: workflow_dispatch
+on: [push, pull_request]
 
 env:
   FOUNDRY_PROFILE: ci
 
 jobs:
+  lint:
+    strategy:
+      fail-fast: true
+
+    name: Run Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+      
+      - run: forge fmt --check
+
   check:
     strategy:
       fail-fast: true
