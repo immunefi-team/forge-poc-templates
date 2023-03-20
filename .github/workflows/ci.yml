@@ -1,9 +1,6 @@
 name: test
 
 on:
-  pull_request:
-    branches-ignore:
-      - 'assets'
   push:
     branches-ignore:
       - 'assets' 
@@ -34,7 +31,7 @@ jobs:
     strategy:
       fail-fast: true
 
-    name: Foundry project
+    name: Foundry Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
