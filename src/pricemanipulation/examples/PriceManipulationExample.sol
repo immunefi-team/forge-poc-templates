@@ -51,7 +51,6 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
 
             // Unrawp wstETH and swap stETH to Ether to pay back balancer loan
             IWrapped(address(EthereumTokens.wstETH)).unwrap(EthereumTokens.wstETH.balanceOf(address(this)));
-            ICurvePool curvePool = ICurvePool(0xDC24316b9AE028F1497c275EB9192a3Ea0f67022);
             EthereumTokens.stETH.approve(address(curvePool), type(uint256).max);
             curvePool.exchange(1, 0, EthereumTokens.stETH.balanceOf(address(this)), 0);
 
