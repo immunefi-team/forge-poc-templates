@@ -1,4 +1,5 @@
-# Immunefi PoC Templates
+<img align=left style="padding:0px;" height="50px" width="50px" src="https://github.com/immunefi-team/forge-poc-templates/blob/assets/imgs/Logo_Mark_Badge_White%404x.png"/>
+<p style="font-size:30px;">&nbsp;&nbsp;&nbsp;Immunefi PoC Templates</p>
 
 This is a collaborative repository that aims to provide reusable and easily modifiable PoC examples for a variety of EVM based vulnerabilities. This will increase the quality of bug reports and allow whitehats an easier, faster way to create PoCs and verify their claims. These templates are intended for testing proof of concepts in local forks for submission to bug bounty programs. Any other use is explicitly prohibited.
 
