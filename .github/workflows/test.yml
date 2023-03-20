@@ -1,6 +1,12 @@
 name: test
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches-ignore:
+      - 'assets'
+  push:
+    branches-ignore:
+      - 'assets' 
 
 env:
   FOUNDRY_PROFILE: ci
