@@ -1,4 +1,15 @@
-<a href="https://immunefi.com"><img align="left" src="https://github.com/immunefi-team/forge-poc-templates/blob/assets/imgs/Logo_white@3x.png"/></a>
+<a href="https://immunefi.com"><img src="https://github.com/immunefi-team/forge-poc-templates/blob/assets/imgs/Logo_white@3x.png"/></a>
+
+[![GitHub issues](https://img.shields.io/github/issues/immunefi-team/forge-poc-templates.svg)](https://GitHub.com/Naereen/StrapDown.js/issues/)
+[![GitHub forks](https://badgen.net/github/forks/immunefi-team/forge-poc-templates/)](https://GitHub.com/immunefi-team/forge-poc-templates/network/)
+[![GitHub stars](https://badgen.net/github/stars/immunefi-team/forge-poc-templates)](https://GitHub.com/immunefi-team/forge-poc-templates/stargazers/)
+[![LGPLv3 license](https://img.shields.io/badge/License-LGPLv3-blue.svg)](./LICENSE)
+
+[![Immunefi Discord](https://badgen.net/discord/online-members/immunefi)](https://discord.gg/immunefi)
+[![Twitter](https://badgen.net/badge/icon/twitter?icon=twitter&label)](https://twitter.com/immunefi)
+[![Medium](https://badgen.net/badge/icon/medium?icon=medium&label)](https://medium.com/immunefi)
+[![YouTube](https://badgen.net/badge/icon/YouTube?icon=googleplay&label)](https://www.youtube.com/channel/UCmulw2BHpP6IiBM0Re0yP5Q)
+
 
 This is a collaborative repository that aims to provide reusable and easily modifiable PoC examples for a variety of EVM based vulnerabilities. This will increase the quality of bug reports and allow whitehats an easier, faster way to create PoCs and verify their claims. These templates are intended for testing proof of concepts in local forks for submission to bug bounty programs. Any other use is explicitly prohibited.
 
