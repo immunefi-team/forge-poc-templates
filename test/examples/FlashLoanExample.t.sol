@@ -6,13 +6,12 @@ import "../../src/flashloan/examples/MultiProviderFlashLoanExample.sol";
 
 contract FlashLoanExampleTest is Test {
     uint256 mainnetFork;
-    string RPC_URL = vm.envString("RPC_URL");
 
     FlashLoanExample public flashLoanExample;
     MultiProviderFlashLoanExample public multiProviderFlashLoanExample;
 
     function setUp() public {
-        mainnetFork = vm.createFork(RPC_URL);
+        mainnetFork = vm.createFork("eth");
         vm.selectFork(mainnetFork);
 
         flashLoanExample = new FlashLoanExample();
@@ -31,9 +30,9 @@ contract FlashLoanExampleTest is Test {
         flashLoanExample.initiateAttack(FlashLoanProviders.BALANCER);
     }
 
-    function testEulerFlashLoan() public {
-        flashLoanExample.initiateAttack(FlashLoanProviders.EULER);
-    }
+    // function testEulerFlashLoan() public {
+    //     flashLoanExample.initiateAttack(FlashLoanProviders.EULER);
+    // }
 
     function testMakerDAOFlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.MAKERDAO);

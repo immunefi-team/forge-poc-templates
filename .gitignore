@@ -10,5 +10,8 @@ out/
 # Dotenv file
 .env
 
+# Mac file
+.DS_Store
+
 # ignore directories
 .history

@@ -6,12 +6,11 @@ import "../src/PriceManipulationTemplate.sol";
 
 contract PriceManipulationTest is Test {
     uint256 mainnetFork;
-    string RPC_URL = vm.envString("RPC_URL");
 
     PriceManipulationTemplate public attackContract;
 
     function setUp() public {
-        mainnetFork = vm.createFork(RPC_URL);
+        mainnetFork = vm.createFork("eth");
         vm.selectFork(mainnetFork);
 
         attackContract = new PriceManipulationTemplate();

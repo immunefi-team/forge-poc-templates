@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "forge-std/interfaces/IERC20.sol";
 
 library EulerFlashLoan {
     /**
