@@ -49,12 +49,12 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             // Borrow wstETH
             takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.wstETH, 50000e18);
 
-            // Unrawp wstETH and swap stETH to Ether to pay back balancer loan
+            // Unrawp wstETH and swap stETH to Ether to pay back AAVEV3 loan
             IWrapped(address(EthereumTokens.wstETH)).unwrap(EthereumTokens.wstETH.balanceOf(address(this)));
             EthereumTokens.stETH.approve(address(curvePool), type(uint256).max);
             curvePool.exchange(1, 0, EthereumTokens.stETH.balanceOf(address(this)), 0);
 
-            // Wrap Ether to pay back balancer loan
+            // Wrap Ether to pay back AAVEV3 loan
             IWrappedEther(address(EthereumTokens.WETH)).deposit{value: address(this).balance}();
             console.log("---------------------------------------------------------------------------");
             console.log("Pay back WETH flash loan");
