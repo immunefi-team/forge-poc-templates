@@ -48,7 +48,6 @@ forge test -vv --match-path test/[test_name]
 
 | Variable          | Example                                        |
 | ----------------- | ---------------------------------------------- |
-| RPC_URL           | https://eth-mainnet.alchemyapi.io/v2/[API_KEY] |
 | ETHERSCAN_API_KEY | [API_KEY]                                      |
 
 ## Template Categories 🪲
