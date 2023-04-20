@@ -11,7 +11,7 @@ contract FlashLoanExample is FlashLoan, Tokens {
     function initiateAttack(FlashLoanProviders flp) external {
         _flp = flp;
         uint256 fee;
-        if (flp == FlashLoanProviders.AAVEV1 || flp == FlashLoanProviders.AAVEV3) {
+        if (flp == FlashLoanProviders.AAVEV1 || flp == FlashLoanProviders.AAVEV2 ||flp == FlashLoanProviders.AAVEV3) {
             fee = 900000000000000;
         } else if (flp == FlashLoanProviders.UNISWAPV2) {
             fee = 3009027081243732;
