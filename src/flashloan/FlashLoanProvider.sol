@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import {AAVEV1FlashLoan} from "./lib/AAVEV1FlashLoan.sol";
+import {AAVEV2FlashLoan} from "./lib/AAVEV2FlashLoan.sol";
 import {AAVEV3FlashLoan} from "./lib/AAVEV3FlashLoan.sol";
 import {EulerFlashLoan} from "./lib/EulerFlashLoan.sol";
 import {BalancerFlashLoan} from "./lib/BalancerFlashLoan.sol";
@@ -11,6 +12,7 @@ import {UniswapV3FlashLoan} from "./lib/UniswapV3FlashLoan.sol";
 enum FlashLoanProviders {
     NONE,
     AAVEV1,
+    AAVEV2,
     AAVEV3,
     BALANCER,
     EULER,
@@ -31,6 +33,8 @@ library FlashLoanProvider {
             BalancerFlashLoan.takeFlashLoan(tokens, amounts);
         } else if (flp == FlashLoanProviders.UNISWAPV2) {
             UniswapV2FlashLoan.takeFlashLoan(tokens, amounts);
+        } else if (flp == FlashLoanProviders.AAVEV2) {
+            AAVEV3FlashLoan.takeFlashLoan(tokens, amounts);
         } else if (flp == FlashLoanProviders.AAVEV3) {
             AAVEV3FlashLoan.takeFlashLoan(tokens, amounts);
         } else {
@@ -47,6 +51,8 @@ library FlashLoanProvider {
     function takeFlashLoan(FlashLoanProviders flp, address token, uint256 amount) internal {
         if (flp == FlashLoanProviders.AAVEV1) {
             AAVEV1FlashLoan.takeFlashLoan(token, amount);
+        } else if (flp == FlashLoanProviders.AAVEV2) {
+            AAVEV2FlashLoan.takeFlashLoan(token, amount);
         } else if (flp == FlashLoanProviders.AAVEV3) {
             AAVEV3FlashLoan.takeFlashLoan(token, amount);
         } else if (flp == FlashLoanProviders.BALANCER) {
@@ -71,6 +77,8 @@ library FlashLoanProvider {
     function payFlashLoan(FlashLoanProviders flp) internal {
         if (flp == FlashLoanProviders.AAVEV1) {
             AAVEV1FlashLoan.payFlashLoan(msg.data);
+        } else if (flp == FlashLoanProviders.AAVEV2) {
+            AAVEV2FlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.AAVEV3) {
             AAVEV3FlashLoan.payFlashLoan(msg.data);
         } else if (flp == FlashLoanProviders.BALANCER) {
@@ -95,6 +103,8 @@ library FlashLoanProvider {
     function callbackFunctionSelector(FlashLoanProviders flp) internal pure returns (bytes4) {
         if (flp == FlashLoanProviders.AAVEV1) {
             return AAVEV1FlashLoan.CALLBACK_SELECTOR;
+        } else if (flp == FlashLoanProviders.AAVEV2) {
+            return AAVEV2FlashLoan.CALLBACK_SELECTOR;
         } else if (flp == FlashLoanProviders.AAVEV3) {
             return AAVEV3FlashLoan.CALLBACK_SELECTOR;
         } else if (flp == FlashLoanProviders.BALANCER) {
@@ -117,6 +127,8 @@ library FlashLoanProvider {
     function returnData(FlashLoanProviders flp) internal pure returns (bytes memory) {
         if (flp == FlashLoanProviders.MAKERDAO) {
             return MakerDAOFlashLoan.RETURN_DATA;
+        } else if (flp == FlashLoanProviders.AAVEV2) {
+            return AAVEV2FlashLoan.RETURN_DATA;
         } else if (flp == FlashLoanProviders.AAVEV3) {
             return AAVEV3FlashLoan.RETURN_DATA;
         }
