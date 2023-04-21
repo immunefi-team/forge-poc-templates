@@ -70,10 +70,21 @@ forge test -vv --match-path test/[test_name]
 
  - [Hundred Finance Hack](https://medium.com/immunefi/a-poc-of-the-hundred-finance-heist-4121f23a098) by [@hephyrius](https://twitter.com/hephyrius)
  - [Omni Protocol Hack](https://medium.com/immunefi/hack-analysis-omni-protocol-july-2022-2d35091a0109) by [@realgmhacker](https://twitter.com/realgmhacker)
+ - [Euler Exploit PoC](https://github.com/iphelix/euler-exploit-poc) by [@iphelix](https://twitter.com/_iphelix)
 
 ## Contribute 📝
 
 We sincerely appreciate contributions to Immunefi's templates. Please take the time to review the [contribution guidelines](.github/CONTRIBUTING.md) and [code of conduct](.github/CODE_OF_CONDUCT.md) to ensure your contributions are merged as soon as possible.
+
+## Contributors
+* [@unsafe_call](https://twitter.com/unsafe_call)
+* [@Omikomikomik](https://twitter.com/omikomikomik)
+* [@ArbazKiraak](https://twitter.com/ArbazKiraak)
+* [@AdrianHetman](https://twitter.com/adrianhetman)
+* [@Pep1nn](https://twitter.com/Pep1nn)
+* [@realgmhacker](https://twitter.com/realgmhacker)
+* [@_iphelix](https://twitter.com/_iphelix)
+
 
 ## All set!
 

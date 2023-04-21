@@ -10,6 +10,8 @@ This template is for getting started with attack PoCs which use flash loans. The
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
 | Ethereum | AAVEV1     | [AAVEV1FlashLoan](./lib/AAVEV1FlashLoan.sol) |
+| Ethereum | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
+| Ethereum | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 | Ethereum | Euler      | [EulerFlashLoan](./lib/EulerFlashLoan.sol) |
 | Ethereum | Balancer   | [BalancerFlashLoan](./lib/BalancerFlashLoan.sol) |
 | Ethereum | MakerDAO   | [MakerDAOFlashLoan](./lib/MakerDAOFlashLoan.sol) |
@@ -58,6 +60,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
+| Ethereum | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
 | Polygon | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
@@ -80,6 +83,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
+| Ethereum | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
 | Avalanche | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
