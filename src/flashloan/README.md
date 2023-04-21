@@ -60,7 +60,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
+| Polygon | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
 | Polygon | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
@@ -83,7 +83,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 
 | Network | Protocol | Library |
 | ---------- | -------- | ------------------------------------------------------- |
-| Ethereum | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
+| Avalanche | AAVEV2     | [AAVEV2FlashLoan](./lib/AAVEV2FlashLoan.sol) |
 | Avalanche | AAVEV3     | [AAVEV3FlashLoan](./lib/AAVEV3FlashLoan.sol) |
 
 </details>
