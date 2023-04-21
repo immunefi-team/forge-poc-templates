@@ -22,6 +22,10 @@ contract FlashLoanExampleTest is Test {
         flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV1);
     }
 
+    function testAAVEV2FlashLoan() public {
+        flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV2);
+    }
+
     function testAAVEV3FlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV3);
     }
