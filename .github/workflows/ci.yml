@@ -4,6 +4,10 @@ on:
   push:
     branches-ignore:
       - 'assets' 
+  pull_request:
+    branches-ignore:
+      - 'assets' 
+
 
 env:
   FOUNDRY_PROFILE: ci
