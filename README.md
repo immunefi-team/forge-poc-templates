@@ -19,9 +19,12 @@ Foundry is required to use this repository. See: https://book.getfoundry.sh/gett
 ### Getting Started 📖
 
 1️⃣ First, set up the interfaces for the protocol you will be creating a PoC for. You can create your own interface contracts, or download the contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. Define the `ETHERSCAN_API_KEY` environment variable, then call
+
+### Method: 1 - Download the contracts
 ```
 cast etherscan-source [address] -d src/external
 ```
+
 This will download the contracts' source code to `src/external`, where you can simply import any contract interfaces by adding the following to the top of your PoC.
 > ##### *🚨 When downloading source code from deployed contracts, there may be remappings that need to be modified for the source files to compile. Add any necessary remappings to [`remappings.txt`](./remappings.txt).
 ```
@@ -29,6 +32,21 @@ import "./external/ExampleProtocol/ExampleEtherscanContract.sol"
 ```
 Optionally, append `--chain [chain_name]` to specify a chain other than the Ethereum mainnet to download contracts from. **Note:** you will have to update your Etherscan API key when switching between different chains.
 <br>
+
+### Method: 2 - Create the Interface of the smart contract to interact with (Recommended)
+
+Instead of importing the smart contract itself directly, you can use the Interface features added as of solidity 0.6x
+
+```sh
+cast i [address] -o src/external/interfaces/IExample.sol -n Iexample
+```
+
+```
+import "./external/interfaces/IExample.sol"
+```
+> see also: [Abi to sol](https://gnidan.github.io/abi-to-sol/)
+
+
 
 2️⃣ Pick a PoC [template](#template-categories-) and modify the template file which extends* from the corresponding source contract. Within the template contract, there will be comments describing how you can modify the PoC to fit your vulnerability. 
 
