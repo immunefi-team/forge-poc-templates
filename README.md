@@ -18,40 +18,45 @@ Foundry is required to use this repository. See: https://book.getfoundry.sh/gett
 
 ### Getting Started 📖
 
-1️⃣ First, set up the interfaces for the protocol you will be creating a PoC for. You can create your own interface contracts, or download the contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. Define the `ETHERSCAN_API_KEY` environment variable, then call
+1️⃣ First, set up the interfaces for the protocol you will be creating a PoC for. You can create your own interface contracts, create an interface automatically with Foundry's [`cast interface`](https://book.getfoundry.sh/reference/cast/cast-interface) commandline tool, or download the full source code for contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. To use the `cast` commands, define the `ETHERSCAN_API_KEY` environment variable, then call cast with either of the following methods:
 
-### Method: 1 - Download the contracts
+### a. Download the interface (recommended)
+Rather than copying the entire smart contract code itself, you can use the Interface feature introduced in Solidity version 0.6.x to define which functions a contract implements. To do so automatically, run the following command in the console:
+
+```sh
+cast interface [address] -o src/external/interfaces/IExample.sol -n IExample
 ```
+
+Foundry automatically creates the interface based on the externally available functions according to the contracts ABI. Then import the newly created interface contract in your PoC:
+
+```js
+import "./external/interfaces/IExample.sol";
+```
+> see also: [ABI to sol](https://gnidan.github.io/abi-to-sol/)
+
+
+### b. Download the entire source code
+Alternatively, you can download the entire source code from Etherscan like block explorers using the following command:
+> ##### *🚨 When downloading source code from deployed contracts, there may be remappings that need to be modified for the source files to compile. Add any necessary remappings to [`remappings.txt`](./remappings.txt).
+```sh
 cast etherscan-source [address] -d src/external
 ```
 
-This will download the contracts' source code to `src/external`, where you can simply import any contract interfaces by adding the following to the top of your PoC.
-> ##### *🚨 When downloading source code from deployed contracts, there may be remappings that need to be modified for the source files to compile. Add any necessary remappings to [`remappings.txt`](./remappings.txt).
-```
-import "./external/ExampleProtocol/ExampleEtherscanContract.sol"
+This will download the contracts' entire source code to `src/external`, where you can import any contract interfaces by adding the following to the top of your PoC:
+```js
+import "./external/ExampleProtocol/ExampleEtherscanContract.sol";
 ```
 Optionally, append `--chain [chain_name]` to specify a chain other than the Ethereum mainnet to download contracts from. **Note:** you will have to update your Etherscan API key when switching between different chains.
 <br>
 
-### Method: 2 - Create the Interface of the smart contract to interact with (Recommended)
 
-Instead of importing the smart contract itself directly, you can use the Interface features added as of solidity 0.6x
-
-```sh
-cast i [address] -o src/external/interfaces/IExample.sol -n Iexample
-```
-
-```
-import "./external/interfaces/IExample.sol"
-```
-> see also: [Abi to sol](https://gnidan.github.io/abi-to-sol/)
-
-
-
+---
 2️⃣ Pick a PoC [template](#template-categories-) and modify the template file which extends* from the corresponding source contract. Within the template contract, there will be comments describing how you can modify the PoC to fit your vulnerability. 
 
 > #####  *🚨 When extending from an abstract contract, there will be functions which must be defined. Implement any undefined functions with your attack.
 <br>
+
+---
 
 3️⃣ Once you have completed your attack contract, navigate to the corresponding [test](./test) file, import your attack contract, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more the setup differs from the mainnet state, the harder it is for projects to verify your claims. Now, you're ready to run your PoC!
 
