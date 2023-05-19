@@ -107,6 +107,7 @@ We sincerely appreciate contributions to Immunefi's templates. Please take the t
 * [@Pep1nn](https://twitter.com/Pep1nn)
 * [@realgmhacker](https://twitter.com/realgmhacker)
 * [@_iphelix](https://twitter.com/_iphelix)
+* [0xlead](https://github.com/0xlead)
 
 
 ## All set!
