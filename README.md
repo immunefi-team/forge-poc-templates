@@ -94,6 +94,7 @@ forge test -vv --match-path test/[test_name]
  - [Hundred Finance Hack](https://medium.com/immunefi/a-poc-of-the-hundred-finance-heist-4121f23a098) by [@hephyrius](https://twitter.com/hephyrius)
  - [Omni Protocol Hack](https://medium.com/immunefi/hack-analysis-omni-protocol-july-2022-2d35091a0109) by [@realgmhacker](https://twitter.com/realgmhacker)
  - [Euler Exploit PoC](https://github.com/iphelix/euler-exploit-poc) by [@iphelix](https://twitter.com/_iphelix)
+ - [DFX Finance Bugfix Review](./pocs/DFXFinanceBugfixReview.sol) by [@unsafe_call](https://twitter.com/unsafe_call)
 
 ## Contribute 📝
 
