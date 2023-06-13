@@ -34,7 +34,11 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             console.log("stETH :", EthereumTokens.stETH.balanceOf(address(this)));
 
             manipulatePrice(
-                PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, flashLoanAmount, flashLoanAmount
+                PriceManipulationProviders.CURVE,
+                EthereumTokens.ETH,
+                EthereumTokens.stETH,
+                flashLoanAmount,
+                flashLoanAmount
             );
 
             console.log("---------------------------------------------------------------------------");
