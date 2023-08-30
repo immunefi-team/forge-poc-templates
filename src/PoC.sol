@@ -3,10 +3,7 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 
-import {
-    Tokens,
-    IERC20
-} from "./tokens/Tokens.sol";
+import {Tokens, IERC20} from "./tokens/Tokens.sol";
 
 struct TokenBalance {
     IERC20 token;
