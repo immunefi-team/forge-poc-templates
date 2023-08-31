@@ -20,10 +20,10 @@ contract PoC is Test, Tokens {
      * @notice snapshot the balance of the attacker for the specified tokens
      * @param _user the user to snapshot the balance of
      * @param _tokens the list of tokens to snapshot the balance of
-     * @return tokenBalances the list of token balances
+     * @return index the index of the balance snapshot
      */
     function snapshotAndPrint(address _user, IERC20[] memory _tokens) public returns (uint256 index) {
-        tokenBalances = new TokenBalance[](_tokens.length);
+        TokenBalance[] memory tokenBalances = new TokenBalance[](_tokens.length);
         index = tokensBalance[_user].length;
         tokensBalance[_user].push();
         for (uint256 i = 0; i < _tokens.length; i++) {
