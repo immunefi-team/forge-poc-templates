@@ -24,6 +24,8 @@ contract DFXFinanceBugfixReviewTest is PoC {
 
         setAlias(address(curve_pool), "curve_pool");
         setAlias(address(attackContract), "Attacker");
+
+        console.log("\n>>> Initial conditions");
     }
 
     function testAttack() public snapshot(address(attackContract), tokens) snapshot(address(curve_pool), tokens) {

@@ -16,9 +16,15 @@ contract HundredFinanceHackTest is PoC {
     function setUp() public {
         mainnetFork = vm.createFork("gnosis", 21120000);
         vm.selectFork(mainnetFork);
+        
         hundredFinanceHack = new HundredFinanceHack();
+
         tokens.push(GnosisTokens.USDC);
         tokens.push(husd);
+
+        setAlias(address(hundredFinanceHack), "Attacker");
+
+        console.log("\n>>> Initial conditions");
     }
 
     function testFlashLoan() public snapshot(address(hundredFinanceHack), tokens) {

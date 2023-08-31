@@ -15,6 +15,8 @@ contract PoC is Test, Tokens {
     mapping(address => TokenBalance[][]) public tokensBalance;
     // For resolving addresses to aliases
     mapping(address => string) public names;
+    // Level of information to print
+    uint8 logLevel;
 
     /**
      * @notice snapshot the balance of the attacker for the specified tokens
@@ -77,10 +79,12 @@ contract PoC is Test, Tokens {
      */
     function printBalance(address _user, uint256 _index) public view {
         string memory resolvedAddress = _resolveAddress(_user);
-        console.log("~~~ Balance of [%s] at block #%s", resolvedAddress, block.number);
-        console.log("-------------------------------------------------------------------------------");
-        console.log("             Token address                    |       Symbol  |       Balance");
-        console.log("-------------------------------------------------------------------------------");
+        if (logLevel == 1) {
+            console.log("~~~ Balance of [%s] at block #%s", resolvedAddress, block.number);
+            console.log("-----------------------------------------------------------------------------------------");
+            console.log("             Token address                    |       Symbol  |       Balance");
+            console.log("-----------------------------------------------------------------------------------------");
+        }
         for (uint256 j = 0; j < tokensBalance[_user][_index].length; j++) {
             uint256 balance = uint256(tokensBalance[_user][_index][j].amount);
 
@@ -97,9 +101,14 @@ contract PoC is Test, Tokens {
                 : "NATIVE";
 
             // Generate template string
-            string memory template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
-
-            console.log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part);
+            string memory template;
+            if (logLevel == 1) {
+                template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
+                console.log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part);
+            } else if (logLevel == 0) {
+                template = string.concat("--- ", symbol, " balance of [%s]:\t%s.%s", " ---");
+                console.log(template, resolvedAddress, integer_part, fractional_part);
+            }
         }
         console.log();
     }
@@ -111,9 +120,9 @@ contract PoC is Test, Tokens {
     function printProfit(address _user) public view {
         string memory resolvedAddress = _resolveAddress(_user);
         console.log("~~~ Profit for [%s]", resolvedAddress);
-        console.log("-------------------------------------------------------------------------------");
+        console.log("-----------------------------------------------------------------------------------------");
         console.log("             Token address                    |       Symbol  |       Profit");
-        console.log("-------------------------------------------------------------------------------");
+        console.log("-----------------------------------------------------------------------------------------");
         for (uint256 j = 0; j < tokensBalance[_user][0].length; j++) {
             int256 profit = tokensBalance[_user][tokensBalance[_user].length - 1][j].amount
                 - int256(tokensBalance[_user][0][j].amount);
@@ -152,6 +161,14 @@ contract PoC is Test, Tokens {
     }
 
     /**
+     * @notice sets the log level
+     * @param _logLevel the log level to set
+     */
+    function setLogLevel(uint8 _logLevel) public {
+        logLevel = _logLevel;
+    }
+
+    /**
      * @notice resolves the address to a name if it has one
      * @param _user the address to resolve
      * @return the resolved alias
@@ -174,7 +191,7 @@ contract PoC is Test, Tokens {
             s[2 * i] = char(hi);
             s[2 * i + 1] = char(lo);
         }
-        return string(s);
+        return string.concat("0x", string(s));
     }
 
     /**
