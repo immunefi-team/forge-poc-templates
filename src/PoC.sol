@@ -22,12 +22,9 @@ contract PoC is Test, Tokens {
      * @param _tokens the list of tokens to snapshot the balance of
      * @return tokenBalances the list of token balances
      */
-    function snapshotAndPrint(address _user, IERC20[] memory _tokens)
-        public
-        returns (TokenBalance[] memory tokenBalances)
-    {
+    function snapshotAndPrint(address _user, IERC20[] memory _tokens) public returns (uint256 index) {
         tokenBalances = new TokenBalance[](_tokens.length);
-        uint256 index = tokensBalance[_user].length;
+        index = tokensBalance[_user].length;
         tokensBalance[_user].push();
         for (uint256 i = 0; i < _tokens.length; i++) {
             uint256 tokenBalance = address(_tokens[i]) != address(0x0) ? _tokens[i].balanceOf(_user) : _user.balance;
@@ -88,13 +85,17 @@ contract PoC is Test, Tokens {
             uint256 balance = uint256(tokensBalance[_user][_index][j].amount);
 
             // Normalize to token decimals
-            uint256 d = tokensBalance[_user][_index][j].token != IERC20(address(0x0)) ? tokensBalance[_user][_index][j].token.decimals() : 18;
+            uint256 d = tokensBalance[_user][_index][j].token != IERC20(address(0x0))
+                ? tokensBalance[_user][_index][j].token.decimals()
+                : 18;
             uint256 integer_part = balance / (10 ** d);
             uint256 fractional_part = balance % (10 ** d);
 
             // Get token symbol
-            string memory symbol = tokensBalance[_user][_index][j].token != IERC20(address(0x0)) ? tokensBalance[_user][_index][j].token.symbol() : "NATIVE";
-            
+            string memory symbol = tokensBalance[_user][_index][j].token != IERC20(address(0x0))
+                ? tokensBalance[_user][_index][j].token.symbol()
+                : "NATIVE";
+
             // Generate template string
             string memory template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
 
@@ -122,12 +123,16 @@ contract PoC is Test, Tokens {
             string memory sign = profit < 0 ? "-" : "";
 
             // Normalize to token decimals
-            uint256 d = tokensBalance[_user][0][j].token != IERC20(address(0x0)) ? tokensBalance[_user][0][j].token.decimals() : 18;
+            uint256 d = tokensBalance[_user][0][j].token != IERC20(address(0x0))
+                ? tokensBalance[_user][0][j].token.decimals()
+                : 18;
             uint256 integer_part = abs_profit / (10 ** d);
             uint256 fractional_part = abs_profit % (10 ** d);
 
             // Get token symbol
-            string memory symbol = tokensBalance[_user][0][j].token != IERC20(address(0x0)) ? tokensBalance[_user][0][j].token.symbol() : "NATIVE";
+            string memory symbol = tokensBalance[_user][0][j].token != IERC20(address(0x0))
+                ? tokensBalance[_user][0][j].token.symbol()
+                : "NATIVE";
 
             // Generate template string
             string memory template = string.concat("%s\t|\t", symbol, "\t|\t", sign, "%s.%s");
@@ -162,12 +167,12 @@ contract PoC is Test, Tokens {
      */
     function toAsciiString(address x) internal pure returns (string memory) {
         bytes memory s = new bytes(40);
-        for (uint i = 0; i < 20; i++) {
-            bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));
+        for (uint256 i = 0; i < 20; i++) {
+            bytes1 b = bytes1(uint8(uint256(uint160(x)) / (2 ** (8 * (19 - i)))));
             bytes1 hi = bytes1(uint8(b) / 16);
             bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));
-            s[2*i] = char(hi);
-            s[2*i+1] = char(lo);            
+            s[2 * i] = char(hi);
+            s[2 * i + 1] = char(lo);
         }
         return string(s);
     }
