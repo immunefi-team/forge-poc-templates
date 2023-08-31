@@ -11,7 +11,7 @@ contract DFXFinanceBugfixReview is PoC {
     IERC20[] tokens;
 
     function initiateAttack() external {
-        console.log(">> Initiate attack\n");
+        console.log(">>> Initiate attack\n");
 
         tokens.push(PolygonTokens.USDC);
         tokens.push(EURS);
@@ -25,6 +25,7 @@ contract DFXFinanceBugfixReview is PoC {
     }
 
     function _executeAttack() internal {
+        console.log(PolygonTokens.USDC.balanceOf(address(this)));
         console.log(">>> Execute attack\n");
 
         // Approve curve pool to use funds

