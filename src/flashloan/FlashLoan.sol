@@ -23,12 +23,7 @@ abstract contract FlashLoan {
     function takeFlashLoan(FlashLoanProviders flp, IERC20[] memory tokens, uint256[] memory amounts) internal virtual {
         address[] memory tkns = new address[](tokens.length);
         for (uint256 i = 0; i < tokens.length; i++) {
-            console.log(
-                "\n>>> Taking flashloan of %s %s from [%s]",
-                amounts[i],
-                tokens[i].symbol(),
-                flp.name()
-            );
+            console.log("\n>>> Taking flashloan of %s %s from [%s]", amounts[i], tokens[i].symbol(), flp.name());
             tkns[i] = address(tokens[i]);
         }
         _flps.push(flp);
@@ -46,9 +41,7 @@ abstract contract FlashLoan {
         virtual
     {
         for (uint256 i = 0; i < tokens.length; i++) {
-            console.log(
-                "\n>>> Taking flashloan of %s %s from [%s]", amounts[i], tokens[i], flp.name()
-            );
+            console.log("\n>>> Taking flashloan of %s %s from [%s]", amounts[i], tokens[i], flp.name());
         }
         _flps.push(flp);
         flp.takeFlashLoan(tokens, amounts);

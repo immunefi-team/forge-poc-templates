@@ -16,7 +16,7 @@ contract HundredFinanceHackTest is PoC {
     function setUp() public {
         mainnetFork = vm.createFork("gnosis", 21120000);
         vm.selectFork(mainnetFork);
-        
+
         hundredFinanceHack = new HundredFinanceHack();
 
         tokens.push(GnosisTokens.USDC);

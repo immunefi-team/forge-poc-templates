@@ -46,7 +46,7 @@ library FlashLoanProvider {
             return "None";
         }
     }
-    
+
     /**
      * @dev Allows a user to take a flash loan from a specified FlashloanProvider
      * @param flp The flash loan provider to take the loan from
