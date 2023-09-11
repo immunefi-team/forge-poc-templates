@@ -25,7 +25,7 @@ abstract contract Reentrancy {
      * @dev Function run when target contract makes external call back to attack contract
      */
     function _reentrancyCallback() internal virtual {
-        console.log(">>> Execute attack");
+        console.log("\n>>> Execute attack");
         _executeAttack();
     }
 

@@ -23,6 +23,31 @@ enum FlashLoanProviders {
 
 library FlashLoanProvider {
     /**
+     * @dev Returns the name of the specified flash loan provider
+     */
+    function name(FlashLoanProviders flp) internal pure returns (string memory) {
+        if (flp == FlashLoanProviders.AAVEV1) {
+            return "AAVEV1";
+        } else if (flp == FlashLoanProviders.AAVEV2) {
+            return "AAVEV2";
+        } else if (flp == FlashLoanProviders.AAVEV3) {
+            return "AAVEV3";
+        } else if (flp == FlashLoanProviders.BALANCER) {
+            return "Balancer";
+        } else if (flp == FlashLoanProviders.EULER) {
+            return "Euler";
+        } else if (flp == FlashLoanProviders.MAKERDAO) {
+            return "MakerDAO";
+        } else if (flp == FlashLoanProviders.UNISWAPV2) {
+            return "UniswapV2";
+        } else if (flp == FlashLoanProviders.UNISWAPV3) {
+            return "UniswapV3";
+        } else {
+            return "None";
+        }
+    }
+
+    /**
      * @dev Allows a user to take a flash loan from a specified FlashloanProvider
      * @param flp The flash loan provider to take the loan from
      * @param tokens The addresses of the tokens to borrow

