@@ -18,16 +18,19 @@ Foundry is required to use this repository. See: https://book.getfoundry.sh/gett
 
 ### Getting Started 📖
 
-1️⃣ First, initialize a forge repository with the attack template you would like to use. Passing `default` as the branch will initialize a minimal forge repository with the correct dependencies installed. See the [template categories](#template-categories-) below for a list of templates which can be chosen.
+### 1️⃣ Initialize Forge repository
+
+First, initialize a forge repository with the attack template you would like to use. Passing `default` as the branch will initialize a minimal forge repository with the correct dependencies installed. See the [template categories](#template-categories-) below for a list of templates which can be chosen.
 ```
 forge init --template immunefi-team/forge-poc-templates --branch [template]
 ```
 
-2️⃣ Download the contract interfaces
+---
+### 2️⃣ Download the contract interfaces
 
-You can create your own interface contracts, create an interface automatically with Foundry's [`cast interface`](https://book.getfoundry.sh/reference/cast/cast-interface) commandline tool, or download the full source code for contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. To use the `cast` commands, define the `ETHERSCAN_API_KEY` environment variable, then call cast with either of the following methods:
+You can create your own interface contracts, create an interface automatically with Foundry's [`cast interface`](https://book.getfoundry.sh/reference/cast/cast-interface) commandline tool (a), or download the full source code for contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool (b). To use the `cast` commands, define the `ETHERSCAN_API_KEY` environment variable, then call cast with either of the following methods:
 
-### a. Download the interface (recommended)
+#### a. Download the interface (recommended)
 Rather than copying the entire smart contract code itself, you can use the Interface feature introduced in Solidity version 0.6.x to define which functions a contract implements. To do so automatically, run the following command in the console:
 
 ```sh
@@ -42,7 +45,7 @@ import "./external/interfaces/IExample.sol";
 > see also: [ABI to sol](https://gnidan.github.io/abi-to-sol/)
 
 
-### b. Download the entire source code
+#### b. Download the entire source code
 Alternatively, you can download the entire source code from Etherscan like block explorers using the following command:
 > ##### *🚨 When downloading source code from deployed contracts, there may be remappings that need to be modified for the source files to compile. Add any necessary remappings to [`remappings.txt`](./remappings.txt).
 ```sh
@@ -58,7 +61,8 @@ Optionally, append `--chain [chain_name]` to specify a chain other than the Ethe
 
 
 ---
-3️⃣ Once you have created your attack contract, import your attack contract into the PoCTest.sol, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack.
+### 3️⃣ Write the test
+Once you have created your attack contract, import your attack contract into the PoCTest.sol, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack.
 
 Try to keep your setup as **close** to mainnet state as possible. The more the setup differs from the mainnet state, the harder it is for projects to verify your claims. Execute the attack in the `testAttack()` function.
 
@@ -66,7 +70,7 @@ The test should extend the [PoC](./src/PoC.sol) contract, which introduces funct
 
 ### Running a PoC 🚀
 
-To use a template, run the following in the console:
+To run a test, use the following command in the console:
 ```
 forge test -vv --match-path test/[test_name]
 ```
