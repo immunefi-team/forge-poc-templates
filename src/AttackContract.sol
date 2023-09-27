@@ -5,7 +5,7 @@ import "@immunefi/src/PoC.sol";
 
 contract AttackContract is PoC {
     function initializeAttack() public {
-        console.log("\n>>> Initalize attack");
+        console.log("\n>>> Initialize attack");
         _executeAttack();
     }
 
