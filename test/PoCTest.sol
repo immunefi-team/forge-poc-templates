@@ -16,11 +16,10 @@ contract PoCTest is PoC {
         attackContract = new AttackContract();
 
         // Fund attacker contract
-        deal(EthereumTokens.USDC, address(attackContract), 1 * 10 ** 10);
+        // e.g. deal(EthereumTokens.USDC, address(attackContract), 1 * 10 ** 10);
 
         // Tokens to track during snapshotting
-        tokens.push(EthereumTokens.USDC);
-        tokens.push(EthereumTokens.cDAI);
+        // e.g. tokens.push(EthereumTokens.USDC);
 
         setAlias(address(attackContract), "Attacker");
 

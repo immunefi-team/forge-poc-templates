@@ -11,7 +11,6 @@ contract AttackContract is PoC {
 
     function _executeAttack() internal {
         console.log("\n>>> Execute attack");
-        EthereumTokens.USDC.transfer(address(0xdead), 1 * 10 ** 10);
         _completeAttack();
     }
     
