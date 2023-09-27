@@ -58,7 +58,9 @@ Optionally, append `--chain [chain_name]` to specify a chain other than the Ethe
 
 
 ---
-3️⃣ Once you have created your attack contract, import your attack contract into the PoCTest.sol, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more the setup differs from the mainnet state, the harder it is for projects to verify your claims. Execute the attack in the `testAttack()` function.
+3️⃣ Once you have created your attack contract, import your attack contract into the PoCTest.sol, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack.
+
+Try to keep your setup as **close** to mainnet state as possible. The more the setup differs from the mainnet state, the harder it is for projects to verify your claims. Execute the attack in the `testAttack()` function.
 
 The test should extend the [PoC](./src/PoC.sol) contract, which introduces functionality to automatically snapshot and print account balances before and after a test. Use the modifier `snapshot(address account, IERC20[] tokens)` on the `test*` function to automatically print information such as pre-attack balances, post-attack balances, and profit. Passing a token with `address(0x0)` corresponds to the native token of the chain.
 
