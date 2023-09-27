@@ -18,7 +18,14 @@ Foundry is required to use this repository. See: https://book.getfoundry.sh/gett
 
 ### Getting Started 📖
 
-1️⃣ First, set up the interfaces for the protocol you will be creating a PoC for. You can create your own interface contracts, create an interface automatically with Foundry's [`cast interface`](https://book.getfoundry.sh/reference/cast/cast-interface) commandline tool, or download the full source code for contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. To use the `cast` commands, define the `ETHERSCAN_API_KEY` environment variable, then call cast with either of the following methods:
+1️⃣ First, initialize a forge repository with the attack template you would like to use. Passing `default` as the branch will initialize a minimal forge repository with the correct dependencies installed. See the [template categories](#template-categories-) below for a list of templates which can be chosen.
+```
+forge init --template immunefi-team/forge-poc-templates --branch [template]
+```
+
+2️⃣ Download the contract interfaces
+
+You can create your own interface contracts, create an interface automatically with Foundry's [`cast interface`](https://book.getfoundry.sh/reference/cast/cast-interface) commandline tool, or download the full source code for contracts for the protocol using Foundry's [`cast etherscan-source`](https://book.getfoundry.sh/reference/cast/cast-etherscan-source) command line tool. To use the `cast` commands, define the `ETHERSCAN_API_KEY` environment variable, then call cast with either of the following methods:
 
 ### a. Download the interface (recommended)
 Rather than copying the entire smart contract code itself, you can use the Interface feature introduced in Solidity version 0.6.x to define which functions a contract implements. To do so automatically, run the following command in the console:
@@ -51,14 +58,9 @@ Optionally, append `--chain [chain_name]` to specify a chain other than the Ethe
 
 
 ---
-2️⃣ Pick a PoC [template](#template-categories-) and modify the template file which extends* from the corresponding source contract. Within the template contract, there will be comments describing how you can modify the PoC to fit your vulnerability. 
+3️⃣ Once you have created your attack contract, import your attack contract into the PoCTest.sol, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more the setup differs from the mainnet state, the harder it is for projects to verify your claims. Execute the attack in the `testAttack()` function.
 
-> #####  *🚨 When extending from an abstract contract, there will be functions which must be defined. Implement any undefined functions with your attack.
-<br>
-
----
-
-3️⃣ Once you have completed your attack contract, navigate to the corresponding [test](./test) file, import your attack contract, and modify the `setUp()` to replicate any necessary attack preconditions, such as forking from a network, initializing accounts with certain balances, or creating any other conditions which are necessary for the attack. Try to keep your setup as **close** to mainnet state as possible. The more the setup differs from the mainnet state, the harder it is for projects to verify your claims. Now, you're ready to run your PoC!
+The test should extend the [PoC](./src/PoC.sol) contract, which introduces functionality to automatically snapshot and print account balances before and after a test. Use the modifier `snapshot(address account, IERC20[] tokens)` on the `test*` function to automatically print information such as pre-attack balances, post-attack balances, and profit. Passing a token with `address(0x0)` corresponds to the native token of the chain.
 
 ### Running a PoC 🚀
 
@@ -75,12 +77,12 @@ forge test -vv --match-path test/[test_name]
 
 ## Template Categories 🪲
 
-|       Categorisation       | Template | Source | Test | Documentation |
-| -------------------------- | -------- | ------ | ---- | ------------- |
-| Reentrancy                 | [Template](./src/ReentrancyTemplate.sol)        | [Source](./src/reentrancy/Reentrancy.sol)                         | [Test](./test/Reentrancy.t.sol)         | [Readme](./src/reentrancy/README.md)              |
-| Token Balance Manipulation | [Template](./src/TokenTemplate.sol)             | [Source](./src/tokens/Tokens.sol)                         | [Test](./test/Tokens.t.sol)             | [Readme](./src/tokens/README.md)                  |
-| Flash Loan                 | [Template](./src/FlashLoanTemplate.sol)         | [Source](./src/flashloan/FlashLoan.sol)                         | [Test](./test/FlashLoan.t.sol)          | [Readme](./src/flashloan/README.md)               |
-| Price Manipulation         | [Template](./src/PriceManipulationTemplate.sol) | [Source](./src/pricemanipulation/PriceManipulation.sol)       | [Test](./test/PriceManipulation.t.sol)  | [Readme](./src/pricemanipulation/README.md)       |
+|       Categorisation       | Branch | Source | Documentation |
+| -------------------------- | -------- | ------ | ------------- |
+| Default                 | [default](https://github.com/immunefi-team/forge-poc-templates/tree/default)        | | |
+| Reentrancy                 | [reentrancy](https://github.com/immunefi-team/forge-poc-templates/tree/reentrancy)        | [Source](./src/reentrancy/Reentrancy.sol)                         | [Readme](./src/reentrancy/README.md)              |
+| Flash Loan                 | [flash_loan](https://github.com/immunefi-team/forge-poc-templates/tree/flash_loan)         | [Source](./src/flashloan/FlashLoan.sol)                         | [Readme](./src/flashloan/README.md)               |
+| Price Manipulation         | [price_manipulation](https://github.com/immunefi-team/forge-poc-templates/tree/price_manipulation) | [Source](./src/pricemanipulation/PriceManipulation.sol)       | [Readme](./src/pricemanipulation/README.md)       |
 <!-- | Forking                    | [Template](./src/ForkingTemplate.sol) | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
 | NFTX Loan                  | [Template](./src/NFTXLoanTemplate.sol) | [Source](./src/NFTXLoan.sol)                      | [Test](./test/NFTXLoan.t.sol)           |
 | Uninitialized Proxy        | [Template](./src/UninitializedProxyTemplate.sol) | [Source](./src/UninitializedProxy.sol)            | [Test](./test/UninitializedProxy.t.sol) | -->
