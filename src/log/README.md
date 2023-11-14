@@ -38,20 +38,13 @@ Log messages from a specific phase of the attack vector:
 _setLogType(LogType.COMPLETE_ATTACK);
 ```
 
-The following `LogType`s are supported:
-<details>
-  <summary>
-### Supported LogType's
-  </summary>
-A `LogType` for every main phase of an attack vector:
+A `LogType` for every main phase of an attack vector is supported. Additionally, up to 10 steps can be defined to group and control logs related to every step of an attack vector:
+
 | Phase | Code |
 | ---------- | ------------------------------------------------------- |
 | `INITIALIZE_ATTACK` | `_setLogType(LogType.INITIALIZE_ATTACK);` |
 | `EXECUTE_ATTACK` | `_setLogType(LogType.EXECUTE_ATTACK);` |
 | `COMPLETE_ATTACK` | `_setLogType(LogType.COMPLETE_ATTACK);` |
-
-Additionally, up to 10 steps can be defined to group and control logs related to every step of an attack vector:
-| Phase | Code |
 | `STEP_1` | `_setLogType(LogType.STEP_1);` |
 | `STEP_2` | `_setLogType(LogType.STEP_2);` |
 | `STEP_3` | `_setLogType(LogType.STEP_3);` |
@@ -63,7 +56,6 @@ Additionally, up to 10 steps can be defined to group and control logs related to
 | `STEP_9` | `_setLogType(LogType.STEP_9);` |
 | `STEP_10` | `_setLogType(LogType.STEP_10);` |
 
-</details>
 
 Automatically control the lifecicle of a phases by adding a modifier to any function:
 ```solidity
@@ -109,20 +101,13 @@ _setPhase(LogPhase.DEFAULT);
 
 ```
 
-The following `LogPhase`s are supported:
-<details>
-  <summary>
-### Supported LogPhase's
-  </summary>
-A `LogPhase` for every main phase of an attack vector:
+A `LogPhase` for every main phase of an attack vector is supported. Additionally, up to 10 steps can be defined to group and control logs related to every step of an attack vector:
+
 | Phase | Code |
 | ---------- | ------------------------------------------------------- |
 | `INITIALIZE_ATTACK` | `_setPhase(LogPhase.INITIALIZE_ATTACK);` |
 | `EXECUTE_ATTACK` | `_setPhase(LogPhase.EXECUTE_ATTACK);` |
 | `COMPLETE_ATTACK` | `_setPhase(LogPhase.COMPLETE_ATTACK);` |
-
-Additionally, up to 10 steps can be defined to group and control logs related to every step of an attack vector:
-| Phase | Code |
 | `STEP_1` | `_setPhase(LogPhase.STEP_1);` |
 | `STEP_2` | `_setPhase(LogPhase.STEP_2);` |
 | `STEP_3` | `_setPhase(LogPhase.STEP_3);` |
@@ -133,5 +118,3 @@ Additionally, up to 10 steps can be defined to group and control logs related to
 | `STEP_8` | `_setPhase(LogPhase.STEP_8);` |
 | `STEP_9` | `_setPhase(LogPhase.STEP_9);` |
 | `STEP_10` | `_setPhase(LogPhase.STEP_10);` |
-
-</details>
