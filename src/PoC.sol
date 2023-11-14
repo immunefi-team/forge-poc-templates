@@ -81,10 +81,10 @@ contract PoC is Test, Tokens, Log {
     function printBalance(address _user, uint256 _index) public view {
         string memory resolvedAddress = _resolveAddress(_user);
         if (logLevel == 1) {
-            console.log("~~~ Balance of [%s] at block #%s", resolvedAddress, block.number);
-            console.log("-----------------------------------------------------------------------------------------");
-            console.log("             Token address                    |       Symbol  |       Balance");
-            console.log("-----------------------------------------------------------------------------------------");
+            _log("~~~ Balance of [%s] at block #%s", resolvedAddress, block.number);
+            _log("-----------------------------------------------------------------------------------------");
+            _log("             Token address                    |       Symbol  |       Balance");
+            _log("-----------------------------------------------------------------------------------------");
         }
         for (uint256 j = 0; j < tokensBalance[_user][_index].length; j++) {
             uint256 balance = uint256(tokensBalance[_user][_index][j].amount);
@@ -105,13 +105,13 @@ contract PoC is Test, Tokens, Log {
             string memory template;
             if (logLevel == 1) {
                 template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
-                console.log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part);
+                _log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part);
             } else if (logLevel == 0) {
                 template = string.concat("--- ", symbol, " balance of [%s]:\t%s.%s", " ---");
-                console.log(template, resolvedAddress, integer_part, fractional_part);
+                _log(template, resolvedAddress, integer_part, fractional_part);
             }
         }
-        console.log();
+        _log();
     }
 
     /**
@@ -120,10 +120,10 @@ contract PoC is Test, Tokens, Log {
      */
     function printProfit(address _user) public view {
         string memory resolvedAddress = _resolveAddress(_user);
-        console.log("~~~ Profit for [%s]", resolvedAddress);
-        console.log("-----------------------------------------------------------------------------------------");
-        console.log("             Token address                    |       Symbol  |       Profit");
-        console.log("-----------------------------------------------------------------------------------------");
+        _log("~~~ Profit for [%s]", resolvedAddress);
+        _log("-----------------------------------------------------------------------------------------");
+        _log("             Token address                    |       Symbol  |       Profit");
+        _log("-----------------------------------------------------------------------------------------");
         for (uint256 j = 0; j < tokensBalance[_user][0].length; j++) {
             int256 profit = tokensBalance[_user][tokensBalance[_user].length - 1][j].amount
                 - int256(tokensBalance[_user][0][j].amount);
@@ -147,9 +147,9 @@ contract PoC is Test, Tokens, Log {
             // Generate template string
             string memory template = string.concat("%s\t|\t", symbol, "\t|\t", sign, "%s.%s");
 
-            console.log(template, address(tokensBalance[_user][0][j].token), integer_part, fractional_part);
+            _log(template, address(tokensBalance[_user][0][j].token), integer_part, fractional_part);
         }
-        console.log();
+        _log();
     }
 
     /**
