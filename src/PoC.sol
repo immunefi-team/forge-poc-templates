@@ -4,13 +4,14 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 
 import "./tokens/Tokens.sol";
+import "./log/Log.sol";
 
 struct TokenBalance {
     IERC20 token;
     int256 amount;
 }
 
-contract PoC is Test, Tokens {
+contract PoC is Test, Tokens, Log {
     // For snapshotting users' balances
     mapping(address => TokenBalance[][]) public tokensBalance;
     // For resolving addresses to aliases
