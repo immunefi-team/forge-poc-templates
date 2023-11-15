@@ -44,8 +44,6 @@ abstract contract Log {
     enum LogType {
         // Log everything
         ALL,
-        // Log nothing
-        NONE,
         // Log messages from the "Initiate Attack" phase
         INITIALIZE_ATTACK,
         // Log messages from the "Execute Attack" phase
@@ -62,7 +60,9 @@ abstract contract Log {
         STEP_7,
         STEP_8,
         STEP_9,
-        STEP_10
+        STEP_10,
+        // Log nothing
+        NONE
     }
 
     // Current log type and phase
@@ -95,22 +95,7 @@ abstract contract Log {
         // Check if either the log type is ALL or the log type matches the current phase
         if (
             (logType == LogType.ALL) ||
-            (logType == LogType.INITIALIZE_ATTACK &&
-                currentPhase == LogPhase.INITIALIZE_ATTACK) ||
-            (logType == LogType.EXECUTE_ATTACK &&
-                currentPhase == LogPhase.EXECUTE_ATTACK) ||
-            (logType == LogType.COMPLETE_ATTACK &&
-                currentPhase == LogPhase.COMPLETE_ATTACK) ||
-            (logType == LogType.STEP_1 && currentPhase == LogPhase.STEP_1) ||
-            (logType == LogType.STEP_2 && currentPhase == LogPhase.STEP_2) ||
-            (logType == LogType.STEP_3 && currentPhase == LogPhase.STEP_3) ||
-            (logType == LogType.STEP_4 && currentPhase == LogPhase.STEP_4) ||
-            (logType == LogType.STEP_5 && currentPhase == LogPhase.STEP_5) ||
-            (logType == LogType.STEP_6 && currentPhase == LogPhase.STEP_6) ||
-            (logType == LogType.STEP_7 && currentPhase == LogPhase.STEP_7) ||
-            (logType == LogType.STEP_8 && currentPhase == LogPhase.STEP_8) ||
-            (logType == LogType.STEP_9 && currentPhase == LogPhase.STEP_9) ||
-            (logType == LogType.STEP_10 && currentPhase == LogPhase.STEP_10)
+            (uint(logType) == uint(currentPhase))
         ) {
             _;
         }
