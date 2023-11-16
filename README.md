@@ -85,7 +85,7 @@ forge test -vv --match-path test/[test_name]
 
 |       Categorisation       | Branch | Source | Documentation |
 | -------------------------- | -------- | ------ | ------------- |
-| Default                 | [default](https://github.com/immunefi-team/forge-poc-templates/tree/default)        | | |
+| Default                    | [default](https://github.com/immunefi-team/forge-poc-templates/tree/default)        | | |
 | Reentrancy                 | [reentrancy](https://github.com/immunefi-team/forge-poc-templates/tree/reentrancy)        | [Source](./src/reentrancy/Reentrancy.sol)                         | [Readme](./src/reentrancy/README.md)              |
 | Flash Loan                 | [flash_loan](https://github.com/immunefi-team/forge-poc-templates/tree/flash_loan)         | [Source](./src/flashloan/FlashLoan.sol)                         | [Readme](./src/flashloan/README.md)               |
 | Price Manipulation         | [price_manipulation](https://github.com/immunefi-team/forge-poc-templates/tree/price_manipulation) | [Source](./src/pricemanipulation/PriceManipulation.sol)       | [Readme](./src/pricemanipulation/README.md)       |
@@ -117,6 +117,7 @@ We sincerely appreciate contributions to Immunefi's templates. Please take the t
 * [@realgmhacker](https://twitter.com/realgmhacker)
 * [@_iphelix](https://twitter.com/_iphelix)
 * [0xlead](https://github.com/0xlead)
+* [@infosec_us_team](https://twitter.com/infosec_us_team)
 
 
 ## All set!
