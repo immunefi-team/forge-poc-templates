@@ -1,11 +1,7 @@
-// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-/// @dev The original console.sol uses `int` and `uint` for computing function selectors, but it should
-/// use `int256` and `uint256`. This modified version fixes that. This version is recommended
-/// over `console.sol` if you don't need compatibility with Hardhat as the logs will show up in
-/// forge stack traces. If you do need compatibility with Hardhat, you must use `console.sol`.
-/// Reference: https://github.com/NomicFoundation/hardhat/issues/2178
+/// @dev The following code was pulled from forge-std console2.sol and modified
+/// to include additional functionality for granular logging
 abstract contract Log {
     /**
      * @dev Function to log a dashed line for better log readability
