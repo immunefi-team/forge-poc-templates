@@ -30,7 +30,4 @@ contract LogExample is Log {
     function _completeAttack() internal complete_attack {
         _log("\n>>> Complete attack");
     }
-
-
-
 }
