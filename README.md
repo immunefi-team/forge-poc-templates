@@ -1,6 +1,6 @@
 <a href="https://immunefi.com"><img src="https://github.com/immunefi-team/forge-poc-templates/blob/assets/imgs/Logo_white@3x.png"/></a>
 
-[![GitHub issues](https://img.shields.io/github/issues/immunefi-team/forge-poc-templates.svg)](https://GitHub.com/Naereen/StrapDown.js/issues/)
+[![GitHub issues](https://img.shields.io/github/issues/immunefi-team/forge-poc-templates.svg)](https://GitHub.com/immunefi-team/forge-poc-templates/issues/)
 [![LGPLv3 license](https://img.shields.io/badge/License-LGPLv3-blue.svg)](./LICENSE)
 
 [![Immunefi Discord](https://badgen.net/discord/online-members/immunefi)](https://discord.gg/immunefi)
