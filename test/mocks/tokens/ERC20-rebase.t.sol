@@ -8,7 +8,7 @@ contract ERC20RebasingTest is Test {
     IERC20 public rebasingToken;
     uint256 immutable initialSupply = 1000000000;
     uint256 rebasingInterval = 1 minutes;
-    uint256 rebasingAmt = 5; 
+    uint256 rebasingAmt = 5;
 
     address alice = vm.addr(1);
     address bob = vm.addr(2);
@@ -20,21 +20,20 @@ contract ERC20RebasingTest is Test {
 
     function testRebasingTransfer() public {
         uint256 transferAmt = 100;
-        assertEq(rebasingToken.totalSupply(),initialSupply);
+        assertEq(rebasingToken.totalSupply(), initialSupply);
 
         uint256 balBefore = rebasingToken.balanceOf(address(this));
         uint256 userBalBefore = rebasingToken.balanceOf(address(alice));
-        
+
         vm.warp(block.timestamp + rebasingInterval);
-        
-        rebasingToken.transfer(address(alice),transferAmt);
+
+        rebasingToken.transfer(address(alice), transferAmt);
         uint256 balAfter = rebasingToken.balanceOf(address(this));
         uint256 userBalAfter = rebasingToken.balanceOf(address(alice));
 
-        assertEq(rebasingToken.totalSupply(),initialSupply + rebasingAmt);
-        
+        assertEq(rebasingToken.totalSupply(), initialSupply + rebasingAmt);
+
         assertEq(balAfter, balBefore - transferAmt + rebasingAmt);
         assertEq(userBalAfter, userBalBefore + transferAmt);
     }
-
 }

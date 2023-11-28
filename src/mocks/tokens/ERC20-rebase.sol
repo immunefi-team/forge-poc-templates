@@ -10,7 +10,14 @@ contract ERC20rebase is ERC20Base, Test {
     uint256 public rebaseInterval = 1 minutes;
     uint256 public rebaseAmt = 5;
 
-    constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _initialSupply, uint256 _rebaseInterval, uint256 _rebaseAmt) {
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        uint8 _decimals,
+        uint256 _initialSupply,
+        uint256 _rebaseInterval,
+        uint256 _rebaseAmt
+    ) {
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
@@ -20,7 +27,6 @@ contract ERC20rebase is ERC20Base, Test {
         lastRebaseTimestamp = block.timestamp;
         rebaseInterval = _rebaseInterval;
         rebaseAmt = _rebaseAmt;
-
 
         emit Transfer(address(0), msg.sender, _initialSupply);
     }
@@ -36,11 +42,11 @@ contract ERC20rebase is ERC20Base, Test {
         _;
     }
 
-    function transfer(address to, uint256 amount) public rebase override returns (bool) {
-        super.transfer(to,amount);
+    function transfer(address to, uint256 amount) public override rebase returns (bool) {
+        super.transfer(to, amount);
     }
 
-    function transferFrom(address from, address to, uint256 amount) public rebase override returns (bool) {
-        super.transferFrom(from,to,amount);
+    function transferFrom(address from, address to, uint256 amount) public override rebase returns (bool) {
+        super.transferFrom(from, to, amount);
     }
 }
