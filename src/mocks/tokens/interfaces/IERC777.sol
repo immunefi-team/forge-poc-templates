@@ -107,7 +107,7 @@ interface IERC777 {
      * This list is immutable, but individual holders may revoke these via
      * `revokeOperator`, in which case `isOperatorFor` will return false.
      */
-    function _defaultOperators() external view returns (address[] memory);
+    function defaultOperators() external view returns (address[] memory);
 
     /**
      * @dev Moves `amount` tokens from `sender` to `recipient`. The caller must
