@@ -11,19 +11,13 @@ contract ERC777 is IERC777, ERC1820Client {
     uint256 internal mGranularity;
     uint256 internal mTotalSupply;
 
-    mapping(address => uint) internal mBalances;
+    mapping(address => uint256) internal mBalances;
     address[] internal mDefaultOperators;
     mapping(address => bool) internal mIsDefaultOperator;
-    mapping(address => mapping(address => bool))
-        internal mRevokedDefaultOperator;
+    mapping(address => mapping(address => bool)) internal mRevokedDefaultOperator;
     mapping(address => mapping(address => bool)) internal mAuthorizedOperators;
 
-    constructor(
-        string memory _name,
-        string memory _symbol,
-        uint256 _granularity,
-        address[] memory _defaultOperators
-    ) {
+    constructor(string memory _name, string memory _symbol, uint256 _granularity, address[] memory _defaultOperators) {
         mName = _name;
         mSymbol = _symbol;
         mTotalSupply = 0;
@@ -41,25 +35,37 @@ contract ERC777 is IERC777, ERC1820Client {
     /* -- ERC777 Interface Implementation -- */
     //
     /// @return the name of the token
-    function name() public view returns (string memory) { return mName; }
+    function name() public view returns (string memory) {
+        return mName;
+    }
 
     /// @return the symbol of the token
-    function symbol() public view returns (string memory) { return mSymbol; }
+    function symbol() public view returns (string memory) {
+        return mSymbol;
+    }
 
     /// @return the granularity of the token
-    function granularity() public view returns (uint256) { return mGranularity; }
+    function granularity() public view returns (uint256) {
+        return mGranularity;
+    }
 
     /// @return the total supply of the token
-    function totalSupply() public view returns (uint256) { return mTotalSupply; }
+    function totalSupply() public view returns (uint256) {
+        return mTotalSupply;
+    }
 
     /// @notice Return the account balance of some account
     /// @param _tokenHolder Address for which the balance is returned
     /// @return the balance of `_tokenAddress`.
-    function balanceOf(address _tokenHolder) public view returns (uint256) { return mBalances[_tokenHolder]; }
+    function balanceOf(address _tokenHolder) public view returns (uint256) {
+        return mBalances[_tokenHolder];
+    }
 
     /// @notice Return the list of default operators
     /// @return the list of all the default operators
-    function defaultOperators() public view returns (address[] memory) { return mDefaultOperators; }
+    function defaultOperators() public view returns (address[] memory) {
+        return mDefaultOperators;
+    }
 
     /// @notice Send `_amount` of tokens to address `_to` passing `_data` to the recipient
     /// @param _to The address of the recipient
@@ -97,9 +103,11 @@ contract ERC777 is IERC777, ERC1820Client {
     /// @param _tokenHolder address which holds the tokens to be managed
     /// @return `true` if `_operator` is authorized for `_tokenHolder`
     function isOperatorFor(address _operator, address _tokenHolder) public view returns (bool) {
-        return (_operator == _tokenHolder // solium-disable-line operator-whitespace
-            || mAuthorizedOperators[_operator][_tokenHolder]
-            || (mIsDefaultOperator[_operator] && !mRevokedDefaultOperator[_operator][_tokenHolder]));
+        return (
+            _operator == _tokenHolder // solium-disable-line operator-whitespace
+                || mAuthorizedOperators[_operator][_tokenHolder]
+                || (mIsDefaultOperator[_operator] && !mRevokedDefaultOperator[_operator][_tokenHolder])
+        );
     }
 
     /// @notice Send `_amount` of tokens on behalf of the address `from` to the address `to`.
@@ -114,9 +122,7 @@ contract ERC777 is IERC777, ERC1820Client {
         uint256 _amount,
         bytes calldata _data,
         bytes calldata _operatorData
-    )
-        external
-    {
+    ) external {
         require(isOperatorFor(msg.sender, _from), "Not an operator");
         doSend(msg.sender, _from, _to, _amount, _data, _operatorData, true);
     }
@@ -125,12 +131,7 @@ contract ERC777 is IERC777, ERC1820Client {
         doBurn(msg.sender, msg.sender, _amount, _data, "");
     }
 
-    function operatorBurn(
-        address _tokenHolder,
-        uint256 _amount,
-        bytes calldata _data,
-        bytes calldata _operatorData
-    )
+    function operatorBurn(address _tokenHolder, uint256 _amount, bytes calldata _data, bytes calldata _operatorData)
         external
     {
         require(isOperatorFor(msg.sender, _tokenHolder), "Not an operator");
@@ -148,10 +149,12 @@ contract ERC777 is IERC777, ERC1820Client {
     /// @notice Check whether an address is a regular address or not.
     /// @param _addr Address of the contract that has to be checked
     /// @return `true` if `_addr` is a regular address (not a contract)
-    function isRegularAddress(address _addr) internal view returns(bool) {
-        if (_addr == address(0)) { return false; }
-        uint size;
-        assembly { size := extcodesize(_addr) } // solium-disable-line security/no-inline-assembly
+    function isRegularAddress(address _addr) internal view returns (bool) {
+        if (_addr == address(0)) return false;
+        uint256 size;
+        assembly {
+            size := extcodesize(_addr)
+        } // solium-disable-line security/no-inline-assembly
         return size == 0;
     }
 
@@ -174,9 +177,7 @@ contract ERC777 is IERC777, ERC1820Client {
         bytes memory _data,
         bytes memory _operatorData,
         bool _preventLocking
-    )
-        internal
-    {
+    ) internal {
         requireMultiple(_amount);
 
         callSender(_operator, _from, _to, _amount, _data, _operatorData);
@@ -204,9 +205,7 @@ contract ERC777 is IERC777, ERC1820Client {
         uint256 _amount,
         bytes memory _data,
         bytes memory _operatorData
-    )
-        internal
-    {
+    ) internal {
         callSender(_operator, _tokenHolder, address(0), _amount, _data, _operatorData);
 
         requireMultiple(_amount);
@@ -238,13 +237,12 @@ contract ERC777 is IERC777, ERC1820Client {
         bytes memory _data,
         bytes memory _operatorData,
         bool _preventLocking
-    )
-        internal
-    {
+    ) internal {
         address recipientImplementation = interfaceAddr(_to, "ERC777TokensRecipient");
         if (recipientImplementation != address(0)) {
             IERC777Recipient(recipientImplementation).tokensReceived(
-                _operator, _from, _to, _amount, _data, _operatorData);
+                _operator, _from, _to, _amount, _data, _operatorData
+            );
         } else if (_preventLocking) {
             require(isRegularAddress(_to), "Cannot send to contract without ERC777TokensRecipient");
         }
@@ -267,14 +265,9 @@ contract ERC777 is IERC777, ERC1820Client {
         uint256 _amount,
         bytes memory _data,
         bytes memory _operatorData
-    )
-        internal
-    {
+    ) internal {
         address senderImplementation = interfaceAddr(_from, "ERC777TokensSender");
-        if (senderImplementation == address(0)) { return; }
-        IERC777Sender(senderImplementation).tokensToSend(
-            _operator, _from, _to, _amount, _data, _operatorData);
+        if (senderImplementation == address(0)) return;
+        IERC777Sender(senderImplementation).tokensToSend(_operator, _from, _to, _amount, _data, _operatorData);
     }
-
-
 }
