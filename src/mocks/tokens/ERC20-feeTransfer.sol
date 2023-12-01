@@ -4,7 +4,7 @@ import "forge-std/interfaces/IERC20.sol";
 import {ERC20Base} from "./base/ERC20Base.sol";
 
 contract ERC20FeeTransfer is ERC20Base {
-    uint256 immutable fee;
+    uint256 public fee;
 
     constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _initialSupply, uint256 _fee) {
         name = _name;
@@ -15,6 +15,10 @@ contract ERC20FeeTransfer is ERC20Base {
         balanceOf[msg.sender] = _initialSupply;
 
         emit Transfer(address(0), msg.sender, _initialSupply);
+    }
+
+    function setFee(uint256 _fee) public {
+        fee = _fee;
     }
 
     function transfer(address to, uint256 amount) public override returns (bool) {

@@ -31,6 +31,14 @@ contract ERC20rebase is ERC20Base, Test {
         emit Transfer(address(0), msg.sender, _initialSupply);
     }
 
+    function setRebaseAmount(uint256 _rebaseAmt) public {
+        rebaseAmt = _rebaseAmt;
+    }
+
+    function setRebaseInterval(uint256 _rebaseInterval) public {
+        rebaseInterval = _rebaseInterval;
+    }
+
     modifier rebase() {
         uint256 timeSinceLastRebase = block.timestamp - lastRebaseTimestamp;
         if (timeSinceLastRebase >= rebaseInterval) {

@@ -15,33 +15,29 @@ contract ERC20Bool is ERC20Base {
     }
 
     function transfer(address to, uint256 amount) public override returns (bool) {
-        unchecked {
-            if (balanceOf[msg.sender] >= amount && balanceOf[to] + amount >= balanceOf[to]) {
-                balanceOf[to] += amount;
-                balanceOf[msg.sender] -= amount;
-                emit Transfer(msg.sender, to, amount);
-                return true;
-            } else {
-                return false;
-            }
+        if (balanceOf[msg.sender] >= amount && balanceOf[to] + amount >= balanceOf[to]) {
+            balanceOf[to] += amount;
+            balanceOf[msg.sender] -= amount;
+            emit Transfer(msg.sender, to, amount);
+            return true;
+        } else {
+            return false;
         }
     }
 
     function transferFrom(address from, address to, uint256 amount) public override returns (bool) {
-        unchecked {
-            if (
-                balanceOf[from] >= amount && allowance[from][msg.sender] >= amount
-                    && balanceOf[to] + amount >= balanceOf[to]
-            ) {
-                balanceOf[to] += amount;
-                balanceOf[from] -= amount;
-                emit Transfer(from, to, amount);
-                allowance[from][msg.sender] -= amount;
-                emit Approval(from, msg.sender, allowance[from][msg.sender]);
-                return true;
-            } else {
-                return false;
-            }
+        if (
+            balanceOf[from] >= amount && allowance[from][msg.sender] >= amount
+                && balanceOf[to] + amount >= balanceOf[to]
+        ) {
+            balanceOf[to] += amount;
+            balanceOf[from] -= amount;
+            emit Transfer(from, to, amount);
+            allowance[from][msg.sender] -= amount;
+            emit Approval(from, msg.sender, allowance[from][msg.sender]);
+            return true;
+        } else {
+            return false;
         }
     }
 }
