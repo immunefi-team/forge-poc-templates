@@ -11,8 +11,23 @@ contract returnBombTest is Test {
         attacker = new returnBomb();
     }
 
-    function testReturnBomb() public {
-        (bool success, bytes memory returnData) = address(attacker).call{gas: 3397}("");
-        assertEq(success, false);
+    function callSomething() public {
+        uint256 innerGasVal = gasleft() / 2;
+        (bool success, bytes memory returnData) = address(attacker).call{gas: innerGasVal}("");
+        console.log("returnBomb Innercall success: ", success);
+    }
+
+    function testReturnBombRevert() public {
+        vm.expectRevert();
+        this.callSomething{gas: 3000}();
+    }
+
+    function testReturnBombNotRevert() public {
+        this.callSomething{gas: 10000}();
+    }
+
+    function testSetters() public {
+        attacker.setReturnDataSize(50000);
+        assertEq(attacker.returnDataSize(),50000);
     }
 }
