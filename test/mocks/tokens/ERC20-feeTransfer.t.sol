@@ -13,7 +13,7 @@ contract ERC20FeeTest is Test {
     address bob = vm.addr(2);
 
     function setUp() public {
-        feeToken = new ERC20FeeTransfer("FeeToken","Ftoken",18,initialSupply,fee);
+        feeToken = new ERC20FeeTransfer("FeeToken", "Ftoken", 18, initialSupply, fee);
         assertEq(feeToken.balanceOf(address(this)), initialSupply);
     }
 

@@ -14,9 +14,9 @@ contract returnBomb {
         returnDataSize = _returnDataSize;
     }
 
-    fallback () external {
+    fallback() external {
         assembly {
-            revert(0,returnDataSize.slot)
+            revert(0, returnDataSize.slot)
         }
     }
 }

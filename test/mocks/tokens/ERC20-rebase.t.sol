@@ -14,7 +14,7 @@ contract ERC20RebasingTest is Test {
     address bob = vm.addr(2);
 
     function setUp() public {
-        rebasingToken = new ERC20rebase("BoolToken","Btoken",18,initialSupply,rebasingInterval,rebasingAmt);
+        rebasingToken = new ERC20rebase("BoolToken", "Btoken", 18, initialSupply, rebasingInterval, rebasingAmt);
         assertEq(rebasingToken.balanceOf(address(this)), initialSupply);
     }
 

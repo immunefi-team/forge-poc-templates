@@ -12,7 +12,7 @@ contract ERC20BoolTest is Test {
     address bob = vm.addr(2);
 
     function setUp() public {
-        boolToken = new ERC20Bool("BoolToken","Btoken",18,initialSupply);
+        boolToken = new ERC20Bool("BoolToken", "Btoken", 18, initialSupply);
         assertEq(boolToken.balanceOf(address(this)), initialSupply);
     }
 

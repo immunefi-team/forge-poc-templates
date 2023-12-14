@@ -28,6 +28,6 @@ contract returnBombTest is Test {
 
     function testSetters() public {
         attacker.setReturnDataSize(50000);
-        assertEq(attacker.returnDataSize(),50000);
+        assertEq(attacker.returnDataSize(), 50000);
     }
 }
