@@ -2,7 +2,7 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "forge-std/interfaces/IERC20.sol";
-import {ERC20rebase} from "../../../src/mocks/tokens/ERC20-rebase.sol";
+import {ERC20Rebase} from "../../../src/mocks/tokens/ERC20-rebase.sol";
 
 contract ERC20RebasingTest is Test {
     IERC20 public rebasingToken;
@@ -14,7 +14,7 @@ contract ERC20RebasingTest is Test {
     address bob = vm.addr(2);
 
     function setUp() public {
-        rebasingToken = new ERC20rebase("BoolToken", "Btoken", 18, initialSupply, rebasingInterval, rebasingAmt);
+        rebasingToken = new ERC20Rebase("BoolToken", "Btoken", 18, initialSupply, rebasingInterval, rebasingAmt);
         assertEq(rebasingToken.balanceOf(address(this)), initialSupply);
     }
 

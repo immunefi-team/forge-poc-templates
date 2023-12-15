@@ -5,7 +5,7 @@ import {ERC20Base} from "./base/ERC20Base.sol";
 
 import "forge-std/Test.sol";
 
-contract ERC20rebase is ERC20Base, Test {
+contract ERC20Rebase is ERC20Base, Test {
     uint256 public lastRebaseTimestamp;
     uint256 public rebaseInterval = 1 minutes;
     uint256 public rebaseAmt = 5;
