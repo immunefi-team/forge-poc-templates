@@ -62,6 +62,29 @@ contract PoC is Test, Tokens, Log {
     }
 
     /**
+     * @notice snapshot the balance of the attacker for the specified tokens and amounts
+     * @param _user the user to snapshot the balance of
+     * @param _tokens the list of tokens to snapshot the balance of
+     * @param _amounts the list of amounts to snapshot the balance of
+     * @return tokenBalances the list of token balances
+     */
+    function snapshotBalance(address _user, IERC20[] memory _tokens, uint256[] memory _amounts)
+        public
+        returns (TokenBalance[] memory tokenBalances)
+    {
+        tokenBalances = new TokenBalance[](_tokens.length);
+        uint256 index = tokensBalance[_user].length;
+        tokensBalance[_user].push();
+        for (uint256 i = 0; i < _tokens.length; i++) {
+            uint256 tokenBalance = _amounts[i];
+            require(tokenBalance <= uint256(type(int256).max), "PoC: balance too large");
+            tokenBalances[i].token = _tokens[i];
+            tokenBalances[i].amount = int256(tokenBalance);
+            tokensBalance[_user][index].push(tokenBalances[i]);
+        }
+    }
+
+    /**
      * @notice snapshot the balance of the attacker for the specified tokens
      * @param _user the user to snapshot the balance of
      * @param _tokens the list of tokens to snapshot the balance of
