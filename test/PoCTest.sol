@@ -2,10 +2,10 @@
 pragma solidity ^0.8.13;
 
 import "@immunefi/src/PoC.sol";
-import "../src/AttackContract.sol";
+import "../src/SandwichAttackContract.sol";
 
 contract PoCTest is PoC {
-    AttackContract public attackContract;
+    SandwichAttackContract public attackContract;
     IERC20[] tokens;
 
     function setUp() public {
@@ -13,7 +13,7 @@ contract PoCTest is PoC {
         vm.createSelectFork("https://rpc.ankr.com/eth"); // , block_number);
 
         // Deploy attack contract
-        attackContract = new AttackContract();
+        attackContract = new SandwichAttackContract();
 
         // Fund attacker contract
         // e.g. deal(EthereumTokens.USDC, address(attackContract), 1 * 10 ** 10);
@@ -27,6 +27,10 @@ contract PoCTest is PoC {
     }
 
     function testAttack() public snapshot(address(attackContract), tokens) {
-        attackContract.initializeAttack();
+        attackContract.frontRun();
+
+        // Victim transaction
+
+        attackContract.backRun();
     }
 }
