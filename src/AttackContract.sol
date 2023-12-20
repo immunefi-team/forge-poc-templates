@@ -5,15 +5,20 @@ import "@immunefi/src/PoC.sol";
 import "@immunefi/src/flashloan/FlashLoan.sol";
 
 contract AttackContract is FlashLoan, PoC {
+    IERC20[] tokens;
+
     function initializeAttack() public {
         console.log("\n>>> Initalize attack");
-        takeFlashLoan(FlashLoanProviders.MAKERDAO, EthereumTokens.DAI, 1 * 10 ** 18);
+        // Flash loan funds from provider
+        // See available providers: https://github.com/immunefi-team/forge-poc-templates/tree/main/src/flashloan/lib
+        takeFlashLoan(FlashLoanProviders.MAKERDAO, EthereumTokens.DAI, 1000000 * 10 ** 18);
     }
 
     function _executeAttack() internal override {
         if (currentFlashLoanProvider() == FlashLoanProviders.MAKERDAO) {
-            console.log("Use flash loaned funds");
-            EthereumTokens.DAI.transfer(address(0xdead), 1 * 10 ** 18);
+            // Do something with flash loaned funds
+            tokens.push(EthereumTokens.DAI);
+            snapshotAndPrint(address(this), tokens);
         }
     }
     

@@ -16,7 +16,7 @@ contract PoCTest is PoC {
         attackContract = new AttackContract();
 
         // Fund attacker contract
-        deal(EthereumTokens.DAI, address(attackContract), 1 * 10 ** 18);
+        // deal(EthereumTokens.DAI, address(attackContract), 1 * 10 ** 18);
 
         // Tokens to track during snapshotting
         tokens.push(EthereumTokens.DAI);
