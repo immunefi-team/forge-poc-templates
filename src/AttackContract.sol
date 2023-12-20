@@ -11,9 +11,10 @@ contract AttackContract is Reentrancy, PoC {
     }
 
     function _executeAttack() internal override {
+        // _executeAttack() is called when the reentrancy callback is triggered, since we extend the Reentrancy contract
         _completeAttack();
     }
-    
+
     function _completeAttack() internal override {
         console.log("\n>>> Complete attack");
     }
