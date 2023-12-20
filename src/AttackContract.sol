@@ -8,19 +8,19 @@ contract AttackContract is PriceManipulation, PoC {
     function initializeAttack() public {
         console.log("\n>>> Initialize attack");
         manipulatePrice(
-            PriceManipulationProviders.CURVE,
-            EthereumTokens.ETH,
-            EthereumTokens.stETH,
-            40000 ether,
-            40000 ether
+            PriceManipulationProviders.CURVE, EthereumTokens.ETH, EthereumTokens.stETH, 40000 ether, 40000 ether
         );
     }
 
     function _executeAttack() internal override {
         console.log("\n>>> Execute attack");
-        _completeAttack();
+        if (currentPriceOracleProvider() == PriceManipulationProviders.CURVE) {
+            // Use manipulated price
+            // For an example see: https://github.com/immunefi-team/forge-poc-templates/blob/main/src/pricemanipulation/examples/PriceManipulationExample.sol
+            _completeAttack();
+        }
     }
-    
+
     function _completeAttack() internal override {
         console.log("\n>>> Complete attack");
     }
