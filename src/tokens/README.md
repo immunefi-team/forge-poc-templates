@@ -343,7 +343,7 @@ The following attack contract demonstrates a simple token balance manipulation o
 
 * [TokenExampleManipulation](./examples/TokenExampleManipulation.sol)
 
-Extend the Tokens contract to set an account balance for the specified token or to transfer tokens from one address to another:
+Extend the Tokens contract to set an accounts balance for the specified token or to transfer tokens from one address to another:
 ```
 // Modify the account balance for the specified token
 deal(EthereumTokens.USDC, address(this), 1 ether);
