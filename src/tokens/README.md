@@ -339,11 +339,15 @@ This template is for getting started with manipulating token balances. The token
 
 ## Usage
 
-The following attack contract demonstrate a simple token balance manipulation of USDC on a fork of Ethereum mainnet.
+The following attack contract demonstrates a simple token balance manipulation of USDC on a fork of Ethereum mainnet.
 
 * [TokenExampleManipulation](./examples/TokenExampleManipulation.sol)
 
-Extend the Tokens contract and call `deal(IERC20 token, address to, uint256 amount)` to set an accounts balance for the specified token:
+Extend the Tokens contract to set an account balance for the specified token or to transfer tokens from one address to another:
 ```
+// Modify the account balance for the specified token
 deal(EthereumTokens.USDC, address(this), 1 ether);
+
+// Impersonate the address 'user' with a prank call and transfer tokens from 'user' to 'address(this)' using the token's IERC20 interface
+dealFrom(EthereumTokens.USDC, user, address(this), 1 ether);
 ```
