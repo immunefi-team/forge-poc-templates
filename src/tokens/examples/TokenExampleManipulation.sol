@@ -4,6 +4,6 @@ import "../Tokens.sol";
 
 contract TokenExampleManipulation is Tokens {
     function manipulateTokenBalance() external {
-        deal(EthereumTokens.USDC, address(this), 1 ether);
+        deal(EthereumTokens.WETH, address(this), 1 ether);
     }
 }

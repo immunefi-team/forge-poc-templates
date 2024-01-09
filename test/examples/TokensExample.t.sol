@@ -17,8 +17,8 @@ contract TokensExampleTest is Test {
     }
 
     function testTokenManipulation() public {
-        console.log("Balance before:", EthereumTokens.USDC.balanceOf(address(tokenExample)));
+        console.log("Balance before:", EthereumTokens.WETH.balanceOf(address(tokenExample)));
         tokenExample.manipulateTokenBalance();
-        console.log("Balance after:", EthereumTokens.USDC.balanceOf(address(tokenExample)));
+        console.log("Balance after:", EthereumTokens.WETH.balanceOf(address(tokenExample)));
     }
 }
