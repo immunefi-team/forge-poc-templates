@@ -4,7 +4,9 @@ out = 'out'
 libs = ['lib']
 
 # Ankr RPC endpoints (https://www.ankr.com/rpc/)
-rpc_endpoints = { eth = "https://rpc.ankr.com/eth", optimism = "https://rpc.ankr.com/optimism", fantom = "https://rpc.ankr.com/fantom", arbitrum = "https://rpc.ankr.com/arbitrum",   bsc = "https://rpc.ankr.com/bsc", moonriver = "https://moonriver.public.blastapi.io", gnosis = "https://rpc.ankr.com/gnosis", Avalanche = "https://rpc.ankr.com/avalanche", polygon = "https://rpc.ankr.com/polygon", celo = "https://rpc.ankr.com/celo", solana = "https://rpc.ankr.com/solana", IoTeX = "https://rpc.ankr.com/iotex", harmony = "https://rpc.ankr.com/harmony", aptos = "https://rpc.ankr.com/http/aptos/v1", tron = "https://rpc.ankr.com/http/tron", near = "https://rpc.ankr.com/near", klaytn = "https://rpc.ankr.com/klaytn", filecoin = "https://rpc.ankr.com/filecoin", nervos = "https://rpc.ankr.com/nervos", bttc = "https://rpc.ankr.com/bttc", syscoin = "https://rpc.ankr.com/syscoin", arbitrumnova = "https://rpc.ankr.com/arbitrumnova", secretnetwork = "https://rpc.ankr.com/scrt" }
-
+[rpc_endpoints]
+eth = "${ETH_RPC_URL}"
+gnosis = "${GNOSIS_RPC_URL}"
+polygon = "${POLYGON_RPC_URL}"
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
