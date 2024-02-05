@@ -15,9 +15,11 @@ library ChainlinkOracle {
     /**
      * @dev Mocks oracle data for testing purposes. This function allows simulating oracle data
      * within a test environment, enabling the testing of contract interactions with oracles.
-     * @param data Byte array containing the mocked data to be used in the oracle simulation.
+     * @param quoteToken The token to quote the price in.
+     * @param baseToken The token to get the price of.
+     * @param price The price of the base token in terms of the quote token.
      */
-    function mockOracleData(bytes memory data) internal {
+    function mockOracleData(IERC20 quoteToken, IERC20 baseToken, uint256 price) internal {
         Context memory context = context();
 
         // It's likely we can generalize this function to take a token pair to mock the returned price of, but we should provide a generic
