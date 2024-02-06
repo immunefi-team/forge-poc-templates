@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "../../tokens/Tokens.sol";
+import "forge-std/Vm.sol";
 
 /**
  * ChainlinkOracle is a library used to facilitate interactions with Chainlink Oracles.
@@ -8,8 +9,12 @@ import "../../tokens/Tokens.sol";
  * specific to the blockchain environment the contract is operating in.
  */
 library MockChainLink {
+    address constant HEVM_ADDRESS = address(bytes20(uint160(uint256(keccak256("hevm cheat code")))));
+    Vm constant vm = Vm(HEVM_ADDRESS);
+
     struct Context {
         EACAggregatorProxy aggregator;
+        FeedRegistryInterface registry;
     }
 
     /**
@@ -19,7 +24,7 @@ library MockChainLink {
      * @param baseToken The token to get the price of.
      * @param price The price of the base token in terms of the quote token.
      */
-    function mockOracleData(IERC20 quoteToken, IERC20 baseToken, uint256 price) internal {
+    function mockOracleData(IERC20 baseToken, address quoteToken, uint256 price) internal {
         Context memory context = context();
 
         // It's likely we can generalize this function to take a token pair to mock the returned price of, but we should provide a generic
@@ -27,6 +32,18 @@ library MockChainLink {
         // wrapper function which serializes/deserializes the generic mock oracle data into the appropriate parameters.
 
         // Code to mock the oracle call...
+        EACAggregatorProxy feed = context.registry.getFeed(baseToken, quoteToken);
+
+        (uint80 roundId,, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound) =
+            context.registry.latestRoundData(baseToken, quoteToken);
+
+        vm.mockCall(
+            address(context.registry),
+            abi.encodeCall(FeedRegistryInterface.latestRoundData, (baseToken, quoteToken)),
+            abi.encode(roundId, price, startedAt, updatedAt, answeredInRound)
+        );
+
+        //TODO: Mock the feed contract of the pair (latestRoundData)
     }
 
     /**
@@ -37,43 +54,27 @@ library MockChainLink {
      */
     function context() internal view returns (Context memory) {
         EACAggregatorProxy aggregator;
+        FeedRegistryInterface registry;
 
         if (block.chainid == 1) {
             // Ethereum mainnet
             aggregator = EACAggregatorProxy(0x72AFAECF99C9d9C8215fF44C77B94B99C28741e8);
+            registry = FeedRegistryInterface(0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf);
         } else {
             revert("ChainlinkOracle: Chain not supported");
         }
 
-        return Context(aggregator);
+        return Context(aggregator, registry);
     }
+}
 
-    // /**
-    //  * @dev Helper function which encode the mock oracle data
-    //  * @param param1
-    //  * @param param2
-    //  * @param param3
-    //  */
-    // function unpackData(type param1, type param2, type param3)
-    //     internal
-    //     pure
-    //     returns (bytes memory data)
-    // {
-    //     return abi.encode(param1, param2, param3);
-    // }
+interface FeedRegistryInterface {
+    function latestRoundData(IERC20 base, address quote)
+        external
+        view
+        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);
 
-    // /**
-    //  * @dev Helper function which decodes the mock oracle data
-    //  * @param data The data of the mock oracle call
-    //  */
-    // function unpackData(bytes calldata data)
-    //     internal
-    //     pure
-    //     returns (address token0, address token1, uint256 price)
-    // {
-    //     (token0, token1, price) = abi.decode(data, (address, address, uint256));
-    //     return (asset, amount, fee, params);
-    // }
+    function getFeed(IERC20 base, address quote) external view returns (EACAggregatorProxy aggregator);
 }
 
 interface EACAggregatorProxy {
