@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 import "forge-std/console.sol";
 
 import "../lib/MockPyth.sol";
+import "../lib/MockChainLink.sol";
 
 contract MockOracleExample {
     // TODO: provide list of all referencable price feeds
@@ -15,10 +16,14 @@ contract MockOracleExample {
     }
 
     function _executeAttack() internal {
+        // PYTH
         PythUpgradable pyth = PythUpgradable(0x4305FB66699C3B2702D4d05CF36551390A4c69C6);
         PythUpgradable.Price memory p = pyth.getPriceUnsafe(pid);
         console.logInt(p.price);
         _completeAttack();
+
+        // CHAINLINK
+
     }
 
     function _completeAttack() internal {}

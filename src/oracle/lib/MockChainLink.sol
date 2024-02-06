@@ -7,7 +7,7 @@ import "../../tokens/Tokens.sol";
  * This includes functions to mock oracle data for testing and to retrieve context information
  * specific to the blockchain environment the contract is operating in.
  */
-library ChainlinkOracle {
+library MockChainLink {
     struct Context {
         EACAggregatorProxy aggregator;
     }
