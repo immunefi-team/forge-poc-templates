@@ -75,7 +75,7 @@ library MockPyth {
         PythUpgradable.PriceFeed memory pythPriceFeed = context.pythUpgradable.queryPriceFeed(pid);
         pythPriceFeed.price.price = price;
         pythPriceFeed.emaPrice.price = price;
-        
+
         vm.mockCall(
             address(context.pythUpgradable),
             abi.encodePacked(PythUpgradable.queryPriceFeed.selector, pid),
