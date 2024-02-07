@@ -28,20 +28,41 @@ library MockPyth {
         Context memory context = context();
         require(context.pythUpgradable.priceFeedExists(pid), "PythOracle: Price feed not found");
 
-        bytes32 slot1;
-        bytes32 slot2;
-
-        slot1 |= bytes32(uint256(pythPriceFeed.price.publishTime));
-        slot1 |= bytes32(uint256(uint32(pythPriceFeed.price.expo))) << 64;
-        slot1 |= bytes32(uint256(uint64(pythPriceFeed.price.price))) << 96;
-        slot1 |= bytes32(uint256(pythPriceFeed.price.conf)) << 160;
-
-        slot2 |= bytes32(uint256(uint64(pythPriceFeed.emaPrice.price)));
-        slot2 |= bytes32(uint256(pythPriceFeed.emaPrice.conf)) << 64;
-
-        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_1, slot1);
-        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_2, slot2);
-        
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.queryPriceFeed.selector, pid),
+            abi.encode(pythPriceFeed)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPrice.selector, pid),
+            abi.encode(pythPriceFeed.price)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPriceUnsafe.selector, pid),
+            abi.encode(pythPriceFeed.price)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPriceNoOlderThan.selector, pid),
+            abi.encode(pythPriceFeed.price)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPrice.selector, pid),
+            abi.encode(pythPriceFeed.emaPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPriceUnsafe.selector, pid),
+            abi.encode(pythPriceFeed.emaPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPriceNoOlderThan.selector, pid),
+            abi.encode(pythPriceFeed.emaPrice)
+        );
     }
 
     /**
@@ -58,19 +79,41 @@ library MockPyth {
         pythPriceFeed.price.price = price;
         pythPriceFeed.emaPrice.price = price;
         
-        bytes32 slot1;
-        bytes32 slot2;
-
-        slot1 |= bytes32(uint256(pythPriceFeed.price.publishTime));
-        slot1 |= bytes32(uint256(uint32(pythPriceFeed.price.expo))) << 64;
-        slot1 |= bytes32(uint256(uint64(pythPriceFeed.price.price))) << 96;
-        slot1 |= bytes32(uint256(pythPriceFeed.price.conf)) << 160;
-
-        slot2 |= bytes32(uint256(uint64(pythPriceFeed.emaPrice.price)));
-        slot2 |= bytes32(uint256(pythPriceFeed.emaPrice.conf)) << 64;
-
-        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_1, slot1);
-        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_2, slot2);
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.queryPriceFeed.selector, pid),
+            abi.encode(pythPriceFeed)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPrice.selector, pid),
+            abi.encode(pythPriceFeed.price)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPriceUnsafe.selector, pid),
+            abi.encode(pythPriceFeed.price)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPriceNoOlderThan.selector, pid),
+            abi.encode(pythPriceFeed.price)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPrice.selector, pid),
+            abi.encode(pythPriceFeed.emaPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPriceUnsafe.selector, pid),
+            abi.encode(pythPriceFeed.emaPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPriceNoOlderThan.selector, pid),
+            abi.encode(pythPriceFeed.emaPrice)
+        );
     }
 
     /**
