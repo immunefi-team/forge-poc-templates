@@ -11,6 +11,9 @@ library MockPyth {
     address constant HEVM_ADDRESS = address(bytes20(uint160(uint256(keccak256("hevm cheat code")))));
     Vm constant vm = Vm(HEVM_ADDRESS);
 
+    bytes32 constant PRICE_INFO_SLOT_1 = 0xe68d140c40bcf819fa0c979283ee214833c0fb8baca15bcc600ae690d1a4d1ce;
+    bytes32 constant PRICE_INFO_SLOT_2 = 0xe68d140c40bcf819fa0c979283ee214833c0fb8baca15bcc600ae690d1a4d1cf;
+
     struct Context {
         PythUpgradable pythUpgradable;
     }
@@ -19,42 +22,26 @@ library MockPyth {
      * @dev Mocks oracle data for testing purposes. This function allows simulating oracle data
      * within a test environment, enabling the testing of contract interactions with oracles.
      * @param pid The price feed ID of the oracle data to mock.
-     * @param pythPrice The pyth price { int64 price, uint64 conf, int32 expo, uint256 publishTime }
+     * @param pythPriceFeed The pyth price { int64 price, uint64 conf, int32 expo, uint256 publishTime }
      */
-    function mockOracleData(bytes32 pid, PythUpgradable.Price memory pythPrice) internal {
+    function mockOracleData(bytes32 pid, PythUpgradable.PriceFeed memory pythPriceFeed) internal {
         Context memory context = context();
         require(context.pythUpgradable.priceFeedExists(pid), "PythOracle: Price feed not found");
 
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getPrice.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getPriceUnsafe.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getPriceNoOlderThan.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getEmaPrice.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getEmaPriceUnsafe.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getEmaPriceNoOlderThan.selector, pid),
-            abi.encode(pythPrice)
-        );
+        bytes32 slot1;
+        bytes32 slot2;
+
+        slot1 |= bytes32(uint256(pythPriceFeed.price.publishTime));
+        slot1 |= bytes32(uint256(uint32(pythPriceFeed.price.expo))) << 64;
+        slot1 |= bytes32(uint256(uint64(pythPriceFeed.price.price))) << 96;
+        slot1 |= bytes32(uint256(pythPriceFeed.price.conf)) << 160;
+
+        slot2 |= bytes32(uint256(uint64(pythPriceFeed.emaPrice.price)));
+        slot2 |= bytes32(uint256(pythPriceFeed.emaPrice.conf)) << 64;
+
+        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_1, slot1);
+        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_2, slot2);
+        
     }
 
     /**
@@ -67,39 +54,23 @@ library MockPyth {
         Context memory context = context();
         require(context.pythUpgradable.priceFeedExists(pid), "PythOracle: Price feed not found");
 
-        PythUpgradable.Price memory pythPrice = context.pythUpgradable.getPriceUnsafe(pid);
-        pythPrice.price = price;
+        PythUpgradable.PriceFeed memory pythPriceFeed = context.pythUpgradable.queryPriceFeed(pid);
+        pythPriceFeed.price.price = price;
+        pythPriceFeed.emaPrice.price = price;
+        
+        bytes32 slot1;
+        bytes32 slot2;
 
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getPrice.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getPriceUnsafe.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getPriceNoOlderThan.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getEmaPrice.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getEmaPriceUnsafe.selector, pid),
-            abi.encode(pythPrice)
-        );
-        vm.mockCall(
-            address(context.pythUpgradable),
-            abi.encodePacked(PythUpgradable.getEmaPriceNoOlderThan.selector, pid),
-            abi.encode(pythPrice)
-        );
+        slot1 |= bytes32(uint256(pythPriceFeed.price.publishTime));
+        slot1 |= bytes32(uint256(uint32(pythPriceFeed.price.expo))) << 64;
+        slot1 |= bytes32(uint256(uint64(pythPriceFeed.price.price))) << 96;
+        slot1 |= bytes32(uint256(pythPriceFeed.price.conf)) << 160;
+
+        slot2 |= bytes32(uint256(uint64(pythPriceFeed.emaPrice.price)));
+        slot2 |= bytes32(uint256(pythPriceFeed.emaPrice.conf)) << 64;
+
+        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_1, slot1);
+        vm.store(address(context.pythUpgradable), PRICE_INFO_SLOT_2, slot2);
     }
 
     /**
