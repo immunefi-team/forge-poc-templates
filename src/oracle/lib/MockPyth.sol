@@ -4,7 +4,7 @@ import "../../tokens/Tokens.sol";
 import "forge-std/Vm.sol";
 
 /**
- * ChainlinkOracle is a library used to facilitate interactions with Chainlink Oracles.
+ * MockPyth is a library used to facilitate mocking interactions with Pyth Oracles.
  * This includes functions to mock oracle data for testing and to retrieve context information
  * specific to the blockchain environment the contract is operating in.
  */
