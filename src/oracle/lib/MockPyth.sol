@@ -20,6 +20,48 @@ library MockPyth {
      * @dev Mocks oracle data for testing purposes. This function allows simulating oracle data
      * within a test environment, enabling the testing of contract interactions with oracles.
      * @param pid The price feed ID of the oracle data to mock.
+     * @param pythPrice The pyth price { int64 price, uint64 conf, int32 expo, uint256 publishTime }
+     */
+    function mockOracleData(bytes32 pid, PythUpgradable.Price memory pythPrice) internal {
+        Context memory context = context();
+        require(context.pythUpgradable.priceFeedExists(pid), "PythOracle: Price feed not found");
+
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPrice.selector, pid),
+            abi.encode(pythPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPriceUnsafe.selector, pid),
+            abi.encode(pythPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getPriceNoOlderThan.selector, pid),
+            abi.encode(pythPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPrice.selector, pid),
+            abi.encode(pythPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPriceUnsafe.selector, pid),
+            abi.encode(pythPrice)
+        );
+        vm.mockCall(
+            address(context.pythUpgradable),
+            abi.encodePacked(PythUpgradable.getEmaPriceNoOlderThan.selector, pid),
+            abi.encode(pythPrice)
+        );
+    }
+
+    /**
+     * @dev Mocks oracle data for testing purposes. This function allows simulating oracle data
+     * within a test environment, enabling the testing of contract interactions with oracles.
+     * @param pid The price feed ID of the oracle data to mock.
      * @param price The price of the base token in terms of the quote token.
      */
     function mockOracleData(bytes32 pid, int64 price) internal {
