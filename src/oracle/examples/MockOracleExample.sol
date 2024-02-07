@@ -8,12 +8,9 @@ import "../lib/MockPyth.sol";
 import "../lib/MockChainLink.sol";
 
 contract MockOracleExample {
-    // TODO: provide list of all referencable price feeds
-    bytes32 pid = 0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f; // BNB/USD
-
     function initiateAttack() external {
         //1. PYTH ORACLE
-        MockPyth.mockOracleData(pid, 1337);
+        MockPyth.mockOracleData(PriceFeeds.Crypto_BNB_USD, 1337);
         //2. CHAINLINK ORACLE
         MockChainLink.mockOracleData(EthereumTokens.LINK, Fiat.USD, 1337); // LINK/USD
 
@@ -23,7 +20,7 @@ contract MockOracleExample {
     function _executeAttack() internal {
         //1. PYTH ORACLE
         PythUpgradable pyth = PythUpgradable(0x4305FB66699C3B2702D4d05CF36551390A4c69C6);
-        PythUpgradable.Price memory p = pyth.getPriceUnsafe(pid);
+        PythUpgradable.Price memory p = pyth.getPriceUnsafe(PriceFeeds.Crypto_BNB_USD);
         console.logInt(p.price);
         _completeAttack();
 
