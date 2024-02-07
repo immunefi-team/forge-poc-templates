@@ -11,9 +11,6 @@ library MockPyth {
     address constant HEVM_ADDRESS = address(bytes20(uint160(uint256(keccak256("hevm cheat code")))));
     Vm constant vm = Vm(HEVM_ADDRESS);
 
-    bytes32 constant PRICE_INFO_SLOT_1 = 0xe68d140c40bcf819fa0c979283ee214833c0fb8baca15bcc600ae690d1a4d1ce;
-    bytes32 constant PRICE_INFO_SLOT_2 = 0xe68d140c40bcf819fa0c979283ee214833c0fb8baca15bcc600ae690d1a4d1cf;
-
     struct Context {
         PythUpgradable pythUpgradable;
     }
