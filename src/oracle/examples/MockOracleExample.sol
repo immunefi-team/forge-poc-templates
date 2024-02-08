@@ -6,6 +6,7 @@ import "../../tokens/Tokens.sol";
 
 import "../lib/MockPyth.sol";
 import "../lib/MockChainLink.sol";
+import "../lib/MockBand.sol";
 
 contract MockOracleExample {
     function initiateAttack() external {
@@ -13,7 +14,8 @@ contract MockOracleExample {
         MockPyth.mockOracleData(PriceFeeds.Crypto_BNB_USD, 1337);
         //2. CHAINLINK ORACLE
         MockChainLink.mockOracleData(EthereumTokens.LINK, Fiat.USD, 1337); // LINK/USD
-
+        //3. BAND ORACLE
+        MockBand.mockOracleData("STRK", "USD", 1337);
         _executeAttack();
     }
 
@@ -28,6 +30,12 @@ contract MockOracleExample {
         FeedRegistryInterface chainlinkRegistry = FeedRegistryInterface(0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf);
         (, int256 answer,,,) = chainlinkRegistry.latestRoundData(EthereumTokens.LINK, Fiat.USD);
         console.logInt(answer);
+        _completeAttack();
+
+        //3. BAND ORACLE
+        IStdReference bandRegistry = IStdReference(0xDA7a001b254CD22e46d3eAB04d937489c93174C3);
+        IStdReference.ReferenceData memory data = bandRegistry.getReferenceData("STRK", "USD");
+        console.log(data.rate);
         _completeAttack();
     }
 
