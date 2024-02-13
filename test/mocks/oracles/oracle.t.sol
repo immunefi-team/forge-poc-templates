@@ -8,7 +8,7 @@ contract MockOracleExampleTest is Test {
     MockOracleExample public mockOracleExample;
 
     function setUp() public {
-        vm.createSelectFork("https://rpc.ankr.com/eth");
+        vm.createSelectFork("eth");
         mockOracleExample = new MockOracleExample();
     }
 
