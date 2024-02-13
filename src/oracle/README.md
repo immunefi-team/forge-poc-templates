@@ -9,49 +9,41 @@ This template is designed for developing attack proof of concepts (PoCs) that ex
 
 | Network | Oracle Provider | Library |
 | ------- | --------------- | ------- |
-| Ethereum | Chainlink | [Chainlink](./lib/ChainlinkOracle.sol) |
+| Ethereum | Chainlink | [Chainlink](./lib/MockChainLink.sol) |
+| Ethereum | Band Oracle | [Band](./lib/MockBand.sol) |
+| Ethereum | Pyth Oracle | [Pyth](./lib/MockPyth.sol) |
 
 </details>
 
 ## Usage
 The following attack contract demonstrates simple oracle data manipulation:
-* [OracleManipulationExample](./examples/OracleManipulationExample.sol)
+* [OracleManipulationExample](./examples/MockOracleExample.sol)
 
-Extend the `OracleMock` contract:
+Extend the `MockOracleExample` contract:
 ```Solidity
-contract Attack is OracleMock { }
+contract Attack is MockOracleExample { }
 ```
 
-Call mockOracleData(OracleProviders op, bytes memory data) to manipulate the data returned by the oracle. This function will simulate oracle data, which can be used in _executeAttack() to carry out the attack logic.
+Please be aware that various oracles adhere to distinct `mockOracleData` structures and types.
+
+To identify the specific naming parameters required, examine the library code. For instance, within [Pyth](./lib/MockPyth.sol), there exists a `PriceFeeds` library that contains all the `bytes32` quotes for the pair.
+
+For guidance on how to import and utilize the libraries, refer to the example provided below.
 
 ```Solidity
-pragma solidity ^0.8.0;
-
-import "@immunefi/src/oracle/OracleMock.sol";
-import { OracleProviders } from "@immunefi/src/oracle/OracleProvider.sol";
-
-contract Attack is PoC, OracleMock {
-    // Other contract details...
+    import "../lib/MockPyth.sol";
+    import "../lib/MockChainLink.sol";
+    import "../lib/MockBand.sol";
 
     function initiateAttack() external {
-        // Call initiateAttack to start the attack process
-        // This could include setting up necessary state variables
+        //1. PYTH ORACLE
+        MockPyth.mockOracleData(PriceFeeds.Crypto_BNB_USD, 1337);
+
+        //2. CHAINLINK ORACLE
+        MockChainLink.mockOracleData(EthereumTokens.LINK, Fiat.USD, 1337);
+
+        //3. BAND ORACLE
+        MockBand.mockOracleData("STRK", "USD", 1337);
+        _executeAttack();
     }
-
-    function _executeAttack() internal override {
-        // Example data to be used for the mock oracle
-        bytes memory data = abi.encodePacked(/* encoded data here */);
-
-        // Mocking oracle data for the Chainlink provider
-        mockOracleData(OracleProviders.CHAINLINK, data);
-
-        // Implement your attack logic here, using the mocked data
-        // ...
-    }
-
-    function _completeAttack() internal override {
-        // Complete the attack logic, clean up, etc.
-        // ...
-    }
-}
 ```

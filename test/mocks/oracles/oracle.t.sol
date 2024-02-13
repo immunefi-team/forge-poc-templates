@@ -9,9 +9,6 @@ contract MockOracleExampleTest is Test {
 
     function setUp() public {
         vm.createSelectFork("https://rpc.ankr.com/eth");
-
-        // vm.mockCall(0x4305FB66699C3B2702D4d05CF36551390A4c69C6, hex"96834ad3", abi.encode(1));
-
         mockOracleExample = new MockOracleExample();
     }
 
