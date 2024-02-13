@@ -32,7 +32,6 @@ library MockChainLink {
         // wrapper function which serializes/deserializes the generic mock oracle data into the appropriate parameters.
 
         // Code to mock the oracle call...
-        EACAggregatorProxy feed = context.registry.getFeed(baseToken, quoteToken);
 
         (uint80 roundId,, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound) =
             context.registry.latestRoundData(baseToken, quoteToken);
@@ -42,8 +41,6 @@ library MockChainLink {
             abi.encodeCall(FeedRegistryInterface.latestRoundData, (baseToken, quoteToken)),
             abi.encode(roundId, price, startedAt, updatedAt, answeredInRound)
         );
-
-        //TODO: Mock the feed contract of the pair (latestRoundData)
     }
 
     /**
