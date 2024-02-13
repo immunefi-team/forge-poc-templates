@@ -18,6 +18,18 @@ abstract contract Tokens is Test {
             deal(address(token), to, amount);
         }
     }
+
+    /**
+     * @notice Transfers tokens from one address to another using a Prank call.
+     * @param token The IERC20 token to transfer.
+     * @param from The address to transfer tokens from.
+     * @param to The address to transfer tokens to.
+     * @param amount The amount of tokens to transfer.
+     */
+    function dealFrom(IERC20 token, address from, address to, uint256 amount) public {
+        vm.prank(from);
+        token.transfer(to, amount);
+    }
 }
 
 library EthereumTokens {

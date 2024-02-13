@@ -89,7 +89,7 @@ forge test -vv --match-path test/[test_name]
 | Reentrancy                 | [reentrancy](https://github.com/immunefi-team/forge-poc-templates/tree/reentrancy)        | [Source](./src/reentrancy/Reentrancy.sol)                         | [Readme](./src/reentrancy/README.md)              |
 | Flash Loan                 | [flash_loan](https://github.com/immunefi-team/forge-poc-templates/tree/flash_loan)         | [Source](./src/flashloan/FlashLoan.sol)                         | [Readme](./src/flashloan/README.md)               |
 | Price Manipulation         | [price_manipulation](https://github.com/immunefi-team/forge-poc-templates/tree/price_manipulation) | [Source](./src/pricemanipulation/PriceManipulation.sol)       | [Readme](./src/pricemanipulation/README.md)       |
-| Boilterplate Mocks         | [mocks](https://github.com/immunefi-team/forge-poc-templates/tree/mocks) | [Source](./src/mocks/)       | [Readme](./src/mocks/README.md)       |
+| Boilerplate Mocks          | [mocks](./src/mocks/) | [Source](./src/mocks/)       | [Readme](./src/mocks/README.md)       |
 <!-- | Forking                    | [Template](./src/ForkingTemplate.sol) | [Source](./src/Forking.sol)                       | [Test](./test/Forking.t.sol)            |
 | NFTX Loan                  | [Template](./src/NFTXLoanTemplate.sol) | [Source](./src/NFTXLoan.sol)                      | [Test](./test/NFTXLoan.t.sol)           |
 | Uninitialized Proxy        | [Template](./src/UninitializedProxyTemplate.sol) | [Source](./src/UninitializedProxy.sol)            | [Test](./test/UninitializedProxy.t.sol) | -->

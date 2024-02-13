@@ -10,7 +10,7 @@ contract PriceManipulationExampleTest is Test {
     PriceManipulationExample public attackContract;
 
     function setUp() public {
-        mainnetFork = vm.createFork("eth");
+        mainnetFork = vm.createFork("eth", 18464488);
         vm.selectFork(mainnetFork);
 
         attackContract = new PriceManipulationExample();

@@ -11,9 +11,8 @@ abstract contract Log {
     }
 
     // Enum defining different phases for logging
-    enum LogPhase
-    // Default phase
-    {
+    enum LogPhase {
+        // Default phase
         DEFAULT,
         // Log messages from the "Initiate Attack" phase
         INITIALIZE_ATTACK,
@@ -35,9 +34,8 @@ abstract contract Log {
     }
 
     // Enum defining different types of logs
-    enum LogType
-    // Log everything
-    {
+    enum LogType {
+        // Log everything
         ALL,
         // Log messages from the "Initiate Attack" phase
         INITIALIZE_ATTACK,
