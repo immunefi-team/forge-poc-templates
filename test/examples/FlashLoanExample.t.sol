@@ -18,9 +18,12 @@ contract FlashLoanExampleTest is Test {
         multiProviderFlashLoanExample = new MultiProviderFlashLoanExample();
     }
 
-    function testAAVEV1FlashLoan() public {
-        flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV1);
-    }
+    /**
+     * @dev Flash loans only work from block 19168280 or earlier.
+     */
+    // function testAAVEV1FlashLoan() public {
+    //     flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV1);
+    // }
 
     function testAAVEV2FlashLoan() public {
         flashLoanExample.initiateAttack(FlashLoanProviders.AAVEV2);
@@ -34,6 +37,9 @@ contract FlashLoanExampleTest is Test {
         flashLoanExample.initiateAttack(FlashLoanProviders.BALANCER);
     }
 
+    /**
+     * @dev Flash loans only work from block 16818068 or earlier.
+     */
     // function testEulerFlashLoan() public {
     //     flashLoanExample.initiateAttack(FlashLoanProviders.EULER);
     // }
