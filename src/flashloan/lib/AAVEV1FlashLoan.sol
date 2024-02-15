@@ -2,6 +2,12 @@ pragma solidity ^0.8.0;
 
 import "forge-std/interfaces/IERC20.sol";
 
+/**
+ * @custom:deprecated
+ * @dev AAVE V1 flash loans have been disabled as part of the AAVE V1 deprecation strategy
+ * from BGD Labs. Flash loans only work from block 19168280 or earlier.
+ * https://governance.aave.com/t/temp-check-bgd-further-aave-v1-deprecation-strategy/15893/3.
+ */
 library AAVEV1FlashLoan {
     /**
      * @dev struct that hold the reference of IAAVEV1LendingPool and address core

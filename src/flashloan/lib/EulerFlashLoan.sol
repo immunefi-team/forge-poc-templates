@@ -2,6 +2,12 @@ pragma solidity ^0.8.0;
 
 import "forge-std/interfaces/IERC20.sol";
 
+/**
+ * @custom:deprecated
+ * @dev Euler flash loans no longer work due to the $187M hack on March 13, 2023.
+ * Flash loans only work from block 16818068 or earlier.
+ * https://github.com/iphelix/euler-exploit-poc
+ */
 library EulerFlashLoan {
     /**
      * @dev struct that hold the reference of Euler and the dToken
