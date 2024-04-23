@@ -77,6 +77,14 @@ abstract contract Reentrancy {
     }
 
     /**
+     * @dev Whenever an AAVE flashloan is executed
+     */
+    function executeOperation(address, uint256, uint256, address, bytes calldata) external returns (bool) {
+        _reentrancyCallback();
+        return true;
+    }
+
+    /**
      * @dev Fallback function called when no other functions match the function signature
      */
     fallback() external payable virtual {

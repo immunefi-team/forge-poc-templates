@@ -117,7 +117,18 @@ contract PoC is Test, Tokens, Log {
                 ? tokensBalance[_user][_index][j].token.decimals()
                 : 18;
             uint256 integer_part = balance / (10 ** d);
-            uint256 fractional_part = balance % (10 ** d);
+            string memory fractional_part_string;
+            {
+                uint256 fractional_part = balance % (10 ** d);
+                string memory fractional_part_leading_zeros;
+
+                uint256 leading_zeros = d - (log10(fractional_part) + 1);
+                for(uint256 i = 0; i < leading_zeros; i++) {
+                    fractional_part_leading_zeros = string.concat(fractional_part_leading_zeros, "0");
+                }
+
+                fractional_part_string = string.concat(fractional_part_leading_zeros, toString(fractional_part));
+            }
 
             // Get token symbol
             string memory symbol = tokensBalance[_user][_index][j].token != IERC20(address(0x0))
@@ -128,10 +139,10 @@ contract PoC is Test, Tokens, Log {
             string memory template;
             if (logLevel == 1) {
                 template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
-                _log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part);
+                _log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part_string);
             } else if (logLevel == 0) {
                 template = string.concat("--- ", symbol, " balance of [%s]:\t%s.%s", " ---");
-                _log(template, resolvedAddress, integer_part, fractional_part);
+                _log(template, resolvedAddress, integer_part, fractional_part_string);
             }
         }
         _log();
@@ -160,7 +171,18 @@ contract PoC is Test, Tokens, Log {
                 ? tokensBalance[_user][0][j].token.decimals()
                 : 18;
             uint256 integer_part = abs_profit / (10 ** d);
-            uint256 fractional_part = abs_profit % (10 ** d);
+            string memory fractional_part_string;
+            {
+                uint256 fractional_part = abs_profit % (10 ** d);
+                string memory fractional_part_leading_zeros;
+
+                uint256 leading_zeros = d - (log10(fractional_part) + 1);
+                for(uint256 i = 0; i < leading_zeros; i++) {
+                    fractional_part_leading_zeros = string.concat(fractional_part_leading_zeros, "0");
+                }
+                
+                fractional_part_string = string.concat(fractional_part_leading_zeros, toString(fractional_part));
+            }
 
             // Get token symbol
             string memory symbol = tokensBalance[_user][0][j].token != IERC20(address(0x0))
@@ -170,7 +192,7 @@ contract PoC is Test, Tokens, Log {
             // Generate template string
             string memory template = string.concat("%s\t|\t", symbol, "\t|\t", sign, "%s.%s");
 
-            _log(template, address(tokensBalance[_user][0][j].token), integer_part, fractional_part);
+            _log(template, address(tokensBalance[_user][0][j].token), integer_part, fractional_part_string);
         }
         _log();
     }
@@ -226,5 +248,71 @@ contract PoC is Test, Tokens, Log {
     function char(bytes1 b) internal pure returns (bytes1) {
         if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
         else return bytes1(uint8(b) + 0x57);
+    }
+
+    /**
+     * @dev Converts a `uint256` to its ASCII `string` decimal representation.
+     * @notice Pulled from OpenZeppelin 5.0.2 Strings.sol library
+     */
+    bytes16 private constant HEX_DIGITS = "0123456789abcdef";
+    function toString(uint256 value) internal pure returns (string memory) {
+        unchecked {
+            uint256 length = log10(value) + 1;
+            string memory buffer = new string(length);
+            uint256 ptr;
+            /// @solidity memory-safe-assembly
+            assembly {
+                ptr := add(buffer, add(32, length))
+            }
+            while (true) {
+                ptr--;
+                /// @solidity memory-safe-assembly
+                assembly {
+                    mstore8(ptr, byte(mod(value, 10), HEX_DIGITS))
+                }
+                value /= 10;
+                if (value == 0) break;
+            }
+            return buffer;
+        }
+    }
+
+    /**
+     * @dev Return the log in base 10 of a positive value rounded towards zero.
+     * @notice Pulled from OpenZeppelin 5.0.2 Math.sol library
+     * Returns 0 if given 0.
+     */
+    function log10(uint256 value) internal pure returns (uint256) {
+        uint256 result = 0;
+        unchecked {
+            if (value >= 10 ** 64) {
+                value /= 10 ** 64;
+                result += 64;
+            }
+            if (value >= 10 ** 32) {
+                value /= 10 ** 32;
+                result += 32;
+            }
+            if (value >= 10 ** 16) {
+                value /= 10 ** 16;
+                result += 16;
+            }
+            if (value >= 10 ** 8) {
+                value /= 10 ** 8;
+                result += 8;
+            }
+            if (value >= 10 ** 4) {
+                value /= 10 ** 4;
+                result += 4;
+            }
+            if (value >= 10 ** 2) {
+                value /= 10 ** 2;
+                result += 2;
+            }
+            if (value >= 10 ** 1) {
+                result += 1;
+            }
+        }
+        return result;
     }
 }
