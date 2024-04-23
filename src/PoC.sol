@@ -123,7 +123,7 @@ contract PoC is Test, Tokens, Log {
                 string memory fractional_part_leading_zeros;
 
                 uint256 leading_zeros = d - (log10(fractional_part) + 1);
-                for(uint256 i = 0; i < leading_zeros; i++) {
+                for (uint256 i = 0; i < leading_zeros; i++) {
                     fractional_part_leading_zeros = string.concat(fractional_part_leading_zeros, "0");
                 }
 
@@ -177,10 +177,10 @@ contract PoC is Test, Tokens, Log {
                 string memory fractional_part_leading_zeros;
 
                 uint256 leading_zeros = d - (log10(fractional_part) + 1);
-                for(uint256 i = 0; i < leading_zeros; i++) {
+                for (uint256 i = 0; i < leading_zeros; i++) {
                     fractional_part_leading_zeros = string.concat(fractional_part_leading_zeros, "0");
                 }
-                
+
                 fractional_part_string = string.concat(fractional_part_leading_zeros, toString(fractional_part));
             }
 
@@ -255,6 +255,7 @@ contract PoC is Test, Tokens, Log {
      * @notice Pulled from OpenZeppelin 5.0.2 Strings.sol library
      */
     bytes16 private constant HEX_DIGITS = "0123456789abcdef";
+
     function toString(uint256 value) internal pure returns (string memory) {
         unchecked {
             uint256 length = log10(value) + 1;
