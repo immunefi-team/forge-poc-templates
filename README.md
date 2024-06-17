@@ -97,7 +97,7 @@ Showcasing the contributors behind this project:
 - [@realgmhacker](https://twitter.com/realgmhacker)
 - [@_iphelix](https://twitter.com/_iphelix)
 - [0xlead](https://github.com/0xlead)
-- [@infosec_us_team](https://twitter.com/infosec_us_team)
+- [@infosec_us_team](https://github.com/infosec-us-team)
 
 ## Need Assistance?
 
