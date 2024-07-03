@@ -57,7 +57,7 @@ A `LogType` for every main phase of an attack vector is supported. Additionally,
 | `STEP_10` | `_setLogType(LogType.STEP_10);` |
 
 
-Automatically control the lifecicle of a phase by adding a modifier to any function:
+Automatically control the lifecycle of a phase by adding a modifier to any function:
 ```solidity
 /**
   * @dev Adding the modifier `step_1` to the "depositFunds()" function
