@@ -10,7 +10,7 @@ import "forge-std/interfaces/IERC20.sol";
  */
 library AAVEV1FlashLoan {
     /**
-     * @dev struct that hold the reference of IAAVEV1LendingPool and address core
+     * @dev struct that holds the reference of IAAVEV1LendingPool and address core
      */
     struct Context {
         IAAVEV1LendingPool AAVElendingPool;
