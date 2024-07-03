@@ -14,7 +14,7 @@ This template is for getting started with attack PoCs which use price manipulati
 </details>
 
 ## Usage
-The following attack contract demonstrate simple flash loan usage.
+The following attack contract demonstrates simple flash loan usage.
 * [PriceManipulationExample](./examples/PriceManipulationExample.sol)
 
 
