@@ -89,7 +89,7 @@ This template is for getting started with attack PoCs which use flash loans. The
 </details>
 
 ## Usage
-The following attack contract demonstrate simple flash loan usage.
+The following attack contract demonstrates simple flash loan usage.
 * [FlashLoanExample](./examples/FlashLoanExample.sol)
 
 
