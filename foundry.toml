@@ -3,10 +3,13 @@ src = 'src'
 out = 'out'
 libs = ['lib']
 
+# The EVM version by hardfork name
+evm_version = 'shanghai'
+
 # Ankr RPC endpoints (https://www.ankr.com/rpc/)
 [rpc_endpoints]
 eth = "${ETH_RPC_URL}"
 gnosis = "${GNOSIS_RPC_URL}"
 polygon = "${POLYGON_RPC_URL}"
 
-# See more config options https://github.com/foundry-rs/foundry/tree/master/config
+# See more config options https://book.getfoundry.sh/reference/config/overview
