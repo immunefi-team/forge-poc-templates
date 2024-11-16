@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 import "../reentrancy/Reentrancy.sol";
 import "./PriceManipulationProvider.sol";
 
-import "forge-std/console.sol";
+import "forge-std-1.9.4/src/console.sol";
 
 abstract contract PriceManipulation is Reentrancy {
     using PriceManipulationProvider for PriceManipulationProviders;

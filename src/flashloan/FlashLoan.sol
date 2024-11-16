@@ -1,10 +1,9 @@
 pragma solidity ^0.8.0;
 
-import "forge-std/interfaces/IERC20.sol";
+import "forge-std-1.9.4/src/interfaces/IERC20.sol";
+import "forge-std-1.9.4/src/console.sol";
 
 import "./FlashLoanProvider.sol";
-
-import "forge-std/console.sol";
 
 abstract contract FlashLoan {
     using FlashLoanProvider for FlashLoanProviders;

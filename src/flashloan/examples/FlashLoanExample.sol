@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 import "../FlashLoan.sol";
 import "../../tokens/Tokens.sol";
 
-import "forge-std/console.sol";
+import "forge-std-1.9.4/src/console.sol";
 
 contract FlashLoanExample is FlashLoan, Tokens {
     FlashLoanProviders internal _flp;

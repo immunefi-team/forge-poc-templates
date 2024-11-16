@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "forge-std/Vm.sol";
+import "forge-std-1.9.4/src/Vm.sol";
 
 /**
  * MockPyth is a library used to facilitate mocking interactions with Pyth Oracles.

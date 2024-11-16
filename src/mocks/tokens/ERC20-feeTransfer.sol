@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "forge-std/interfaces/IERC20.sol";
+import "forge-std-1.9.4/src/interfaces/IERC20.sol";
 import {ERC20Base} from "./base/ERC20Base.sol";
 
 contract ERC20FeeTransfer is ERC20Base {

@@ -4,8 +4,8 @@ import "../PriceManipulation.sol";
 import "../../tokens/Tokens.sol";
 import "../../flashloan/FlashLoan.sol";
 
-import "forge-std/console.sol";
-import "forge-std/Test.sol";
+import "forge-std-1.9.4/src/console.sol";
+import "forge-std-1.9.4/src/Test.sol";
 
 contract PriceManipulationExample is PriceManipulation, FlashLoan, Tokens {
     using FlashLoanProvider for FlashLoanProviders;

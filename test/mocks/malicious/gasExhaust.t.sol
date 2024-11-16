@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "forge-std/Test.sol";
+import "forge-std-1.9.4/src/Test.sol";
 
 import {gasExhaust} from "../../../src/mocks/malicious/gasExhaust.sol";
 

@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "forge-std/Test.sol";
+import "forge-std-1.9.4/src/Test.sol";
 
 import "./tokens/Tokens.sol";
-import "./log/Log.sol";
 
 struct TokenBalance {
     IERC20 token;
     int256 amount;
 }
 
-contract PoC is Test, Tokens, Log {
+contract PoC is Test, Tokens {
     // For snapshotting users' balances
     mapping(address => TokenBalance[][]) public tokensBalance;
     // For resolving addresses to aliases
@@ -104,10 +103,10 @@ contract PoC is Test, Tokens, Log {
     function printBalance(address _user, uint256 _index) public view {
         string memory resolvedAddress = _resolveAddress(_user);
         if (logLevel == 1) {
-            _log("~~~ Balance of [%s] at block #%s", resolvedAddress, block.number);
-            _log("-----------------------------------------------------------------------------------------");
-            _log("             Token address                    |       Symbol  |       Balance");
-            _log("-----------------------------------------------------------------------------------------");
+            console.log("~~~ Balance of [%s] at block #%s", resolvedAddress, block.number);
+            console.log("-----------------------------------------------------------------------------------------");
+            console.log("             Token address                    |       Symbol  |       Balance");
+            console.log("-----------------------------------------------------------------------------------------");
         }
         for (uint256 j = 0; j < tokensBalance[_user][_index].length; j++) {
             uint256 balance = uint256(tokensBalance[_user][_index][j].amount);
@@ -139,13 +138,13 @@ contract PoC is Test, Tokens, Log {
             string memory template;
             if (logLevel == 1) {
                 template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
-                _log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part_string);
+                console.log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part_string);
             } else if (logLevel == 0) {
                 template = string.concat("--- ", symbol, " balance of [%s]:\t%s.%s", " ---");
-                _log(template, resolvedAddress, integer_part, fractional_part_string);
+                console.log(template, resolvedAddress, integer_part, fractional_part_string);
             }
         }
-        _log();
+        console.log();
     }
 
     /**
@@ -154,10 +153,10 @@ contract PoC is Test, Tokens, Log {
      */
     function printProfit(address _user) public view {
         string memory resolvedAddress = _resolveAddress(_user);
-        _log("~~~ Profit for [%s]", resolvedAddress);
-        _log("-----------------------------------------------------------------------------------------");
-        _log("             Token address                    |       Symbol  |       Profit");
-        _log("-----------------------------------------------------------------------------------------");
+        console.log("~~~ Profit for [%s]", resolvedAddress);
+        console.log("-----------------------------------------------------------------------------------------");
+        console.log("             Token address                    |       Symbol  |       Profit");
+        console.log("-----------------------------------------------------------------------------------------");
         for (uint256 j = 0; j < tokensBalance[_user][0].length; j++) {
             int256 profit = tokensBalance[_user][tokensBalance[_user].length - 1][j].amount
                 - int256(tokensBalance[_user][0][j].amount);
@@ -192,9 +191,9 @@ contract PoC is Test, Tokens, Log {
             // Generate template string
             string memory template = string.concat("%s\t|\t", symbol, "\t|\t", sign, "%s.%s");
 
-            _log(template, address(tokensBalance[_user][0][j].token), integer_part, fractional_part_string);
+            console.log(template, address(tokensBalance[_user][0][j].token), integer_part, fractional_part_string);
         }
-        _log();
+        console.log();
     }
 
     /**
@@ -208,10 +207,10 @@ contract PoC is Test, Tokens, Log {
 
     /**
      * @notice sets the log level
-     * @param _logLevel the log level to set
+     * @param logLevel the log level to set
      */
-    function setLogLevel(uint8 _logLevel) public {
-        logLevel = _logLevel;
+    function setLogLevel(uint8 logLevel) public {
+        logLevel = logLevel;
     }
 
     /**

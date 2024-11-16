@@ -1,7 +1,7 @@
 pragma solidity ^0.8.13;
 
-import "forge-std/Test.sol";
-import "forge-std/interfaces/IERC20.sol";
+import "forge-std-1.9.4/src/Test.sol";
+import "forge-std-1.9.4/src/interfaces/IERC20.sol";
 import {ERC20Bool} from "../../../src/mocks/tokens/ERC20-bool.sol";
 
 contract ERC20BoolTest is Test {

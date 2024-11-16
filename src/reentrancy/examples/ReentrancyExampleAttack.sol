@@ -2,7 +2,7 @@ pragma solidity ^0.8.13;
 
 import "../Reentrancy.sol";
 
-import "forge-std/console.sol";
+import "forge-std-1.9.4/src/console.sol";
 
 contract ReentrancyExampleAttack is Reentrancy {
     // The victim to perform reentrancy attack on

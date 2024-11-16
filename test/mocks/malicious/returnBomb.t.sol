@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "forge-std/Test.sol";
+import "forge-std-1.9.4/src/Test.sol";
 
 import {returnBomb} from "../../../src/mocks/malicious/returnBomb.sol";
 

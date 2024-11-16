@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "../../tokens/Tokens.sol";
-import "forge-std/Vm.sol";
+import "forge-std-1.9.4/src/Vm.sol";
 
 library MockBand {
     address constant HEVM_ADDRESS = address(bytes20(uint160(uint256(keccak256("hevm cheat code")))));
