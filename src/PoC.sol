@@ -138,7 +138,9 @@ contract PoC is Test, Tokens {
             string memory template;
             if (logLevel == 1) {
                 template = string.concat("%s\t|\t", symbol, "\t|\t%s.%s");
-                console.log(template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part_string);
+                console.log(
+                    template, address(tokensBalance[_user][_index][j].token), integer_part, fractional_part_string
+                );
             } else if (logLevel == 0) {
                 template = string.concat("--- ", symbol, " balance of [%s]:\t%s.%s", " ---");
                 console.log(template, resolvedAddress, integer_part, fractional_part_string);
